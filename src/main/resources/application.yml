@@ -1,0 +1,30 @@
+spring:
+  thymeleaf:
+    cache: false
+
+
+  redis:
+    host: 121.41.45.164
+    port: 6379
+    database: 0
+    password: 123123
+    timeout: 5000
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+
+  datasource:
+      url: jdbc:mysql://localhost:3306/sys?characterEncoding=utf-8&serverTimezone=UTC
+      username: root
+      password: wmy0976543244
+      driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:/mybatis/*.xml
+
+
+
+
+

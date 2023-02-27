@@ -1,0 +1,100 @@
+2023-01-31 13:28:12.746  INFO 13928 --- [main] com.kaka.SecurityApplication             : Starting SecurityApplication using Java 1.8.0_251 on LAPTOP-69HLG9DD with PID 13928 (D:\jetbrains\IdeaProjects\security\target\classes started by admin in D:\jetbrains\IdeaProjects\security)
+2023-01-31 13:28:12.749  INFO 13928 --- [main] com.kaka.SecurityApplication             : No active profile set, falling back to default profiles: default
+2023-01-31 13:28:13.328  INFO 13928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-01-31 13:28:13.331  INFO 13928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-01-31 13:28:13.350  INFO 13928 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-01-31 13:28:13.718  INFO 13928 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-01-31 13:28:13.726  INFO 13928 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-01-31 13:28:13.726  INFO 13928 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-01-31 13:28:13.727  INFO 13928 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.30] using APR version [1.7.0].
+2023-01-31 13:28:13.727  INFO 13928 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2023-01-31 13:28:13.727  INFO 13928 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-01-31 13:28:13.740  INFO 13928 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1k  25 Mar 2021]
+2023-01-31 13:28:13.820  INFO 13928 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-01-31 13:28:13.820  INFO 13928 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1008 ms
+2023-01-31 13:28:14.305  INFO 13928 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2023-01-31 13:28:14.474  WARN 13928 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2023-01-31 13:28:14.579  INFO 13928 --- [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 3fe54829-1fad-41b8-8a16-55a085517d3b
+
+2023-01-31 13:28:14.669  INFO 13928 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7da39774, org.springframework.security.web.context.SecurityContextPersistenceFilter@5875de6a, org.springframework.security.web.header.HeaderWriterFilter@4277127c, org.springframework.security.web.csrf.CsrfFilter@3791f50e, org.springframework.security.web.authentication.logout.LogoutFilter@216e9ca3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@27755487, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@48976e6d, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@441b8382, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6fc6deb7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2687725a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5b7c8930, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1df1ced0, org.springframework.security.web.session.SessionManagementFilter@354e7004, org.springframework.security.web.access.ExceptionTranslationFilter@26c89563, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@78e17a99]
+2023-01-31 13:28:14.719  INFO 13928 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-31 13:28:14.726  INFO 13928 --- [main] com.kaka.SecurityApplication             : Started SecurityApplication in 2.346 seconds (JVM running for 3.183)
+2023-01-31 13:28:24.163  INFO 13928 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-31 13:28:24.164  INFO 13928 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-01-31 13:28:24.165  INFO 13928 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-01-31 17:59:29.862  INFO 27696 --- [main] com.kaka.SecurityApplication             : Starting SecurityApplication using Java 1.8.0_251 on LAPTOP-69HLG9DD with PID 27696 (D:\jetbrains\IdeaProjects\security\target\classes started by admin in D:\jetbrains\IdeaProjects\security)
+2023-01-31 17:59:29.866  INFO 27696 --- [main] com.kaka.SecurityApplication             : No active profile set, falling back to default profiles: default
+2023-01-31 17:59:30.501  INFO 27696 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-01-31 17:59:30.503  INFO 27696 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-01-31 17:59:30.523  INFO 27696 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2023-01-31 17:59:30.855  INFO 27696 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-01-31 17:59:30.862  INFO 27696 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-01-31 17:59:30.862  INFO 27696 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-01-31 17:59:30.863  INFO 27696 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.30] using APR version [1.7.0].
+2023-01-31 17:59:30.863  INFO 27696 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2023-01-31 17:59:30.863  INFO 27696 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-01-31 17:59:30.877  INFO 27696 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1k  25 Mar 2021]
+2023-01-31 17:59:30.960  INFO 27696 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-01-31 17:59:30.960  INFO 27696 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1045 ms
+2023-01-31 17:59:31.002  WARN 27696 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userController': Unsatisfied dependency expressed through field 'userService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userServiceImpl': Unsatisfied dependency expressed through field 'userMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.kaka.mapper.UserMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2023-01-31 17:59:31.004  INFO 27696 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-01-31 17:59:31.017  INFO 27696 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-01-31 17:59:31.034 ERROR 27696 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field userMapper in com.kaka.service.UserServiceImpl required a bean of type 'com.kaka.mapper.UserMapper' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.kaka.mapper.UserMapper' in your configuration.
+
+2023-01-31 18:01:56.555  INFO 27584 --- [main] com.kaka.SecurityApplication             : Starting SecurityApplication using Java 1.8.0_251 on LAPTOP-69HLG9DD with PID 27584 (D:\jetbrains\IdeaProjects\security\target\classes started by admin in D:\jetbrains\IdeaProjects\security)
+2023-01-31 18:01:56.558  INFO 27584 --- [main] com.kaka.SecurityApplication             : No active profile set, falling back to default profiles: default
+2023-01-31 18:01:57.037  INFO 27584 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2023-01-31 18:01:57.038  INFO 27584 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-01-31 18:01:57.054  INFO 27584 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2023-01-31 18:01:57.346  INFO 27584 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-01-31 18:01:57.353  INFO 27584 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-01-31 18:01:57.354  INFO 27584 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.39]
+2023-01-31 18:01:57.356  INFO 27584 --- [main] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.30] using APR version [1.7.0].
+2023-01-31 18:01:57.356  INFO 27584 --- [main] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2023-01-31 18:01:57.356  INFO 27584 --- [main] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2023-01-31 18:01:57.360  INFO 27584 --- [main] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1k  25 Mar 2021]
+2023-01-31 18:01:57.432  INFO 27584 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-01-31 18:01:57.432  INFO 27584 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 845 ms
+2023-01-31 18:01:57.467  WARN 27584 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userController': Unsatisfied dependency expressed through field 'userService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userServiceImpl': Unsatisfied dependency expressed through field 'userMapper'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.kaka.mapper.UserMapper' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2023-01-31 18:01:57.468  INFO 27584 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-01-31 18:01:57.478  INFO 27584 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-01-31 18:01:57.492 ERROR 27584 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field userMapper in com.kaka.service.UserServiceImpl required a bean of type 'com.kaka.mapper.UserMapper' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.kaka.mapper.UserMapper' in your configuration.
+
