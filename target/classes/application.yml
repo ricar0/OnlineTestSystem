@@ -1,7 +1,9 @@
+server:
+  port: 8080
+
 spring:
   thymeleaf:
     cache: false
-
 
   redis:
     host: 121.41.45.164
@@ -17,7 +19,7 @@ spring:
         min-idle: 0
 
   datasource:
-      url: jdbc:mysql://localhost:3306/sys?characterEncoding=utf-8&serverTimezone=UTC
+      url: jdbc:mysql://121.41.45.164:3306/onlinetest?characterEncoding=utf-8&serverTimezone=UTC
       username: root
       password: wmy0976543244
       driver-class-name: com.mysql.cj.jdbc.Driver
