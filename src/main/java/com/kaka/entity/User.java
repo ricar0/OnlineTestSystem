@@ -24,5 +24,5 @@ public class User implements Serializable {
     //密码
     private String password;
     //权限
-    private Long state;
+    private String role;
 }

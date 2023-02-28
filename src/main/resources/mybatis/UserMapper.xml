@@ -4,10 +4,13 @@
     <select id="listUser" resultType="com.kaka.entity.User">
         select * from user;
     </select>
-    <select id="listUserByName" parameterType="String" resultType="com.kaka.entity.User">
+    <select id="findUserByName" parameterType="String" resultType="com.kaka.entity.User">
         select * from user where username = #{name};
     </select>
     <insert id="addUser" parameterType="com.kaka.entity.User">
         insert into user value(#{username}, #{password},null,null);
     </insert>
+    <select id="findRoleById" parameterType="Long" resultType="String">
+        select role from user where id = #{id};
+    </select>
 </mapper>

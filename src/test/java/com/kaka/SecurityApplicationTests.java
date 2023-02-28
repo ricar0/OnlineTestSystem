@@ -40,4 +40,9 @@ class SecurityApplicationTests {
         userService.addUser(user);
     }
 
+    @Test
+    void findRoleById() {
+        System.out.println(userService.findRoleById(1L));
+    }
+
 }

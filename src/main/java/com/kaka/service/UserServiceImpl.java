@@ -21,13 +21,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User listUserByName(String name) {
-        return userMapper.listUserByName(name);
+    public User findUserByName(String name) {
+        return userMapper.findUserByName(name);
     }
 
     @Override
     public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.addUser(user);
+    }
+
+    @Override
+    public String findRoleById(Long id) {
+        return userMapper.findRoleById(id);
     }
 }

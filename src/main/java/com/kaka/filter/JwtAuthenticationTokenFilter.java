@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import java.util.Objects;
 
 import static com.kaka.utils.JwtUtil.parseJWT;
@@ -53,7 +54,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         // 存入SecurityContextHolder
         // TODO 获取权限信息封装到Authentication中
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,null);
+
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         // 放行
         filterChain.doFilter(request, response);

@@ -6,6 +6,7 @@ import com.kaka.service.UserService;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class UserController {
     private LoginService loginService;
 
     @RequestMapping(value="/getAll", method=RequestMethod.GET)
+    @PreAuthorize("hasAuthority('teacher')")
     public ResponseResult getAll() {
         ResponseResult rest = new ResponseResult(200,"查询成功!",userService.listUser());
         return rest;
@@ -33,7 +35,7 @@ public class UserController {
 
     @RequestMapping(value="/getListByName", method=RequestMethod.POST)
     public ResponseResult getListByName(@PathParam("username") String Name) {
-        User user = userService.listUserByName(Name);
+        User user = userService.findUserByName(Name);
         ResponseResult rest;
         if (!Objects.isNull(user)) {
             rest = new ResponseResult(200, "查询成功!", user);
