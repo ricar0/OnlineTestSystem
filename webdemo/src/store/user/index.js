@@ -12,9 +12,9 @@ const actions = {
     //登录业务
     async userLogin({commit}, obj) {
         let {data} = await reqUserLogin(obj);
-        console.log(data.msg);
+        console.log(data.code);
         if (data.code == 200) {
-            commit("USERLOGIN", data.msg);
+            commit("USERLOGIN", data.data.token);
             return "ok";
         } else {
             return Promise.reject(new Error("failure"));
