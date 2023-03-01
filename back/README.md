@@ -1,2 +1,0 @@
-# OnlineTestSystem
-一个基于遗传算法实现智能组卷的在线考试系统
