@@ -4,6 +4,7 @@
         <router-link to="/">首页</router-link>
         <router-link to="/register">注册</router-link>
         <router-link to="/login">登录</router-link>
+        <router-link to="/student">学生模块</router-link>
         <el-input label-width="100px" v-model="keywords" placeholder="请输入内容"></el-input>
         <el-button @click="goSearch">搜索</el-button>
     </div>
