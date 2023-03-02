@@ -4,13 +4,13 @@
     <div id="myExam">
         <div class="wrapper">
             <ul class="top" style="height: 40px;">
-                <li class="order" style="margin:3% 3%; height: 50%; font-weight:bold;"><i class="el-icon-alarm-clock"> 我的考试</i></li>
+                <li class="order" style="font-size:25px;margin:3% 3%; height: 50%; font-weight:bold; color: dodgerblue;"><i class="el-icon-alarm-clock"> 我的考试</i></li>
                 <li class="search-li"><div class="icon"><input type="text" placeholder="试卷名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
                 <li><el-button type="primary" @click="search()">搜索试卷</el-button></li>
             </ul>
             <ul class="paper" v-loading="loading">
                 <li class="item" v-for="(item,index) in pagination.records" :key="index">
-                    <h4 @click="toExamMsg(item.examCode)">{{item.source}}</h4>
+                    <h4 @click="toExamMsg(item.examCode)">{{item.source}} <i style="margin:0;"class="el-icon-lock"></i></h4>
                     <p class="name">{{item.source}}-{{item.description}}</p>
                     <span class="name">出卷人：</span> 
                     <span style="color:red;">{{item.teacher}}</span>
@@ -150,9 +150,9 @@ li {
   border-radius: 1rem;
   padding: 3% 3% 3% 10%;
   border: 2px solid #eee;
-  box-shadow: 0 0 4px 2px rgba(217,222,234,0.3);
+  box-shadow: 3px 3px 4px 10px rgba(217,222,234,0.3);
   transition: all 0.6s ease;
-  background-color: #fff
+//   background-color: rgba(120, 200, 255, 0.075);
 }
 .paper .item:hover {
   box-shadow: 0 0 4px 2px rgba(140, 193, 248, 0.45);

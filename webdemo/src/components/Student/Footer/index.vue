@@ -1,3 +1,5 @@
 <template>
-    <div>尾组件</div>
+    <div>
+        
+    </div>
 </template>
