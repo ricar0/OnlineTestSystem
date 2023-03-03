@@ -5,6 +5,7 @@ import com.kaka.entity.User;
 import com.kaka.utils.JwtUtil;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,9 +13,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.kaka.utils.JwtUtil.parseJWT;
 
 @Service
 public class LoginServiceImpl implements LoginService{
@@ -54,5 +58,26 @@ public class LoginServiceImpl implements LoginService{
         //删除redis中的值
         redisCache.deleteObject("login:"+userid);
         return new ResponseResult(200, "注销成功!");
+    }
+
+    @Override
+    public ResponseResult getLoginInfo(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        //解析token
+        String userid;
+        try {
+            Claims claims = parseJWT(token);
+            userid = claims.getSubject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("tolen非法");
+        }
+        // 从redis中获取用户信息
+        String redisKey = "login:" + userid;
+        LoginUser loginUser = redisCache.getCacheObject(redisKey);
+        if (Objects.isNull(loginUser)) {
+            throw new RuntimeException("用户未登录");
+        }
+        return new ResponseResult(200, "验证成功！", loginUser);
     }
 }

@@ -18,7 +18,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
           // 处理异常
-        ResponseResult result = new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "用户名密码不正确");
+        ResponseResult result = new ResponseResult(HttpStatus.UNAUTHORIZED.value(), "未登录");
         String json = JSON.toJSONString(result);
         WebUtils.renderString(response, json);
     }

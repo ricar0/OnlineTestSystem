@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.Objects;
 
@@ -57,8 +58,14 @@ public class UserController {
         return loginService.login(user);
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.POST)
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
     public ResponseResult logout() {
         return loginService.logout();
+    }
+
+    //根据token获取用户信息
+    @RequestMapping(value="/getLoginInfo", method = RequestMethod.GET)
+    public ResponseResult getLoginInfo(HttpServletRequest request) { ;
+        return loginService.getLoginInfo(request);
     }
 }
