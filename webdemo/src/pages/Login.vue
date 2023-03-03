@@ -1,27 +1,26 @@
-<!-- 用户登录界面 -->
 <template>
   <div>
   <Header></Header>
   <div id="login">
     <div class="bg"></div>
     <el-row class="main-container">
-      <el-col :lg="8" :xs="16" :md="10" :span="10">
+      <el-col :lg="9" :xs="16" :md="10" :span="10">
         <div class="bottom">
+          <div class="left"></div>
           <div class="container">
             <p class="title">账号登录</p>
             <el-form  label-width="80px">
-              <el-form-item label="用户名">
-                <el-input v-model="username" placeholder="请输入用户名"></el-input>
-              </el-form-item>
-              <el-form-item label="密码">
-                <el-input v-model="password" placeholder="请输入密码" type='password'></el-input>
-              </el-form-item>
+              <i class="el-icon-user"></i>
+                <el-input style="width:60%;" v-model="username" placeholder="请输入用户名"></el-input>
+                <br></br>
+              <i class="el-icon-lock"></i>
+                <el-input style="width:60%;" v-model="password" placeholder="请输入密码" type='password'></el-input>
               <div class="submit">
-                <el-button type="primary" class="row-login" @click="login()">登录</el-button>
+                <el-button style="width:70%; height: 10%;" type="primary" class="row-login" @click="login()">登录</el-button>
               </div>
               <div class="options">
-                <p class="find"><a href="javascript:;">找回密码</a></p>
-                <div class="register">
+                <p class="find" style="width: 30%; left:15%; top:0; position: relative;"><a href="javascript:;">忘记密码?</a></p>
+                <div class="register" style="width: 50%; left:65%; top:100%; position:absolute;">
                   <span>没有账号?</span>
                   <span><router-link to="/register">去注册</router-link></span>
                 </div>
@@ -31,11 +30,6 @@
         </div>
       </el-col>
     </el-row>
-    <section class="remind">
-      <span>管理员账号：9527</span>
-      <span>教师账号：20081001</span>
-      <span>密码都是：123456</span>
-    </section>
   </div>
   </div>
 </template>
@@ -64,20 +58,35 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.remind {
-  border-radius: 4px;
-  padding: 10px 20px;
-  display: flex;
-  position: fixed;
-  right: 20px;
-  bottom: 50%;
-  flex-direction: column;
-  color: #606266;
-  background-color: #fff;
-  border-left: 4px solid #409eff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+
+.el-icon-user {
+  font-size:150%; 
+  color: blue; 
+  margin-left:13%;
+  margin-right:3%
 }
+.el-icon-lock {
+  font-size:150%; 
+  color: blue; 
+  margin-left:13%;
+  margin-right: 3%;
+}
+.bottom .left {
+  background-color: dodgerblue;
+  height: 100%;
+  width: 50%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  position: absolute;
+}
+
 .container {
+  height: 100%;
+  width: 50%;
+  position: relative;
+  top: 0;
+  left: 25%;
   margin-bottom: 5%;
 }
 .container .el-radio-group {
@@ -117,6 +126,7 @@ a:link {
 }
 
 #login .bottom {
+  position: relative;
   margin-top: 30%;
   display:flex;
   justify-content: center;
@@ -136,7 +146,7 @@ a:link {
   background-color: #04468b;
   border-color: #04468b;
   margin: 5% 0 5% 0;
-  padding: 5% 5%;
+  padding: 3% 10%;
 }
 .bottom .submit {
   display: flex;
@@ -144,14 +154,15 @@ a:link {
 }
 
 .bottom .options {
-  margin-bottom: 10%;
+  // margin-bottom: 10%;
   color: #ff962a;
-  display: flex;
-  justify-content: space-between;
+  
+  // justify-content: space-between;
 }
 .bottom .options > a {
   color: #ff962a;
 }
+
 .bottom .options .register span:nth-child(1) {
   color: #8C8C8C;
 }
