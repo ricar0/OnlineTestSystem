@@ -103,7 +103,7 @@ ul.top {
     padding: 0 auto;
 }
 .block {
-    margin: 4% auto 0 auto;
+    margin: 0;
     height: 100%;
     width: 100%;
     background-color: rgba(150, 144, 144, 0.1);
@@ -216,7 +216,7 @@ li {
 }
 #myExam {
   width: 50%;
-  margin: 0 auto;
+  margin: 4% auto 0 auto;
 }
 #myExam .title {
   margin: 0;

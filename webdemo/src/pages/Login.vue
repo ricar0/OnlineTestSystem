@@ -1,16 +1,15 @@
 <!-- 用户登录界面 -->
 <template>
+  <div>
+  <Header></Header>
   <div id="login">
     <div class="bg"></div>
     <el-row class="main-container">
       <el-col :lg="8" :xs="16" :md="10" :span="10">
-        <div class="top">
-          <i class="iconfont icon-kaoshi"></i><span class="title">在线考试系统</span>
-        </div>
         <div class="bottom">
           <div class="container">
             <p class="title">账号登录</p>
-            <el-form :label-position="labelPosition" label-width="80px">
+            <el-form  label-width="80px">
               <el-form-item label="用户名">
                 <el-input v-model="username" placeholder="请输入用户名"></el-input>
               </el-form-item>
@@ -24,7 +23,7 @@
                 <p class="find"><a href="javascript:;">找回密码</a></p>
                 <div class="register">
                   <span>没有账号?</span>
-                  <span><a href="javascript:;">去注册</a></span>
+                  <span><router-link to="/register">去注册</router-link></span>
                 </div>
               </div>
             </el-form>
@@ -38,10 +37,15 @@
       <span>密码都是：123456</span>
     </section>
   </div>
+  </div>
 </template>
 
 <script>
+import Header from '@/components/Student/Header'
 export default {
+    components: {
+      Header
+    },
     data() {
         return {
             username:'',
@@ -50,8 +54,11 @@ export default {
     },
     methods: {
         login() {
-            const {username,password} = this;
-            (username&&password)&&this.$store.dispatch('userLogin',{username,password});
+          const {username, password} = this;
+          (username&&password)&&this.$store.dispatch('userLogin',{username,password}).then(res=>{
+            // console.log(this.$store.state.user.token);
+            this.$router.push("/myExam");
+          });
         }
     },
 }
@@ -71,17 +78,17 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
 }
 .container {
-  margin-bottom: 32px;
+  margin-bottom: 5%;
 }
 .container .el-radio-group {
-  margin: 30px 0px;
+  margin: 10% 0;
 }
 a:link {
   color:#ff962a;
   text-decoration:none;
 }
 #login {
-  font-size: 14px;
+  font-size: 15px;
   color: #000;
   background-color: #fff;
 }
@@ -101,19 +108,16 @@ a:link {
   align-items: center;
 }
 #login .main-container .top {
-  margin-top: 100px;
+  margin-top: 10%;
+  margin-bottom: 5%;
   font-size: 30px;
   color: #ff962a;
   display: flex;
   justify-content: center;
 }
-#login .top .icon-kaoshi {
-  font-size: 80px;
-}
-#login .top .title {
-  margin-top: 20px;
-}
+
 #login .bottom {
+  margin-top: 30%;
   display:flex;
   justify-content: center;
   background-color:#fff;
@@ -125,35 +129,22 @@ a:link {
   font-size: 30px;
 }
 .bottom .container .title {
-  margin: 30px 0px;;
+  margin: 10% 0;
 }
 .bottom .submit .row-login {
   width: 100%;
   background-color: #04468b;
   border-color: #04468b;
-  margin: 20px 0px 10px 0px;
-  padding: 15px 20px;
+  margin: 5% 0 5% 0;
+  padding: 5% 5%;
 }
 .bottom .submit {
   display: flex;
   justify-content: center;
 }
-.footer {
-  margin-top: 50px;
-  text-align: center;
-}
-.footer .msg1 {
-  font-size: 18px;
-  color: #fff;
-  margin-bottom: 15px;
-}
-.footer .msg2 {
-  font-size: 14px;
-  color: #e3e3e3;
-  margin-top: 70px;
-}
+
 .bottom .options {
-  margin-bottom: 40px;
+  margin-bottom: 10%;
   color: #ff962a;
   display: flex;
   justify-content: space-between;
