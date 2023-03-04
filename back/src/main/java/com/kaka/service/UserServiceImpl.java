@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService{
     public String findRoleById(Long id) {
         return userMapper.findRoleById(id);
     }
+
+    @Override
+    public User findUserByPhone(String phone) {
+        return userMapper.findUserByPhone(phone);
+    }
 }

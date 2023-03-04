@@ -16,7 +16,7 @@
               <i class="el-icon-lock"></i>
                 <el-input style="width:60%;" v-model="password" placeholder="请输入密码" type='password'></el-input>
               <div class="submit">
-                <el-button style="width:70%; height: 10%;" type="primary" class="row-login" @click="login()">登录</el-button>
+                <el-button style="width:65%; height: 10%;" type="primary" class="row-login" @click="login()">登录</el-button>
               </div>
               <div class="options">
                 <p class="find" style="width: 30%; left:15%; top:0; position: relative;"><a href="javascript:;">忘记密码?</a></p>
@@ -50,15 +50,26 @@ export default {
         login() {
           const {username, password} = this;
           (username&&password)&&this.$store.dispatch('userLogin',{username,password}).then(res=>{
-            // console.log(this.$store.state.user.token);
-            this.$router.push("/myExam");
+            if (res != 'ok') {
+              this.$message.error("用户名或密码不正确！");
+            } else {
+              this.$router.push("/myExam");
+            }
           });
         }
     },
 }
 </script>
 <style lang="less" scoped>
-
+/deep/.el-input__inner {
+  // 设置光标颜色
+  caret-color: black;
+}
+/deep/.el-input__inner:focus {
+  // el-input输入时设置边框颜色
+  border: dodgerblue 2px solid;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .el-icon-user {
   font-size:150%; 
   color: blue; 

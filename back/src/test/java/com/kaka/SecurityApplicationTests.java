@@ -2,6 +2,7 @@ package com.kaka;
 
 import com.kaka.entity.User;
 import com.kaka.service.UserService;
+import com.kaka.utils.RedisCache;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,9 @@ class SecurityApplicationTests {
 
     @Autowired(required = false)
     private DataSource dataSource;
+
+    @Autowired
+    private RedisCache redisCache;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,4 +49,8 @@ class SecurityApplicationTests {
         System.out.println(userService.findRoleById(1L));
     }
 
+    @Test
+    void test() {
+        System.out.println("login:"+"15757562010");
+    }
 }

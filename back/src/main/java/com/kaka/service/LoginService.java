@@ -1,5 +1,6 @@
 package com.kaka.service;
 
+import com.kaka.entity.PhoneCheck;
 import com.kaka.entity.User;
 import com.kaka.utils.ResponseResult;
 
@@ -12,4 +13,8 @@ public interface LoginService {
     ResponseResult logout();
 
     ResponseResult getLoginInfo(HttpServletRequest request);
+
+    ResponseResult sendCode(User user);
+
+    ResponseResult getCode(PhoneCheck phoneCheck);
 }

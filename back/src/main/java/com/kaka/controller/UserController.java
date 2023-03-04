@@ -24,9 +24,6 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private LoginService loginService;
-
     @RequestMapping(value="/getAll", method=RequestMethod.GET)
     @PreAuthorize("hasAuthority('teacher')")
     public ResponseResult getAll() {
@@ -53,19 +50,5 @@ public class UserController {
         return rest;
     }
 
-    @RequestMapping(value="/login", method = RequestMethod.POST)
-    public ResponseResult login(@RequestBody User user) {
-        return loginService.login(user);
-    }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public ResponseResult logout() {
-        return loginService.logout();
-    }
-
-    //根据token获取用户信息
-    @RequestMapping(value="/getLoginInfo", method = RequestMethod.GET)
-    public ResponseResult getLoginInfo(HttpServletRequest request) { ;
-        return loginService.getLoginInfo(request);
-    }
 }

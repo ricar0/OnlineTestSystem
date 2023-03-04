@@ -20,4 +20,7 @@ public interface UserMapper {
 
     //根据用户ID查询权限
     public String findRoleById(Long id);
+
+    //根据用户手机号查询用户信息
+    public User findUserByPhone(String phone);
 }

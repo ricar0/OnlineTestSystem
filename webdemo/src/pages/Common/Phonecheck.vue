@@ -4,30 +4,32 @@
   <div id="login">
     <div class="bg"></div>
     <el-row class="main-container">
-      <el-col :lg="10" :xs="16" :md="10" :span="10">
+      <el-col :lg="9" :xs="16" :md="10" :span="10">
         <div class="bottom">
           <div class="left"></div>
           <div class="container">
-            <p class="title">用户注册</p>
-            <el-form  label-width="80px">
-              <i class="el-icon-phone"></i>
-                <el-input style="width:60%;" v-model="username" placeholder="请输入手机号"></el-input>
-                <br></br>
-              <i class="el-icon-user"></i>
-                <el-input style="width:60%;" v-model="username" placeholder="请输入用户名"></el-input>
-                <br></br>
-              <i class="el-icon-lock"></i>
-                <el-input style="width:60%;" v-model="password1" placeholder="请输入密码" type='password'></el-input>
-                <br></br>
-              <i class="el-icon-lock"></i>
-              <el-input style="width:60%;" v-model="password2" placeholder="请再次输入密码" type='password'></el-input>
-              <div class="submit">
-                <el-button style="width:70%; height: 10%;" type="primary" class="row-login" @click="register()">注册</el-button>
-              </div>
-              <div class="options">
-                <div class="register" style="width: 50%; left:75%; top:100%; position:absolute;">
-                  <span><router-link to="/login">返回登录</router-link></span>
+            <p class="title" style="margin-bottom:2%;">激活</p>
+            <el-form label-width="80px">
+              <div v-if="!isActivated">
+                <p style="color: gray; margin-left:15%;">短信已发送至:{{phone}}</p>
+                <i class="el-icon-message"></i>
+                    <el-input style="width:60%;" v-model="code" placeholder="请输入验证码"></el-input>
+                    <br></br>
+                <div class="submit">
+                    <el-button style="width:30%; height: 10%;" type="primary" class="row-login" @click="check1()">确认</el-button>
                 </div>
+                <div class="options">
+                    <div class="register" style="width: 50%; left:75%; top:100%; position:absolute;">
+                    <span><router-link to="/login">返回登录</router-link></span>
+                    </div>
+                </div>
+              </div>  
+              <div v-else>
+                <el-result style="padding: 0;" icon="success" title="账户激活成功">
+                    <template slot="extra">
+                    <el-button type="primary" size="medium" style="background-color:#04468b;" @click="check2()">确认</el-button>
+                    </template>
+                </el-result>
               </div>
             </el-form>
           </div>
@@ -46,30 +48,45 @@ export default {
     },
     data() {
         return {
-            username:'',
-            password1:'',
-            password2:'',
+            phone: this.$store.state.user.phone.substr(0,3)+'****'+this.$store.state.user.phone.substr(7),
+            isActivated: false,
+            code:'',
         }
     },
     methods: {
-        login() {
-          const {username, password} = this;
-          (username&&password)&&this.$store.dispatch('userLogin',{username,password}).then(res=>{
-            // console.log(this.$store.state.user.token);
-            this.$router.push("/myExam");
-          });
+        check1() {
+          if (this.code == '') {
+            this.$message.error('验证码不能为空！');
+          } else {
+            let phone = this.$store.state.user.phone;
+            let code = this.code;
+            this.$store.dispatch('getCode',{code,phone}).then(res=>{
+                console.log(res);
+                if (res != 'ok') {
+                    this.$message.error('验证码不正确!');
+                } else {
+                    this.isActivated = true;
+                }
+            })
+          }
+        },
+        check2() {
+            this.$router.push('/login');
         }
     },
 }
 </script>
 <style lang="less" scoped>
-.el-icon-phone {
-  font-size:150%; 
-  color: blue; 
-  margin-left:13%;
-  margin-right:3%
+/deep/.el-input__inner {
+// 设置光标颜色
+caret-color: black;
 }
-.el-icon-user {
+/deep/.el-input__inner:focus {
+// el-input输入时设置边框颜色
+border: dodgerblue 2px solid;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.el-icon-message {
   font-size:150%; 
   color: blue; 
   margin-left:13%;

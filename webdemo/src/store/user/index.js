@@ -1,9 +1,10 @@
 //user模块小仓库
-import {reqUserLogin, reqUserInfo, reqUserLogout} from '@/api'
+import {reqUserLogin, reqUserInfo, reqUserLogout, reqSendCode, reqGetCode} from '@/api'
 import {setToken, getToken, removeToken} from '@/utils/token'
 const state={
     token: getToken(),
-    userinfo:{}
+    userinfo:{},
+    phone:''
 };
 const mutations = {
     USERLOGIN(state, token) {
@@ -16,6 +17,9 @@ const mutations = {
         state.token = '';
         state.userinfo = {};
         removeToken();
+    },
+    SENDCODE(state, phone) {
+        state.phone = phone;
     }
 };
 const actions = {
@@ -27,7 +31,7 @@ const actions = {
             setToken(data.data.token);
             return "ok";
         } else {
-            return Promise.reject(new Error("failure"));
+            return data.msg;
         }
     },
     //获取用户信息
@@ -46,7 +50,24 @@ const actions = {
         if (data.code == 200) {
             commit("USERLOGOUT");
         } else {
-            return Promise.reject(new Error("failure"));
+            return data.msg;
+        }
+    },
+    async sendCode({commit}, obj) {
+        let {data} = await reqSendCode(obj);
+        if (data.code == 200) {
+            commit("SENDCODE", obj.phone);
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getCode({commit}, obj) {
+        let {data} = await reqGetCode(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
         }
     }
 };
