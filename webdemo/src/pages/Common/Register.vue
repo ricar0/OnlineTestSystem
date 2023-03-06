@@ -1,8 +1,7 @@
 <template>
   <div>
-  <Header></Header>
+    <Header></Header>
   <div id="login">
-    <div class="bg"></div>
     <el-row class="main-container">
       <el-col :lg="10" :xs="16" :md="10" :span="10">
         <div class="bottom">
@@ -143,6 +142,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.bg {
+  opacity: 0%;
+}
 /deep/.el-input__inner {
   // 设置光标颜色
   caret-color: black;
@@ -215,13 +217,14 @@ a:link {
   width: 100%;
   overflow-y: auto;
   height: 100%;
-//   background: url('../../assets/img/loginbg.png')center top / cover no-repeat;
   background-color: #b6bccdd1 !important;
 }
 #login .main-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 4.3%;
+  background-image: url('@/assets/background.png');
 }
 #login .main-container .top {
   margin-top: 10%;

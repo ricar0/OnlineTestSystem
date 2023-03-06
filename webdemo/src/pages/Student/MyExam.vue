@@ -1,4 +1,5 @@
 <template>
+    <!-- <Header></Header> -->
     <div class="block">
     <Header></Header>
     <div id="myExam">
@@ -10,12 +11,12 @@
             </ul>
             <ul class="paper" v-loading="loading">
                 <li class="item" v-for="(item,index) in pagination.records" :key="index">
-                    <h4 @click="toExamMsg(item.examCode)">{{item.source}} <i style="margin:0;"class="el-icon-lock"></i></h4>
+                    <h4 @click="toExamMsg(item.examCode)">{{item.source}} <i v-if="item.lock" style="margin:0;"class="el-icon-lock"></i></h4>
                     <p class="name">{{item.source}}-{{item.description}}</p>
                     <span class="name">出卷人：</span> 
                     <span style="color:red;">{{item.teacher}}</span>
                     <div class="info">
-                        <i class="el-icon-s-promotion"></i><span>{{item.examDate.substr(0,10)}}</span>
+                        <i class="el-icon-date"></i><span>{{item.examDate.substr(0,10)}}</span>
                         <i class="el-icon-timer"></i><span v-if="item.totalTime != null">限时{{item.totalTime}}分钟</span>
                         <i class="el-icon-tickets"></i><span>满分{{item.totalScore}}分</span>
                     </div>
@@ -26,7 +27,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pagination.current"
-                    :page-sizes="[3, 5, 6]"
+                    :page-sizes="[3, 5, 10]"
                     :page-size="pagination.size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="pagination.total">
@@ -39,6 +40,7 @@
 
 <script>
 import Header from '@/components/Student/Header'
+import Footer from '@/components/Student/Footer'
 export default {
     data() {
         return {
@@ -48,50 +50,28 @@ export default {
             pagination: {
                 current: 1,
                 total: null,
-                size: 6,
-                records: [
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        examDate: "2023-01-10"
-                    },
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        examDate: "2023-01-10"
-                    },
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        examDate: "2023-01-10"
-                    },
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        examDate: "2023-01-10"
-                    }
-                ]
+                size: 3,
+                records: []
             }
         }
     },
+    methods: {  
+      handleSizeChange(val) {
+        
+      },
+      handleCurrentChange(val) {
+
+      }
+    },
+    mounted() {
+      this.$store.dispatch('getMyExam').then(res=>{
+          this.pagination.records = this.$store.state.exam.myexam;
+          this.pagination.total = this.pagination.records.length;
+      })
+    },
     components: {
-        Header
+        Header,
+        Footer
     }
 }
 </script>
@@ -103,10 +83,10 @@ ul.top {
     padding: 0 auto;
 }
 .block {
-    margin: 0;
-    height: 100%;
+    height: auto;
     width: 100%;
-    background-color: rgba(150, 144, 144, 0.1);
+    background: url('@/assets/background.png') repeat;
+    // position: relative;
 }
 li {
     list-style: none;
@@ -226,5 +206,6 @@ li {
   border-radius: 2rem;
 //   opacity: 70%;
   box-shadow: 0px 2px 4px 2px rgba(140, 193, 248, 0.45);
+  position: sticky;
 }
 </style>

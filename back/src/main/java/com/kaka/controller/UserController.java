@@ -25,7 +25,6 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value="/getAll", method=RequestMethod.GET)
-    @PreAuthorize("hasAuthority('teacher')")
     public ResponseResult getAll() {
         ResponseResult rest = new ResponseResult(200,"查询成功!",userService.listUser());
         return rest;

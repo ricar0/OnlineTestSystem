@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.mapper.ExamMapper">
+    <select id="getAll" resultType="com.kaka.entity.Exam">
+        select * from exam;
+    </select>
+    <insert id="addExam" parameterType="com.kaka.entity.Exam">
+        insert into exam value(null, #{source}, #{description}, #{totalTime}, #{totalScore}, #{teacher}, #{examDate}, #{lock});
+    </insert>
+    <select id="getMyExam" parameterType="Long" resultType="com.kaka.entity.Exam">
+        select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by examDate asc;
+    </select>
+</mapper>

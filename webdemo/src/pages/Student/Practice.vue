@@ -1,6 +1,6 @@
 <template>
     <div class="block">
-    <Header></Header>
+      <Header></Header>
     <div id="myPractice">
         <div class="wrapper">
             <ul class="top" style="height: 40px;">
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -103,10 +103,9 @@ ul.top {
     padding: 0 auto;
 }
 .block {
-    margin: 4% auto 0 auto;
-    height: 100%;
+    height: auto;
     width: 100%;
-    background-color: rgba(150, 144, 144, 0.1);
+    background-image: url('@/assets/background.png');
 }
 li {
     list-style: none;
@@ -216,7 +215,7 @@ li {
 }
 #myPractice {
   width: 50%;
-  margin: 0 auto;
+  margin: 4% auto 0 auto;
 }
 #myPractice .title {
   margin: 0;
@@ -226,5 +225,6 @@ li {
   border-radius: 2rem;
 //   opacity: 70%;
   box-shadow: 0px 2px 4px 2px rgba(140, 193, 248, 0.45);
+  position: sticky;
 }
 </style>

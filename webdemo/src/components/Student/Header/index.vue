@@ -34,7 +34,7 @@ export default {
             isLogin: false
         }
     },
-    mounted() {
+    created() {
       this.$store.dispatch('getUserInfo').then(res=>{
         if (this.$store.state.user.token) {
           this.isLogin = true;

@@ -4,7 +4,7 @@ import {setToken, getToken, removeToken} from '@/utils/token'
 const state={
     token: getToken(),
     userinfo:{},
-    phone:''
+    phone:'',
 };
 const mutations = {
     USERLOGIN(state, token) {
@@ -53,6 +53,7 @@ const actions = {
             return data.msg;
         }
     },
+    //获取验证码
     async sendCode({commit}, obj) {
         let {data} = await reqSendCode(obj);
         if (data.code == 200) {
@@ -62,6 +63,7 @@ const actions = {
             return data.msg;
         }
     },
+    //提交验证码
     async getCode({commit}, obj) {
         let {data} = await reqGetCode(obj);
         if (data.code == 200) {
@@ -69,7 +71,7 @@ const actions = {
         } else {
             return data.msg;
         }
-    }
+    },
 };
 const getters = {};
 export default {

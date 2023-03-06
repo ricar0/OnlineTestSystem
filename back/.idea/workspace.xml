@@ -4,30 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/PhoneCheck.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/utils/SendSMS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/LoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/LoginServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/kaka/SecurityApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/kaka/SecurityApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/LoginService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/LoginServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/LoginServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/UserMapper.xml" afterDir="false" />
+    <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/kaka/SecurityApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/kaka/SecurityApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +15,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -45,6 +24,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2MV9v0obbiqlggkkgz7vJc4R9os" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -65,18 +45,21 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RunManager" selected="Spring Boot.SecurityApplication">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -119,8 +102,17 @@
       <option name="presentableId" value="Default" />
       <updated>1677842117553</updated>
       <workItem from="1677842119844" duration="732000" />
-      <workItem from="1677894853678" duration="13202000" />
+      <workItem from="1677894853678" duration="13993000" />
+      <workItem from="1677980691849" duration="12654000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
+      <created>1677927098482</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677927098482</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,5 +128,13 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4" />
   </component>
 </project>

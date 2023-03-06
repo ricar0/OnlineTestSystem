@@ -106,7 +106,7 @@ public class LoginServiceImpl implements LoginService{
         String code = Integer.toString(Code);
         //设置有效时长十分钟
         redisCache.setCacheObject("phone:"+user.getPhone(), code, 60*10, TimeUnit.SECONDS);
-        redisCache.setCacheObject("user:"+user.getPhone(), user);
+        redisCache.setCacheObject("user:"+user.getPhone(), user,60*10, TimeUnit.SECONDS);
         return new ResponseResult(200, "发送成功!");
     }
 

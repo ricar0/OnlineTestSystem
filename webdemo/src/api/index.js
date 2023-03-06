@@ -20,3 +20,7 @@ export const reqSendCode = (data)=>requests({url:'auth/sendCode',data,method:'po
 //验证激活
 //url:/api/auth/getCode method: post  phone,code
 export const reqGetCode = (data)=>requests({url:'auth/getCode',data,method:'post'});
+
+//获取我的考试
+//url:/api/exam/getMyExam method: get
+export const reqGetMyExam = ()=>requests({url:'exam/getMyExam',method:'get'});

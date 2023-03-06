@@ -23,12 +23,12 @@ export default new VueRouter ({
         {
             path: "/login",
             component: Login,
-            meta: {show:false}
+            meta: {show:true}
         },
         {
             path: "/register",
             component: Register,
-            meta: {show:false}
+            meta: {show:true}
         },
         {
             path: "/search/:keywords",

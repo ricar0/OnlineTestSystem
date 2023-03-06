@@ -18,7 +18,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //创建BCrptPasswordEncoder注入容器
@@ -50,9 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 //对于登录接口允许匿名访问
-                .antMatchers("/api/auth/login",
+                .antMatchers(
+                        "/api/auth/login",
                         "/api/auth/sendCode",
-                        "/api/auth/getCode"
+                        "/api/auth/getCode",
+                        "/api/user/getAll"
                 ).anonymous()
                 //除上面外所有请求都需要鉴权认证
                 .anyRequest().authenticated();
