@@ -1,19 +1,12 @@
-<!--考生答题界面-->
 <template>
   <div id="answer">
-    <!--顶部信息栏-->
      <div class="top">
        <ul class="item">
-         <li><i class="iconfont icon-menufold icon20" ref="toggle" @click="slider_flag = !slider_flag"></i></li>
-         <li>{{examData.type}}-{{examData.source}}</li>
+         <li><i class="el-icon-time" ref="toggle" @click="slider_flag = !slider_flag"></i></li>
+         <li>{{examData.source}}</li>
          <li @click="flag = !flag">
-           <i class="iconfont icon-user icon20"></i>
-           <div class="msg"  v-if="flag" @click="flag = !flag">
-             <p>姓名：{{userInfo.name}}</p>
-             <p>准考证号:  {{userInfo.id}}</p>
-           </div>
+           <p style="margin:0;"><i class="el-icon-user"></i> {{userInfo.name}}</p>
          </li>
-         <li><i class="iconfont icon-arrLeft icon20"></i></li>
        </ul>
      </div>
      <div class="flexarea">
@@ -40,31 +33,31 @@
             </ul>
             <div class="l-bottom">
               <div class="item">
-                <p>选择题部分</p>
-                <ul>
-                  <li v-for="(list, index1) in topic[1]" :key="index1">
+                <p>单选题部分</p>
+                <ul style="padding-left:0;margin-top:0;">
+                  <li v-for="(list, index1) in topic[0]" :key="index1">
                     <a href="javascript:;" 
                       @click="change(index1)"
-                      :class="{'border': index == index1 && currentType == 1,'bg': bg_flag && topic[1][index1].isClick == true}">
-                      <span :class="{'mark': topic[1][index1].isMark == true}"></span>
+                      :class="{'border': index == index1 && currentType == 1,'bg': bg_flag && topic[0][index1].isClick == true}">
+                      <span :class="{'mark': topic[0][index1].isMark == true}"></span>
                       {{index1+1}}
                     </a>
                   </li>
                 </ul>
               </div>
               <div class="item">
-                <p>填空题部分</p>
+                <p>多选题部分</p>
                 <ul>
-                  <li v-for="(list, index2) in topic[2]" :key="index2">
-                    <a href="javascript:;" @click="fill(index2)" :class="{'border': index == index2 && currentType == 2,'bg': fillAnswer[index2][3] == true}"><span :class="{'mark': topic[2][index2].isMark == true}"></span>{{topicCount[0]+index2+1}}</a>
+                  <li v-for="(list, index2) in topic[1]" :key="index2">
+                    <a href="javascript:;" @click="fill(index2)" :class="{'border': index == index2 && currentType == 2,'bg': fillAnswer[index2][3] == true}"><span :class="{'mark': topic[1][index2].isMark == true}"></span>{{topicCount[0]+index2+1}}</a>
                   </li>
                 </ul>
               </div>
               <div class="item">
                 <p>判断题部分</p>
                 <ul>
-                  <li v-for="(list, index3) in topic[3]" :key="index3">
-                    <a href="javascript:;" @click="judge(index3)" :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && topic[3][index3].isClick == true}"><span :class="{'mark': topic[3][index3].isMark == true}"></span>{{topicCount[0]+topicCount[1]+index3+1}}</a>
+                  <li v-for="(list, index3) in topic[2]" :key="index3">
+                    <a href="javascript:;" @click="judge(index3)" :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && topic[2][index3].isClick == true}"><span :class="{'mark': topic[2][index3].isMark == true}"></span>{{topicCount[0]+topicCount[1]+index3+1}}</a>
                   </li>
                 </ul>
               </div>
@@ -76,18 +69,18 @@
         <transition name="slider-fade">
         <div class="right">
           <div class="title">
-            <p>{{title}}</p>
+            <span style="margin-left:1%;font-size:17px;font-weight:700;">{{title}}</span>
             <i class="iconfont icon-right auto-right"></i>
-            <span>全卷共{{topicCount[0] + topicCount[1] + topicCount[2]}}题  <i class="iconfont icon-time"></i>倒计时：<b>{{time}}</b>分钟</span>
+            <span>全卷共{{topicCount[0]+topicCount[1]+topicCount[2]}}题 &nbsp;&nbsp;<i class="el-icon-time"></i>倒计时：<b>{{time.minutes}}</b>分钟 <b>{{time.seconds}}秒</b></span>
           </div>
           <div class="content">
             <p class="topic"><span class="number">{{number}}</span>{{showQuestion}}</p>
             <div v-if="currentType == 1">
               <el-radio-group v-model="radio[index]" @change="getChangeLabel" >
-                <el-radio :label="1">{{showAnswer.answerA}}</el-radio>
-                <el-radio :label="2">{{showAnswer.answerB}}</el-radio>
-                <el-radio :label="3">{{showAnswer.answerC}}</el-radio>
-                <el-radio :label="4">{{showAnswer.answerD}}</el-radio>
+                <el-radio :label="1">{{showAnswer[0]}}</el-radio>
+                <el-radio :label="2">{{showAnswer[1]}}</el-radio>
+                <el-radio :label="3">{{showAnswer[2]}}</el-radio>
+                <el-radio :label="4">{{showAnswer[3]}}</el-radio>
               </el-radio-group>
               <div class="analysis" v-if="isPractice">
                 <ul>
@@ -107,9 +100,9 @@
               </div>
               <div class="analysis" v-if="isPractice">
                 <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[2][index].answer}}</span></li>
+                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[1][index].answer}}</span></li>
                   <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{topic[2][index].analysis == null ? '暂无解析': topic[2][index].analysis}}</li>
+                  <li>{{topic[1][index].analysis == null ? '暂无解析': topic[1][index].analysis}}</li>
                 </ul>
               </div>
             </div>
@@ -120,9 +113,9 @@
               </el-radio-group>
               <div class="analysis" v-if="isPractice">
                 <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[3][index].answer}}</span></li>
+                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[2][index].answer}}</span></li>
                   <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{topic[3][index].analysis == null ? '暂无解析': topic[3][index].analysis}}</li>
+                  <li>{{topic[2][index].analysis == null ? '暂无解析': topic[2][index].analysis}}</li>
                 </ul>
               </div>
             </div>
@@ -147,37 +140,37 @@ export default {
     return {
       startTime: null, //考试开始时间
       endTime: null, //考试结束时间
-      time: null, //考试持续时间
+      time: {
+        minutes: 0,
+        seconds: 0
+      }, //考试持续时间
       reduceAnswer:[],  //vue官方不支持3层以上数据嵌套,如嵌套则会数据渲染出现问题,此变量直接接收3层嵌套时的数据。
       answerScore: 0, //答题总分数
       bg_flag: false, //已答标识符,已答改变背景色
       isFillClick: false, //选择题是否点击标识符
       slider_flag: true, //左侧显示隐藏标识符
       flag: false, //个人信息显示隐藏标识符
-      currentType: 1, //当前题型类型  1--选择题  2--填空题  3--判断题
+      currentType: 1, //当前题型类型  1--单选题  2--多选题  3--判断题
       radio: [], //保存考生所有选择题的选项
       title: "请选择正确的选项",
       index: 0, //全局index
       userInfo: { //用户信息
         name: null,
-        id: null
       },
-      topicCount: [],//每种类型题目的总数
       score: [],  //每种类型分数的总数
       examData: { //考试信息
-        // source: null,
-        // totalScore: null,
       },
-      topic: {  //试卷信息
-      },
-      showQuestion: [], //当前显示题目信息
-      showAnswer: {}, //当前题目对应的答案选项
+      topic: [[],[],[]],
+      topicCount:[0,0,0],
+      showQuestion: null, //当前显示题目信息
+      showAnswer: [null,null,null,null],
+    //当前题目对应的答案选项
       number: 1, //题号
       part: null, //填空题的空格数量
       fillAnswer: [[]], //二维数组保存所有填空题答案
       judgeAnswer: [], //保存所有判断题答案
       topic1Answer: [],  //学生选择题作答编号,
-      rightAnswer: ''
+      rightAnswer: '',
     }
   },
   created() {
@@ -196,57 +189,51 @@ export default {
       // 拼接
       return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
     },
-    getCookies() {  //获取cookie
-      this.userInfo.name = this.$cookies.get("cname")
-      this.userInfo.id = this.$cookies.get("cid")
+    getCookies() {  //获取用户信息
+      this.$store.dispatch('getUserInfo').then(res=>{
+        this.userInfo.name = this.$store.state.user.userinfo.username;
+      })
     },
     calcuScore() { //计算答题分数
       
     },
     getExamData() { //获取当前试卷所有信息
-      let date = new Date()
+      let date = new Date();
       this.startTime = this.getTime(date)
-      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-        this.examData = { ...res.data.data} //获取考试详情
-        this.index = 0
-        this.time = this.examData.totalScore //获取分钟数
-        let paperId = this.examData.paperId
-        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-          this.topic = {...res.data}
-          let reduceAnswer = this.topic[1][this.index]
-          this.reduceAnswer = reduceAnswer
-          let keys = Object.keys(this.topic) //对象转数组
-          keys.forEach(e => {
-            let data = this.topic[e]
-            this.topicCount.push(data.length)
-            let currentScore = 0
-            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
-              currentScore += data[i].score
-            }
-            this.score.push(currentScore) //把每种题型总分存入score
-          })
-          let len = this.topicCount[1]
-          let father = []
-          for(let i = 0; i < len; i++) { //根据填空题数量创建二维空数组存放每道题答案
-            let children = [null,null,null,null]
-            father.push(children)
-          }
-          this.fillAnswer = father
-          let dataInit = this.topic[1]
-          this.number = 1
-          this.showQuestion = dataInit[0].question
-          this.showAnswer = dataInit[0]
-        })
+      let id = this.$route.query.id //获取路由传递过来的试卷编号
+      this.$store.dispatch('getExamById', id).then(res => {  //通过examCode请求试卷详细信息
+        this.examData = this.$store.state.exam.examinfo //获取考试详情
+        this.time.minutes = this.examData.totalTime; //获取分钟数
+        this.time.seconds = 0;
       })
+      this.$store.dispatch('getPaperInfoById', {id}).then(res =>{
+        let data = this.$store.state.exam.paperinfo
+        this.topicCount[0] = data.singleNum;
+        this.topicCount[1] = data.multipleNum;
+        this.topicCount[2] = data.tfNum;
+        let problem = data.problems[this.index];
+        this.showAnswer[0] = problem.a;
+        this.showAnswer[1] = problem.b;
+        this.showAnswer[2] = problem.c;
+        this.showAnswer[3] = problem.d;
+        this.showQuestion = problem.description;
+        for (let i = 0; i < data.singleNum; i++) {
+          this.topic[0].push({data:data.problems[i], isClick:false, isMark: false});
+        }
+        // for (let i = 0; i < data.multipleNum; i++) {
+        //   this.topic[1].push(data.problems[i+data.singleNum]);
+        // }
+        // for (let i = 0; i < data.tfNum; i++) {
+        //   this.topic[2].push(data.problems[i+data.singleNum+data.multipleNum]);
+        // }
+      })
+      
     },
-    change(index) { //选择题
+    change(index) { //单选题
       this.index = index
-      let reduceAnswer = this.topic[1][this.index]
-      this.reduceAnswer = reduceAnswer
       this.isFillClick = true
       this.currentType = 1
-      let len = this.topic[1].length
+      let len = this.topic[0].length
       if(this.index < len) {
         if(this.index <= 0){
           this.index = 0
@@ -254,10 +241,9 @@ export default {
         console.log(`总长度${len}`)
         console.log(`当前index:${index}`)
         this.title = "请选择正确的选项"
-        let Data = this.topic[1]
-        // console.log(Data)
-        this.showQuestion = Data[this.index].question //获取题目信息
-        this.showAnswer = Data[this.index]
+        let data = this.topic[0][this.index].data;
+        this.showQuestion = data.description //获取题目信息
+        this.showAnswer = [data.a,data.b,data.c,data.d]
         this.number = this.index + 1
       }else if(this.index >= len) {
         this.index = 0
@@ -269,43 +255,20 @@ export default {
         this.fillAnswer[this.index][3] = true
       }
     },
-    fill(index) { //填空题
-      let len = this.topic[2].length
-      this.currentType = 2
-      this.index = index
-      if(index < len) {
-        if(index < 0) {
-          index = this.topic[1].length -1
-          this.change(index)
-        }else {
-          console.log(`总长度${len}`)
-          console.log(`当前index:${index}`)
-          this.title = "请在横线处填写答案"
-          let Data = this.topic[2]
-          console.log(Data)
-          this.showQuestion = Data[index].question //获取题目信息
-          let part= this.showQuestion.split("()").length -1 //根据题目中括号的数量确定填空横线数量
-          this.part = part
-          this.number = this.topicCount[0] + index + 1
-        } 
-      }else if(index >= len) {
-        this.index = 0
-        this.judge(this.index)
-      }
-    },
+    
     judge(index) { //判断题
-      let len = this.topic[3].length
+      let len = this.topic[2].length
       this.currentType = 3
       this.index = index
       if(this.index < len) {
         if(this.index < 0){
-          this.index = this.topic[2].length - 1
+          this.index = this.topic[1].length - 1
           this.fill(this.index)
         }else {
           console.log(`总长度${len}`)
           console.log(`当前index:${this.index}`)
           this.title = "请作出正确判断"
-          let Data = this.topic[3]
+          let Data = this.topic[2]
           console.log(Data)
           this.showQuestion = Data[index].question //获取题目信息
           this.number = this.topicCount[0] + this.topicCount[1] + index + 1
@@ -328,7 +291,7 @@ export default {
     getJudgeLabel(val) {  //获取判断题作答选项
       this.judgeAnswer[this.index] = val
       if(val) {
-        let data = this.topic[3]
+        let data = this.topic[2]
         this.bg_flag = true
         data[this.index]["isClick"] = true
       }
@@ -364,13 +327,13 @@ export default {
     mark() { //标记功能
       switch(this.currentType) {
         case 1:
-          this.topic[1][this.index]["isMark"] = true //选择题标记
+          this.topic[0][this.index]["isMark"] = true //选择题标记
           break
         case 2:
-          this.topic[2][this.index]["isMark"] = true //填空题标记
+          this.topic[1][this.index]["isMark"] = true //填空题标记
           break
         case 3:
-          this.topic[3][this.index]["isMark"] = true //判断题标记
+          this.topic[2][this.index]["isMark"] = true //判断题标记
       }
     },
     commit() { //答案提交计算分数
@@ -423,8 +386,8 @@ export default {
           case 2:
             right = "F"
         }
-        if(right == this.topic[3][index].answer) { // 当前选项与正确答案对比
-            finalScore += this.topic[3][index].score // 计算总分数
+        if(right == this.topic[2][index].answer) { // 当前选项与正确答案对比
+            finalScore += this.topic[2][index].score // 计算总分数
           }
       })
       console.log(`目前总分${finalScore}`)
@@ -465,18 +428,22 @@ export default {
     },
     showTime() { //倒计时
       setInterval(() => {
-        this.time -= 1
-        if(this.time == 10) {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            message: '考生注意,考试时间还剩10分钟！！！'
-          })
-          if(this.time == 0) {
-            console.log("考试时间已到,强制交卷。")
-          }
+        if (this.time.seconds == 0) this.time.minutes -= 1, this.time.seconds = 60;
+        this.time.seconds -= 1
+        if(this.time.minutes == 15) {
+          this.$alert('距离考试结束还剩15分钟!', '提示', {
+            confirmButtonText: '确定',
+          });
         }
-      },1000 * 60)
+        if(this.time.minutes == 0 && this.time.seconds == 0) {
+          this.$alert('考试结束，已自动保存并交卷！', '提示', {
+          confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push('/myexam');
+            }
+          })
+        };
+      },1000)
     }
   },
   computed:mapState(["isPractice"])
@@ -484,6 +451,9 @@ export default {
 </script>
 
 <style lang="less">
+li {
+  list-style: none;
+}
 .iconfont.icon-time {
   color: #2776df;
   margin: 0px 6px 0px 20px;

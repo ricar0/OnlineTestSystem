@@ -32,3 +32,11 @@ export const reqGetMyPractice = ()=>requests({url:'practice/getMyPractice',metho
 //获取考试信息
 //url:/api/exam/getMyExam method: get
 export const reqGetExamById = (id)=>requests({url:'exam/getExamById/'+id,method:'get'});
+
+//获取题目列表
+//url:/api/exam/getMyExam method: post
+export const reqGetProblemById = (data)=>requests({url:'exam/getProblemById',data, method:'post'});
+
+//获取试题信息
+//url:/api/exam/getMyExam method: post
+export const reqGetPaperInfoById = (data)=>requests({url:'exam/getPaperInfoById',data, method:'post'});

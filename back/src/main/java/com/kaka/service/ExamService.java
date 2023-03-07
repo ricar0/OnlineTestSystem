@@ -1,6 +1,7 @@
 package com.kaka.service;
 
 import com.kaka.entity.Exam;
+import com.kaka.entity.Problem;
 import com.kaka.utils.ResponseResult;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,4 +15,7 @@ public interface ExamService {
     public List<Exam> getMyExam(HttpServletRequest request);
 
     public Exam getExamById(Long id);
+
+    public List<Problem> getProblemById(Long id);
+
 }

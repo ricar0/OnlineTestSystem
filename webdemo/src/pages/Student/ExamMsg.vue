@@ -1,12 +1,12 @@
 <template>
   <div id="msg">
     <div class="title">
-      <span>试卷列表</span>
+      <span @click="toExam" style="cursor: pointer; color: blue;text-decoration:underline;">试卷列表</span>
       <span>/  {{examData.source}}</span>
     </div>
     <div class="wrapper">
       <ul class="top">
-        <li class="example">{{examData.source}}</li>
+        <li class="example">{{examData.source}}&nbsp;</li><i v-if="examData.lock" class="el-icon-lock" style="font-size:23px; font-weight:700;"></i>
         <li class="right">
           <div>
             <span class="count">总分</span>
@@ -15,20 +15,20 @@
         </li>
       </ul>
       <ul class="bottom">
-        <li><i class="el-icon-upload"></i>发布于{{examData.examDate}}</li>
+        <li><i class="el-icon-upload"></i>发布于 {{examData.examDate}}</li>
         <li><i class="el-icon-edit"></i>来自 {{examData.teacher}}</li>
-        <li class="right"><el-button @click="toAnswer(examData.examCode)">开始答题</el-button></li>
+        <li class="right"><el-button @click="toAnswer(examData.id)">开始答题</el-button></li>
       </ul>
       <ul class="info">
         <li @click="dialogVisible = true"><a href="javascript:;"><i class="el-icon-info"></i>考生须知</a></li>
       </ul>
     </div>
-    <div class="content">
+    <div class="content" style="margin-bottom: 30%;">
       <el-collapse v-model="activeName" >
         <el-collapse-item class="header" name="0">
           <template slot="title" class="stitle" >
             <div class="title">
-              <span>{{examData.source}}</span><i class="header-icon el-icon-info"></i>
+              <span style="font-weight: 700;">题型</span><i class="header-icon el-icon-info"></i>
               <span class="time">{{examData.totalScore}}分 / {{examData.totalTime}}分钟</span>
               <el-button type="primary" size="small">点击查看试题详情</el-button>
             </div>
@@ -36,33 +36,18 @@
           <el-collapse class="inner">
             <el-collapse-item>
               <template slot="title" name="1">
-                <div class="titlei">选择题 (共{{topicCount[0]}}题 共计{{score[0]}}分)</div>
+                <div class="titlei">单选题 (共{{single}}题 共计{{totalScore[0]}}分)</div>
               </template>
-              <div class="contenti">
-                <ul class="question" v-for="(list, index) in topic[1]" :key="index">
-                  <li>{{index+1}}. {{list.question}} {{list.score}}分</li>
-                </ul>
-              </div>
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="2">
-                <div class="titlei">填空题 (共{{topicCount[1]}}题  共计{{score[1]}}分)</div>
+                <div class="titlei">多选题 (共{{multiple}}题  共计{{totalScore[1]}}分)</div>
               </template>
-              <div class="contenti">
-                <ul class="question" v-for="(list, index) in topic[2]" :key="index">
-                  <li>{{topicCount[0]+index+1}}.{{list.question}}  {{list.score}}分</li>
-                </ul>
-              </div>
             </el-collapse-item>
             <el-collapse-item>
               <template slot="title" name="3">
-                <div class="titlei">判断题 (共{{topicCount[2]}}题 共计{{score[2]}}分)</div>
+                <div class="titlei">判断题 (共{{tf}}题 共计{{totalScore[2]}}分)</div>
               </template>
-              <div class="contenti">
-                <ul class="question" v-for="(list, index) in topic[3]" :key="index">
-                  <li>{{topicCount[0]+topicCount[1]+index+1}}. {{list.question}} {{list.score}}分</li>
-                </ul>
-              </div>
             </el-collapse-item>
           </el-collapse>
         </el-collapse-item>
@@ -88,14 +73,12 @@ export default {
     return {
       dialogVisible: false, //对话框属性
       activeName: '0',  //默认打开序号
-      topicCount: [],//每种类型题目的总数
       score: [],  //每种类型分数的总数
-      examData: { //考试信息
-        // source: null,
-        // totalScore: null,
-      },
-      topic: {  //试卷信息
-      },
+      examData: {},
+      single: 0,
+      multiple: 0,
+      tf: 0,
+      totalScore: [0,0,0]
     }
   },
   mounted() {
@@ -106,13 +89,48 @@ export default {
     init() {
         let id = this.$route.query.id //获取路由传递过来的试卷编号
         this.$store.dispatch('getExamById', id).then(res=>{
-            this.examData = this.$store.state.exam.examinfo;
+          this.examData = this.$store.state.exam.examinfo;
         })
-      
+        this.$store.dispatch('getPaperInfoById', {id}).then(res=>{
+          let list = this.$store.state.exam.paperinfo;
+          for (let i = 0; i < list.problems.length; i++) {
+            if (list.problems[i].label == 'single') this.single++;
+            if (list.problems[i].label == 'multiple') this.multiple++;
+            if (list.problems[i].label == 'tf') this.tf++;
+          }
+          this.totalScore[0] = this.single * list.singleScore;
+          this.totalScore[1] = this.multiple * list.multipleScore;
+          this.totalScore[2] = this.tf * list.tfScore;
+        })
     },
     toAnswer(id) {
-      this.$router.push({path:"/answer",query:{examCode: id}})
+      if (this.examData.lock) {
+        this.$prompt('请输入密码', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            inputErrorMessage: '密码不正确'
+          }).then(({ value }) => {
+            console.log(this.examData.password)
+            if (value == this.examData.password) {
+              this.$message({
+                type: 'success',
+                message: '密码正确'
+              });
+              this.$router.push({path:"/answer",query:{id: id}})
+            }   
+          }).catch(() => {
+            this.$message({
+            type: 'info',
+            message: '取消输入'
+          });       
+        });
+      } else {
+        this.$router.push({path:"/answer",query:{id: id}})
+      }
     },
+    toExam() {
+      this.$router.push('/myexam');
+    }
   }
 }
 </script>
@@ -134,7 +152,7 @@ li {
   margin-left: auto;
 }
 .inner .contenti .question {
-  margin-left: 40px;
+  margin-left: 10px;
   color: #9a9a9a;
   font-size: 14px;
 }
@@ -146,7 +164,7 @@ li {
 }
 .content .title .time {
   font-size: 16px;
-  margin-left: 420px;
+  margin-left: 500px;
   color: #999;
 }
 .content .stitle {
@@ -198,19 +216,19 @@ li {
 }
 #msg {
   background-color: #eee;
-  width: 980px;
+  width: 50%;
   margin: 0 auto;
 }
 #msg .title {
-  margin: 20px;
+  margin: 2%;
 }
 #msg .wrapper {
   background-color: #fff;
-  padding: 10px;
+  padding: 1%;
 }
 .wrapper .top {
   display: flex;
-  margin: 20px;
+  margin: 2%;
   align-items: center;
 }
 .wrapper .top .right {
@@ -222,7 +240,7 @@ li {
   font-weight: 700;
 }
 .wrapper .top li i {
-  margin-left: 20px;
+  margin-left: 10%;
   color: #88949b;
 }
 .wrapper .right .count {

@@ -1,6 +1,7 @@
 package com.kaka.service;
 
 import com.kaka.entity.Exam;
+import com.kaka.entity.Problem;
 import com.kaka.mapper.ExamMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +48,10 @@ public class ExamServiceImpl implements ExamService{
     public Exam getExamById(Long id) {
         return examMapper.getExamById(id);
     }
+
+    @Override
+    public List<Problem> getProblemById(Long id) {
+        return examMapper.getProblemById(id);
+    }
+
 }

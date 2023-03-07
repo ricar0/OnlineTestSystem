@@ -5,7 +5,9 @@
         select * from exam;
     </select>
     <insert id="addExam" parameterType="com.kaka.entity.Exam">
-        insert into exam value(null, #{source}, #{description}, #{totalTime}, #{totalScore}, #{teacher}, #{examDate}, #{lock});
+        insert into exam value(null, #{source}, #{description}, #{totalTime},
+            #{totalScore}, #{teacher}, #{examDate}, #{lock}, #{code}, #{password},
+            #{singleScore}, #{multipleScore}, #{tfScore});
     </insert>
     <select id="getMyExam" parameterType="Long" resultType="com.kaka.entity.Exam">
         select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by examDate asc;
@@ -14,4 +16,9 @@
     <select id="getExamById" parameterType="Long" resultType="com.kaka.entity.Exam">
         select * from exam where id = #{id};
     </select>
+
+    <select id="getProblemById" parameterType="Long" resultType="com.kaka.entity.Problem">
+        select * from problems_set where id in(select problem_id from exam_problem where exam_id = #{id});
+    </select>
+
 </mapper>

@@ -1,8 +1,10 @@
-import { reqGetMyExam, reqGetExamById } from "@/api";
+import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById } from "@/api";
 
 const state = {
     myexam: [],
-    examinfo: []
+    examinfo: [],
+    probleminfo: [],
+    paperinfo:[]
 }
 
 const mutations = {
@@ -11,6 +13,12 @@ const mutations = {
     },
     GETEXAMBYID(state, examinfo) {
         state.examinfo = examinfo;
+    },
+    GETPEOBELMBYID(state, probleminfo) {
+        state.probleminfo = probleminfo;
+    },
+    GETPAPERINFOBYID(state, paperinfo) {
+        state.paperinfo = paperinfo;
     }
 }
 
@@ -33,7 +41,25 @@ const actions = {
         } else {
             return Promise.reject(new Error("failure"));
         }
-    }
+    },
+    async getProblemById({commit}, obj) {
+        let {data} = await reqGetProblemById(obj);
+        if (data.code == 200) {
+            commit("GETPEOBELMBYID", data.data);
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getPaperInfoById({commit}, obj) {
+        let {data} = await reqGetPaperInfoById(obj);
+        if (data.code == 200) {
+            commit("GETPAPERINFOBYID", data.data);
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
 }
 const getters = {};
 export default {

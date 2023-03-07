@@ -2,7 +2,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
-import Home from '@/pages/Home'
 import Login from '@/pages/Common/Login'
 import Register from '@/pages/Common/Register'
 import Search from '@/pages/Student/Search'
@@ -16,11 +15,6 @@ import ExamMsg from '@/pages/Student/ExamMsg'
 export default new VueRouter ({
     //配置路由
     routes:[
-        {
-            path: "/",
-            component: Home,
-            meta: {show:true}
-        },
         {
             path: "/login",
             component: Login,
