@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Exam {
+public class Practice {
     private Long id;
     private String source;
     private String description;
     private int totalTime;
     private int totalScore;
     private String teacher;
-    private String examDate;
     private boolean lock;
 }

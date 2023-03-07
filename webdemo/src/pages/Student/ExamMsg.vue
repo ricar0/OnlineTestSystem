@@ -1,4 +1,3 @@
-// 点击试卷后的缩略信息
 <template>
   <div id="msg">
     <div class="title">
@@ -8,23 +7,20 @@
     <div class="wrapper">
       <ul class="top">
         <li class="example">{{examData.source}}</li>
-        <li><i class="iconfont icon-pen-"></i></li>
-        <li><i class="iconfont icon-share"></i></li>
         <li class="right">
           <div>
             <span class="count">总分</span>
-            <span class="score">{{score[0]+score[1]+score[2]}}</span>
+            <span class="score">{{examData.totalScore}}</span>
           </div>
         </li>
       </ul>
       <ul class="bottom">
-        <li>更新于{{examData.examDate}}</li>
-        <li>来自 {{examData.institute}}</li>
-        <li class="btn">{{examData.type}}</li>
+        <li><i class="el-icon-upload"></i>发布于{{examData.examDate}}</li>
+        <li><i class="el-icon-edit"></i>来自 {{examData.teacher}}</li>
         <li class="right"><el-button @click="toAnswer(examData.examCode)">开始答题</el-button></li>
       </ul>
       <ul class="info">
-        <li @click="dialogVisible = true"><a href="javascript:;"><i class="iconfont icon-info"></i>考生须知</a></li>
+        <li @click="dialogVisible = true"><a href="javascript:;"><i class="el-icon-info"></i>考生须知</a></li>
       </ul>
     </div>
     <div class="content">
@@ -108,25 +104,11 @@ export default {
   methods: {
     //初始化页面数据
     init() {
-      let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
-        res.data.data.examDate = res.data.data.examDate.substr(0,10)
-        this.examData = { ...res.data.data}
-        let paperId = this.examData.paperId
-        this.$axios(`/api/paper/${paperId}`).then(res => {  //通过paperId获取试题题目信息
-          this.topic = {...res.data}
-          let keys = Object.keys(this.topic) //对象转数组
-          keys.forEach(e => {
-            let data = this.topic[e]
-            this.topicCount.push(data.length)
-            let currentScore = 0
-            for(let i = 0; i< data.length; i++) { //循环每种题型,计算出总分
-              currentScore += data[i].score
-            }
-            this.score.push(currentScore) //把每种题型总分存入score
-          })
+        let id = this.$route.query.id //获取路由传递过来的试卷编号
+        this.$store.dispatch('getExamById', id).then(res=>{
+            this.examData = this.$store.state.exam.examinfo;
         })
-      })
+      
     },
     toAnswer(id) {
       this.$router.push({path:"/answer",query:{examCode: id}})
@@ -136,6 +118,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+li {
+    list-style: none;
+}
 .bottom {
   .right{
     .el-button{

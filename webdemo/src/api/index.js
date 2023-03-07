@@ -24,3 +24,11 @@ export const reqGetCode = (data)=>requests({url:'auth/getCode',data,method:'post
 //获取我的考试
 //url:/api/exam/getMyExam method: get
 export const reqGetMyExam = ()=>requests({url:'exam/getMyExam',method:'get'});
+
+//获取我的练习
+//url:/api/exam/getMyExam method: get
+export const reqGetMyPractice = ()=>requests({url:'practice/getMyPractice',method:'get'});
+
+//获取考试信息
+//url:/api/exam/getMyExam method: get
+export const reqGetExamById = (id)=>requests({url:'exam/getExamById/'+id,method:'get'});

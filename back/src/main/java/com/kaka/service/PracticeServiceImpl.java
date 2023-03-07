@@ -1,7 +1,7 @@
 package com.kaka.service;
 
-import com.kaka.entity.Exam;
-import com.kaka.mapper.ExamMapper;
+import com.kaka.entity.Practice;
+import com.kaka.mapper.PracticeMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,23 +12,18 @@ import java.util.List;
 import static com.kaka.utils.JwtUtil.parseJWT;
 
 @Service
-public class ExamServiceImpl implements ExamService{
+public class PracticeServiceImpl implements PracticeService{
 
     @Autowired
-    private ExamMapper examMapper;
+    private PracticeMapper practiceMapper;
 
     @Override
-    public List<Exam> getAll() {
-        return examMapper.getAll();
+    public void addPractice(Practice practice) {
+        practiceMapper.addPractice(practice);
     }
 
     @Override
-    public void addExam(Exam exam) {
-        examMapper.addExam(exam);
-    }
-
-    @Override
-    public List<Exam> getMyExam(HttpServletRequest request) {
+    public List<Practice> getMyPractice(HttpServletRequest request) {
         String token = request.getHeader("token");
         //解析token
         String user_id;
@@ -40,11 +35,6 @@ public class ExamServiceImpl implements ExamService{
             throw new RuntimeException("tolen非法");
         }
         Long userid= Long.valueOf(user_id);
-        return examMapper.getMyExam(userid);
-    }
-
-    @Override
-    public Exam getExamById(Long id) {
-        return examMapper.getExamById(id);
+        return practiceMapper.getMyPractice(userid);
     }
 }

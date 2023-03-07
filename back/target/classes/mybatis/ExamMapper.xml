@@ -10,4 +10,8 @@
     <select id="getMyExam" parameterType="Long" resultType="com.kaka.entity.Exam">
         select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by examDate asc;
     </select>
+
+    <select id="getExamById" parameterType="Long" resultType="com.kaka.entity.Exam">
+        select * from exam where id = #{id};
+    </select>
 </mapper>

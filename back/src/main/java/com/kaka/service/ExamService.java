@@ -12,4 +12,6 @@ public interface ExamService {
     public void addExam(Exam exam);
 
     public List<Exam> getMyExam(HttpServletRequest request);
+
+    public Exam getExamById(Long id);
 }

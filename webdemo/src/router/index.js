@@ -12,6 +12,7 @@ import Practice from '@/pages/Student/Practice'
 import WrongBook from '@/pages/Student/WrongBook'
 import MyExam from '@/pages/Student/MyExam'
 import Phonecheck from '@/pages/Common/Phonecheck' 
+import ExamMsg from '@/pages/Student/ExamMsg'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -64,6 +65,11 @@ export default new VueRouter ({
         {
             path: "/phonecheck",
             component: Phonecheck,
+            meta: {show:true}
+        }, 
+        {
+            path: "/examMsg",
+            component: ExamMsg,
             meta: {show:true}
         }, 
     ]

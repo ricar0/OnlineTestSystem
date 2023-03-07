@@ -9,7 +9,7 @@
                 <li><el-button type="primary" @click="search()">搜索试卷</el-button></li>
             </ul>
             <ul class="paper" v-loading="loading">
-                <li class="item" v-for="(item,index) in pagination.records" :key="index">
+                <li class="item" v-for="(item,index) in pagination.nowrecords" :key="index">
                     <h4 @click="toExamMsg(item.examCode)">{{item.source}} <i style="margin:0;"class="el-icon-lock"></i></h4>
                     <p class="name">{{item.source}}-{{item.description}}</p>
                     <span class="name">出卷人：</span> 
@@ -26,7 +26,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pagination.current"
-                    :page-sizes="[3, 5, 6]"
+                    :page-sizes="[3, 5, 10]"
                     :page-size="pagination.size"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="pagination.total">
@@ -48,47 +48,28 @@ export default {
             pagination: {
                 current: 1,
                 total: null,
-                size: 6,
-                records: [
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        preScore: 100
-                    },
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        preScore: 100
-                    },
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        preScore: 100
-                    },
-                    {
-                        examCode: "101",
-                        source: "数据库原理",
-                        description: "2022年下半学期期末考",
-                        totalTime: 90,
-                        totalScore: 100,
-                        teacher: "挑挑",
-                        preScore: 100
-                    }
-                ]
+                size: 3,
+                totalrecords: [],
+                nowrecords: []
             }
         }
+    },
+    methods: {  
+      handleSizeChange(val) {
+        this.pagination.size = val;
+        this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
+      },
+      handleCurrentChange(val) {
+        this.pagination.current = val;
+        this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
+      }
+    },
+    mounted() {
+      this.$store.dispatch('getMyPractice').then(res=>{
+          this.pagination.totalrecords = this.$store.state.practice.mypractice;
+          this.pagination.total = this.pagination.totalrecords.length;
+          this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
+      })
     },
     components: {
         Header
@@ -106,12 +87,14 @@ ul.top {
     height: auto;
     width: 100%;
     background-image: url('@/assets/background.png');
+    min-height: 80%;
 }
 li {
     list-style: none;
 }
 .pagination {
   padding: 3% 0 5% 0;
+  
   .el-pagination {
     display: flex;
     justify-content: center;
@@ -226,5 +209,6 @@ li {
 //   opacity: 70%;
   box-shadow: 0px 2px 4px 2px rgba(140, 193, 248, 0.45);
   position: sticky;
+  
 }
 </style>

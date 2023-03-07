@@ -1,6 +1,6 @@
 package com.kaka.mapper;
 
-import com.kaka.entity.Exam;
+import com.kaka.entity.Practice;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -9,12 +9,8 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ExamMapper {
-    public List<Exam> getAll();
+public interface PracticeMapper {
+    public void addPractice(Practice practice);
 
-    public void addExam(Exam exam);
-
-    public List<Exam> getMyExam(Long user_id);
-
-    public Exam getExamById(Long id);
+    public List<Practice> getMyPractice(Long user_id);
 }

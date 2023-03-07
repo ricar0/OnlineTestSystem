@@ -10,8 +10,8 @@
                 <li><el-button type="primary" @click="search()">搜索试卷</el-button></li>
             </ul>
             <ul class="paper" v-loading="loading">
-                <li class="item" v-for="(item,index) in pagination.records" :key="index">
-                    <h4 @click="toExamMsg(item.examCode)">{{item.source}} <i v-if="item.lock" style="margin:0;"class="el-icon-lock"></i></h4>
+                <li class="item" v-for="(item,index) in pagination.nowrecords" :key="index">
+                    <h4 @click="toExamMsg(item.id)">{{item.source}} <i v-if="item.lock" style="margin:0;"class="el-icon-lock"></i></h4>
                     <p class="name">{{item.source}}-{{item.description}}</p>
                     <span class="name">出卷人：</span> 
                     <span style="color:red;">{{item.teacher}}</span>
@@ -51,22 +51,29 @@ export default {
                 current: 1,
                 total: null,
                 size: 3,
-                records: []
+                totalrecords: [],
+                nowrecords: []
             }
         }
     },
     methods: {  
       handleSizeChange(val) {
-        
+        this.pagination.size = val;
+        this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
       },
       handleCurrentChange(val) {
-
+        this.pagination.current = val;
+        this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
+      },
+      toExamMsg(id) {
+        this.$router.push('/ExamMsg'+ "?id=" + id);
       }
     },
     mounted() {
       this.$store.dispatch('getMyExam').then(res=>{
-          this.pagination.records = this.$store.state.exam.myexam;
-          this.pagination.total = this.pagination.records.length;
+          this.pagination.totalrecords = this.$store.state.exam.myexam;
+          this.pagination.total = this.pagination.totalrecords.length;
+          this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
       })
     },
     components: {
@@ -87,6 +94,7 @@ ul.top {
     width: 100%;
     background: url('@/assets/background.png') repeat;
     // position: relative;
+    min-height: 80%;
 }
 li {
     list-style: none;

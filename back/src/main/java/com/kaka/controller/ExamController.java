@@ -29,4 +29,10 @@ public class ExamController {
     public ResponseResult getMyExam(HttpServletRequest request) {
         return new ResponseResult(200, "获取成功!", examService.getMyExam(request));
     }
+
+    @RequestMapping(value = "/getExamById/{id}")
+    public ResponseResult getExamById(@PathVariable("id") Long id) {
+        return new ResponseResult(200, "获取成功!", examService.getExamById(id));
+    }
+
 }

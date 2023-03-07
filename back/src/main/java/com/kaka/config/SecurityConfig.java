@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/auth/login",
                         "/api/auth/sendCode",
                         "/api/auth/getCode",
-                        "/api/user/getAll"
+                        "/api/user/getAll",
+                        "/api/practice/addPractice"
                 ).anonymous()
                 //除上面外所有请求都需要鉴权认证
                 .anyRequest().authenticated();
