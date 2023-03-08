@@ -1,6 +1,8 @@
 package com.kaka.service;
 
 import com.kaka.entity.Exam;
+import com.kaka.entity.ExamCookie;
+import com.kaka.entity.MyExam;
 import com.kaka.entity.Problem;
 import com.kaka.utils.ResponseResult;
 
@@ -18,4 +20,5 @@ public interface ExamService {
 
     public List<Problem> getProblemById(Long id);
 
+    public void startExam(MyExam myExam);
 }

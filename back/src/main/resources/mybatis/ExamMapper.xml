@@ -21,4 +21,11 @@
         select * from problems_set where id in(select problem_id from exam_problem where exam_id = #{id});
     </select>
 
+    <update id="startExam">
+        update myexam set start_time = #{start_time} where (user_id = #{user_id} and exam_id = #{exam_id})
+    </update>
+
+    <select id="getExamInfo" resultType="com.kaka.entity.MyExam" parameterType="com.kaka.entity.MyExam">
+        select * from myexam where (user_id = #{user_id} and exam_id = #{exam_id});
+    </select>
 </mapper>

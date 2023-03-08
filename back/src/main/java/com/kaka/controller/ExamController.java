@@ -1,15 +1,20 @@
 package com.kaka.controller;
 
-import com.kaka.entity.Exam;
-import com.kaka.entity.Paper;
-import com.kaka.entity.Problem;
+import com.kaka.entity.*;
+import com.kaka.mapper.ExamMapper;
 import com.kaka.service.ExamService;
+import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.ReactiveListCommands;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
+import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -17,6 +22,12 @@ import java.util.List;
 public class ExamController {
     @Autowired
     private ExamService examService;
+
+    @Autowired
+    private RedisCache redisCache;
+
+    @Autowired
+    private ExamMapper examMapper;
 
     @RequestMapping(value="/getAll", method = RequestMethod.GET)
     public ResponseResult getAll() {
@@ -64,5 +75,68 @@ public class ExamController {
         paper.setMultipleScore(e.getMultipleScore());
         paper.setTfScore(e.getTfScore());
         return new ResponseResult(200, "获取成功!", paper);
+    }
+
+    @RequestMapping(value = "/initExamCookies", method = RequestMethod.POST)
+    public ResponseResult initExamCookies(@RequestBody ExamCookie examCookie) {
+        examCookie.setMinutes(examService.getExamById(examCookie.getExam_id()).getTotalTime());
+        examCookie.setSeconds(0);
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        for (int i = 0; i < 14; i++) {
+            List<Integer> l = new ArrayList<Integer>();
+            list.add(l);
+        }
+        examCookie.setMultipleAnswer(list);
+        List<Integer> list1 = new ArrayList<Integer>();
+        examCookie.setSingleAnswer(list1);
+        examCookie.setJudgeAnswer(list1);
+
+        List<Boolean> list2 = new ArrayList<Boolean>();
+        for (int i = 0; i < 14; i++) list2.add(false);
+        examCookie.setSingleisClick(list2);
+        examCookie.setMultipleisClick(list2);
+        examCookie.setJudgeisClick(list2);
+        examCookie.setSingleisMark(list2);
+        examCookie.setMultipleisMark(list2);
+        examCookie.setJudgeisMark(list2);
+        examCookie.setBg_flag(false);
+        redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id(), examCookie);
+        return new ResponseResult(200, "设置成功!");
+    }
+
+    @RequestMapping(value = "/setExamCookies", method = RequestMethod.POST)
+    public ResponseResult setExamCookies(@RequestBody ExamCookie examCookie) {
+        int totalTime = examService.getExamById(examCookie.getExam_id()).getTotalTime();
+        MyExam myExam = new MyExam();
+        myExam.setExam_id(examCookie.getExam_id());
+        myExam.setUser_id(examCookie.getUser_id());
+        Date date = examMapper.getExamInfo(myExam).getStart_time();
+        Calendar startTime = Calendar.getInstance();
+        startTime.setTime(date);
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.setTime(new Date());
+        Long startSecond = startTime.getTimeInMillis();
+        Long currentSecond = currentTime.getTimeInMillis();
+        int totleSecond = totalTime * 60;
+        Long remainingTime = (totleSecond-(currentSecond-startSecond)/1000);
+        int minutes = (int)(remainingTime / 60);
+        int seconds = (int)(remainingTime - remainingTime/60*60);
+        examCookie.setMinutes(minutes);
+        examCookie.setSeconds(seconds);
+        redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id(), examCookie);
+        return new ResponseResult(200, "设置成功!");
+    }
+    @RequestMapping(value = "/getExamCookies", method = RequestMethod.POST)
+    public ResponseResult getExamCookies(@RequestBody ExamCookie examCookie) {
+        ExamCookie res = redisCache.getCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id());
+        return new ResponseResult(200, "获取成功!", res);
+    }
+
+    @RequestMapping(value="/startExam", method = RequestMethod.POST)
+    public ResponseResult startExam(@RequestBody MyExam myExam) {
+
+        myExam.setStart_time(new Date());
+        examService.startExam(myExam);
+        return new ResponseResult(200, "已开始考试!");
     }
 }

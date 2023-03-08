@@ -1,10 +1,12 @@
-import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById } from "@/api";
+import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
+    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam } from "@/api";
 
 const state = {
     myexam: [],
     examinfo: [],
     probleminfo: [],
-    paperinfo:[]
+    paperinfo:[],
+    examcookies: null
 }
 
 const mutations = {
@@ -19,6 +21,9 @@ const mutations = {
     },
     GETPAPERINFOBYID(state, paperinfo) {
         state.paperinfo = paperinfo;
+    },
+    GETEXAMCOOKIES(state, examcookies) {
+        state.examcookies = examcookies;
     }
 }
 
@@ -60,6 +65,39 @@ const actions = {
             return Promise.reject(new Error("failure"));
         }
     },
+    async initExamCookies({commit}, obj) {
+        let {data} = await reqInitExamCookies(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getExamCookies({commit}, obj) {
+        let {data} = await reqGetExamCookies(obj);
+        if (data.code == 200) {
+            commit("GETEXAMCOOKIES", data.data);
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async setExamCookies({commit}, obj) {
+        let {data} = await reqSetExamCookies(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async startExam({commit}, obj) {
+        let {data} = await reqStartExam(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    }
 }
 const getters = {};
 export default {

@@ -34,12 +34,12 @@
             <div class="l-bottom">
               <div class="item">
                 <p>单选题部分</p>
-                <ul style="padding-left:0;margin-top:0;">
+                <ul>
                   <li v-for="(list, index1) in topic[0]" :key="index1">
                     <a href="javascript:;" 
-                      @click="change(index1)"
-                      :class="{'border': index == index1 && currentType == 1,'bg': bg_flag && topic[0][index1].isClick == true}">
-                      <span :class="{'mark': topic[0][index1].isMark == true}"></span>
+                      @click="single(index1)"
+                      :class="{'border': index == index1 && currentType == 1,'bg': bg_flag && singleisClick[index1] == true}">
+                      <span :class="{'mark': singleisMark[index1] == true}"></span>
                       {{index1+1}}
                     </a>
                   </li>
@@ -49,7 +49,12 @@
                 <p>多选题部分</p>
                 <ul>
                   <li v-for="(list, index2) in topic[1]" :key="index2">
-                    <a href="javascript:;" @click="fill(index2)" :class="{'border': index == index2 && currentType == 2,'bg': fillAnswer[index2][3] == true}"><span :class="{'mark': topic[1][index2].isMark == true}"></span>{{topicCount[0]+index2+1}}</a>
+                    <a href="javascript:;" 
+                      @click="multiple(index2)"
+                      :class="{'border': index == index2 && currentType == 2,'bg': bg_flag && multipleisClick[index2] == true}">
+                      <span :class="{'mark': multipleisMark[index2] == true}"></span>
+                      {{topicCount[0]+index2+1}}
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -57,7 +62,7 @@
                 <p>判断题部分</p>
                 <ul>
                   <li v-for="(list, index3) in topic[2]" :key="index3">
-                    <a href="javascript:;" @click="judge(index3)" :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && topic[2][index3].isClick == true}"><span :class="{'mark': topic[2][index3].isMark == true}"></span>{{topicCount[0]+topicCount[1]+index3+1}}</a>
+                    <a href="javascript:;" @click="judge(index3)" :class="{'border': index == index3 && currentType == 3,'bg': bg_flag && judgeisClick[index3] == true}"><span :class="{'mark': judgeisMark[index3] == true}"></span>{{topicCount[0]+topicCount[1]+index3+1}}</a>
                   </li>
                 </ul>
               </div>
@@ -76,11 +81,11 @@
           <div class="content">
             <p class="topic"><span class="number">{{number}}</span>{{showQuestion}}</p>
             <div v-if="currentType == 1">
-              <el-radio-group v-model="radio[index]" @change="getChangeLabel" >
-                <el-radio :label="1">{{showAnswer[0]}}</el-radio>
-                <el-radio :label="2">{{showAnswer[1]}}</el-radio>
-                <el-radio :label="3">{{showAnswer[2]}}</el-radio>
-                <el-radio :label="4">{{showAnswer[3]}}</el-radio>
+              <el-radio-group v-model="singleAnswer[index]" @change="getSingleLabel">
+                <el-radio :label="1">A.{{showAnswer[0]}}</el-radio>
+                <el-radio :label="2">B.{{showAnswer[1]}}</el-radio>
+                <el-radio :label="3">C.{{showAnswer[2]}}</el-radio>
+                <el-radio :label="4">D.{{showAnswer[3]}}</el-radio>
               </el-radio-group>
               <div class="analysis" v-if="isPractice">
                 <ul>
@@ -90,24 +95,23 @@
                 </ul>
               </div>
             </div>
-            <div class="fill" v-if="currentType == 2">
-              <div v-for="(item,currentIndex) in part" :key="currentIndex">
-                <el-input placeholder="请填在此处"
-                  v-model="fillAnswer[index][currentIndex]"
-                  clearable
-                  @blur="fillBG">
-                </el-input>
-              </div>
+            <div v-if="currentType == 2">
+              <el-checkbox-group v-model="multipleAnswer[index]" @change="getMultipleLabel">
+                <el-checkbox :label="1">A.{{showAnswer[0]}}</el-checkbox><br></br>
+                <el-checkbox :label="2">B.{{showAnswer[1]}}</el-checkbox><br></br>
+                <el-checkbox :label="3">C.{{showAnswer[2]}}</el-checkbox><br></br>
+                <el-checkbox :label="4">D.{{showAnswer[3]}}</el-checkbox><br></br>
+              </el-checkbox-group>
               <div class="analysis" v-if="isPractice">
                 <ul>
-                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{topic[1][index].answer}}</span></li>
+                  <li> <el-tag type="success">正确姿势：</el-tag><span class="right">{{reduceAnswer.rightAnswer}}</span></li>
                   <li><el-tag>题目解析：</el-tag></li>
-                  <li>{{topic[1][index].analysis == null ? '暂无解析': topic[1][index].analysis}}</li>
+                  <li>{{reduceAnswer.analysis == null ? '暂无解析': reduceAnswer.analysis}}</li>
                 </ul>
               </div>
             </div>
             <div class="judge" v-if="currentType == 3">
-              <el-radio-group v-model="judgeAnswer[index]" @change="getJudgeLabel" v-if="currentType == 3">
+              <el-radio-group v-model="judgeAnswer[index]" @change="getJudgeLabel">
                 <el-radio :label="1">正确</el-radio>
                 <el-radio :label="2">错误</el-radio>
               </el-radio-group>
@@ -122,9 +126,9 @@
           </div>
           <div class="operation">
             <ul class="end">
-              <li @click="previous()"><i class="iconfont icon-previous"></i><span>上一题</span></li>
-              <li @click="mark()"><i class="iconfont icon-mark-o"></i><span>标记</span></li>
-              <li @click="next()"><span>下一题</span><i class="iconfont icon-next"></i></li>
+              <li @click="previous()"><i class="el-icon-arrow-left"></i><span>上一题</span></li>
+              <li @click="mark()"><i class="el-icon-view"></i><span>标记</span></li>
+              <li @click="next()"><span>下一题</span><i class="el-icon-arrow-right"></i></li>
             </ul>
           </div>
         </div>
@@ -151,7 +155,6 @@ export default {
       slider_flag: true, //左侧显示隐藏标识符
       flag: false, //个人信息显示隐藏标识符
       currentType: 1, //当前题型类型  1--单选题  2--多选题  3--判断题
-      radio: [], //保存考生所有选择题的选项
       title: "请选择正确的选项",
       index: 0, //全局index
       userInfo: { //用户信息
@@ -163,14 +166,18 @@ export default {
       topic: [[],[],[]],
       topicCount:[0,0,0],
       showQuestion: null, //当前显示题目信息
-      showAnswer: [null,null,null,null],
-    //当前题目对应的答案选项
+      showAnswer: [null,null,null,null],//当前题目对应的答案选项
       number: 1, //题号
-      part: null, //填空题的空格数量
-      fillAnswer: [[]], //二维数组保存所有填空题答案
+      multipleAnswer: [], //二维数组保存所有填空题答案
       judgeAnswer: [], //保存所有判断题答案
-      topic1Answer: [],  //学生选择题作答编号,
+      singleAnswer: [],  //单选题作答编号,
       rightAnswer: '',
+      singleisClick: [],
+      judgeisClick: [],
+      multipleisClick: [],
+      singleisMark: [],
+      judgeisMark: [],
+      multipleisMark: []
     }
   },
   created() {
@@ -179,6 +186,40 @@ export default {
     this.showTime()
   },
   methods: {
+    getCookies() {  //获取用户信息信息和答题信息
+      this.$store.dispatch('getUserInfo').then(res=>{
+        this.userInfo.name = this.$store.state.user.userinfo.username;
+        let user_id = this.$store.state.user.userinfo.id;
+        let exam_id = this.$route.query.id
+
+        //在每次刷新后先同步信息，再上传
+        this.$store.dispatch('getExamCookies', {user_id, exam_id}).then(res=>{
+          let data = this.$store.state.exam.examcookies;
+          // 选项
+          this.singleAnswer = data.singleAnswer
+          this.multipleAnswer = data.multipleAnswer
+          this.judgeAnswer = data.judgeAnswer
+          // 计时
+          this.time.minutes = data.minutes
+          this.time.seconds = data.seconds
+          // 点击
+          this.singleisClick = data.singleisClick
+          this.multipleisClick = data.multipleisClick
+          this.judgeisClick = data.judgeisClick
+          // 标记
+          this.singleisMark = data.singleisMark
+          this.multipleisMark = data.multipleisMark
+          this.judgeisMark = data.judgeisMark
+          this.bg_flag = data.bg_flag
+          // console.log(data)
+          const {singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, 
+          multipleisMark, judgeisClick, judgeisMark, bg_flag} = this
+          this.$store.dispatch('setExamCookies', {user_id, exam_id, singleAnswer, 
+          multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick,
+          multipleisMark, judgeisClick, judgeisMark, bg_flag})
+        });
+      })
+    },
     getTime(date) { //日期格式化
       let year = date.getFullYear()
       let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -189,11 +230,6 @@ export default {
       // 拼接
       return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
     },
-    getCookies() {  //获取用户信息
-      this.$store.dispatch('getUserInfo').then(res=>{
-        this.userInfo.name = this.$store.state.user.userinfo.username;
-      })
-    },
     calcuScore() { //计算答题分数
       
     },
@@ -203,8 +239,6 @@ export default {
       let id = this.$route.query.id //获取路由传递过来的试卷编号
       this.$store.dispatch('getExamById', id).then(res => {  //通过examCode请求试卷详细信息
         this.examData = this.$store.state.exam.examinfo //获取考试详情
-        this.time.minutes = this.examData.totalTime; //获取分钟数
-        this.time.seconds = 0;
       })
       this.$store.dispatch('getPaperInfoById', {id}).then(res =>{
         let data = this.$store.state.exam.paperinfo
@@ -218,18 +252,18 @@ export default {
         this.showAnswer[3] = problem.d;
         this.showQuestion = problem.description;
         for (let i = 0; i < data.singleNum; i++) {
-          this.topic[0].push({data:data.problems[i], isClick:false, isMark: false});
+          this.topic[0].push(data.problems[i]);
         }
-        // for (let i = 0; i < data.multipleNum; i++) {
-        //   this.topic[1].push(data.problems[i+data.singleNum]);
-        // }
-        // for (let i = 0; i < data.tfNum; i++) {
-        //   this.topic[2].push(data.problems[i+data.singleNum+data.multipleNum]);
-        // }
+        for (let i = 0; i < data.multipleNum; i++) {
+          this.topic[1].push(data.problems[i+data.singleNum]);
+        }
+        for (let i = 0; i < data.tfNum; i++) {
+          this.topic[2].push(data.problems[i+data.singleNum+data.multipleNum]);
+        }
       })
       
     },
-    change(index) { //单选题
+    single(index) { //单选题
       this.index = index
       this.isFillClick = true
       this.currentType = 1
@@ -238,72 +272,88 @@ export default {
         if(this.index <= 0){
           this.index = 0
         }
-        console.log(`总长度${len}`)
-        console.log(`当前index:${index}`)
-        this.title = "请选择正确的选项"
-        let data = this.topic[0][this.index].data;
+        let data = this.topic[0][this.index];
         this.showQuestion = data.description //获取题目信息
         this.showAnswer = [data.a,data.b,data.c,data.d]
         this.number = this.index + 1
+      } else if(this.index >= len) {
+        this.index = 0;
+        this.multiple(this.index);
+      }
+    },
+    multiple(index) {//多选题
+      this.index = index
+      this.isFillClick = true
+      this.currentType = 2
+      let len = this.topic[1].length
+      if(this.index < len) {
+        if(this.index < 0){
+          this.index = this.topicCount[0]-1;
+          this.single(this.index);
+        }
+        this.title = "请选择正确的选项"
+        let data = this.topic[1][this.index];
+        this.showQuestion = data.description //获取题目信息
+        this.showAnswer = [data.a,data.b,data.c,data.d]
+        this.number = this.index + 1 + this.topicCount[0]
       }else if(this.index >= len) {
-        this.index = 0
-        this.fill(this.index)
+        this.index = 0;
+        this.judge(this.index);
       }
     },
-    fillBG() { //填空题已答题目 如果已答该题目,设置第四个元素为true为标识符
-      if(this.fillAnswer[this.index][0] != null) {
-        this.fillAnswer[this.index][3] = true
-      }
-    },
-    
     judge(index) { //判断题
       let len = this.topic[2].length
       this.currentType = 3
       this.index = index
       if(this.index < len) {
         if(this.index < 0){
-          this.index = this.topic[1].length - 1
-          this.fill(this.index)
+          this.index = this.topicCount[1] - 1;
+          this.multiple(this.index);
         }else {
-          console.log(`总长度${len}`)
-          console.log(`当前index:${this.index}`)
-          this.title = "请作出正确判断"
-          let Data = this.topic[2]
-          console.log(Data)
-          this.showQuestion = Data[index].question //获取题目信息
+           let data = this.topic[2][this.index];
+          this.showQuestion = data.description //获取题目信息
+          this.showAnswer = [data.a,data.b]
           this.number = this.topicCount[0] + this.topicCount[1] + index + 1
         }
       }else if (this.index >= len) {
         this.index = 0
-        this.change(this.index)
+        this.single(this.index)
       }
     },
-    getChangeLabel(val) { //获取选择题作答选项
-      this.radio[this.index] = val //当前选择的序号
-      if(val) {
-        let data = this.topic[1]
+    getSingleLabel(val) { //获取单选题作答选项
+      this.singleAnswer[this.index] = val
+      if(val) {   
         this.bg_flag = true
-        data[this.index]["isClick"] = true
+        this.singleisClick[this.index] = true
       }
       /* 保存学生答题选项 */
-      this.topic1Answer[this.index] = val 
+    },
+    getMultipleLabel(val) { //获取多选题作答选项
+      this.multipleAnswer[this.index] = val 
+      if(val.length != 0) {   
+        this.bg_flag = true
+        this.multipleisClick[this.index] = true
+      } else {
+        this.multipleisClick[this.index] = false
+      }
+      /* 保存学生答题选项 */
+      
     },
     getJudgeLabel(val) {  //获取判断题作答选项
       this.judgeAnswer[this.index] = val
       if(val) {
-        let data = this.topic[2]
         this.bg_flag = true
-        data[this.index]["isClick"] = true
+        this.judgeisClick[this.index] = true
       }
     },
     previous() { //上一题
       this.index --
       switch(this.currentType) {
         case 1: 
-          this.change(this.index)
+          this.single(this.index)
           break
         case 2: 
-          this.fill(this.index)
+          this.multiple(this.index)
           break
         case 3:
           this.judge(this.index)
@@ -314,10 +364,10 @@ export default {
       this.index ++
       switch(this.currentType) {
         case 1: 
-          this.change(this.index)
+          this.single(this.index)
           break
         case 2: 
-          this.fill(this.index)
+          this.multiple(this.index)
           break
         case 3:
           this.judge(this.index)
@@ -327,13 +377,13 @@ export default {
     mark() { //标记功能
       switch(this.currentType) {
         case 1:
-          this.topic[0][this.index]["isMark"] = true //选择题标记
+          this.singleisMark[this.index] ^= 1 //选择题标记
           break
         case 2:
-          this.topic[1][this.index]["isMark"] = true //填空题标记
+          this.multipleisMark[this.index] ^= 1 //填空题标记
           break
         case 3:
-          this.topic[2][this.index]["isMark"] = true //判断题标记
+          this.judgeisMark[this.index] ^= 1 //判断题标记
       }
     },
     commit() { //答案提交计算分数
@@ -443,7 +493,13 @@ export default {
             }
           })
         };
-      },1000)
+      },1000),
+      setInterval(()=>{
+        let user_id = this.$store.state.user.userinfo.id;
+        let exam_id = this.$route.query.id
+        const {singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag} = this
+        this.$store.dispatch('setExamCookies', {user_id, exam_id, singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag})
+      },1000*30*60)
     }
   },
   computed:mapState(["isPractice"])
@@ -641,18 +697,20 @@ li {
 }
 .l-bottom .item ul {
   width: 100%;
-  margin-bottom: -8px;
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  text-align: left;
 }
 .l-bottom .item ul li a { 
   position: relative;
   justify-content: center;
   display: inline-flex;
   align-items: center;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #fff;
   border: 1px solid #eee;

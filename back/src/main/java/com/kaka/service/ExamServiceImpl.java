@@ -1,6 +1,7 @@
 package com.kaka.service;
 
 import com.kaka.entity.Exam;
+import com.kaka.entity.MyExam;
 import com.kaka.entity.Problem;
 import com.kaka.mapper.ExamMapper;
 import io.jsonwebtoken.Claims;
@@ -52,6 +53,11 @@ public class ExamServiceImpl implements ExamService{
     @Override
     public List<Problem> getProblemById(Long id) {
         return examMapper.getProblemById(id);
+    }
+
+    @Override
+    public void startExam(MyExam myExam) {
+        examMapper.startExam(myExam);
     }
 
 }

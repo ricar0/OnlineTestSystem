@@ -40,3 +40,19 @@ export const reqGetProblemById = (data)=>requests({url:'exam/getProblemById',dat
 //获取试题信息
 //url:/api/exam/getMyExam method: post
 export const reqGetPaperInfoById = (data)=>requests({url:'exam/getPaperInfoById',data, method:'post'});
+
+//初始化考试
+//url:/api/exam/setExamCookies method: post
+export const reqInitExamCookies = (data)=>requests({url:'exam/initExamCookies',data, method:'post'});
+
+//下载考试进度
+//url:/api/exam/getExamCookies method: post
+export const reqGetExamCookies = (data)=>requests({url:'exam/getExamCookies',data, method:'post'});
+
+//上传考试进度
+//url:/api/exam/getExamCookies method: post
+export const reqSetExamCookies = (data)=>requests({url:'exam/setExamCookies',data, method:'post'});
+
+//开始考试
+//url:/api/exam/startExam method: post
+export const reqStartExam = (data)=>requests({url:'exam/startExam',data, method:'post'});

@@ -78,7 +78,8 @@ export default {
       single: 0,
       multiple: 0,
       tf: 0,
-      totalScore: [0,0,0]
+      totalScore: [0,0,0],
+      uid:null,
     }
   },
   mounted() {
@@ -116,7 +117,16 @@ export default {
                 type: 'success',
                 message: '密码正确'
               });
-              this.$router.push({path:"/answer",query:{id: id}})
+              this.$store.dispatch('getUserInfo').then(res=>{
+                this.uid = this.$store.state.user.userinfo.id;
+                let user_id = this.uid;
+                let exam_id = id;
+                this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
+                  console.log(res) 
+                  this.$router.push({path:"/answer",query:{id: id}})
+                })
+              })
+             
             }   
           }).catch(() => {
             this.$message({
@@ -125,7 +135,15 @@ export default {
           });       
         });
       } else {
-        this.$router.push({path:"/answer",query:{id: id}})
+        this.$store.dispatch('getUserInfo').then(res=>{
+          this.uid = this.$store.state.user.userinfo.id;
+          let user_id = this.uid;
+          let exam_id = id;
+          this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
+            console.log(res) 
+            this.$router.push({path:"/answer",query:{id: id}})
+          })
+        })
       }
     },
     toExam() {
