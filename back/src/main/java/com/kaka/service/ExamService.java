@@ -21,4 +21,6 @@ public interface ExamService {
     public List<Problem> getProblemById(Long id);
 
     public void startExam(MyExam myExam);
+
+    public void endExam(MyExam myExam);
 }

@@ -1,5 +1,5 @@
 import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
-    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam } from "@/api";
+    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam } from "@/api";
 
 const state = {
     myexam: [],
@@ -92,6 +92,14 @@ const actions = {
     },
     async startExam({commit}, obj) {
         let {data} = await reqStartExam(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async endExam({commit}, obj) {
+        let {data} = await reqEndExam(obj);
         if (data.code == 200) {
             return "ok";
         } else {

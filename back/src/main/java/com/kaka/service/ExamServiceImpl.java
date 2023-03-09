@@ -60,4 +60,9 @@ public class ExamServiceImpl implements ExamService{
         examMapper.startExam(myExam);
     }
 
+    @Override
+    public void endExam(MyExam myExam) {
+        examMapper.endExam(myExam);
+    }
+
 }

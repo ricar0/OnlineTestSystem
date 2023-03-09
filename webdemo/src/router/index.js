@@ -12,6 +12,9 @@ import WrongBook from '@/pages/Student/WrongBook'
 import MyExam from '@/pages/Student/MyExam'
 import Phonecheck from '@/pages/Common/Phonecheck' 
 import ExamMsg from '@/pages/Student/ExamMsg'
+import ScoreTable from '@/pages/Student/ScoreTable'
+import AnswerScore from '@/pages/Student/AnswerScore'
+
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -66,5 +69,15 @@ export default new VueRouter ({
             component: ExamMsg,
             meta: {show:true}
         }, 
+        {
+            path: "/scoreTable",
+            component: ScoreTable,
+            meta: {show:true}
+        },
+        {
+            path: "/answerScore",
+            component: AnswerScore,
+            meta: {show:true}
+        }
     ]
 })

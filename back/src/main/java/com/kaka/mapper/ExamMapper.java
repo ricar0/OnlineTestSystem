@@ -27,4 +27,5 @@ public interface ExamMapper {
 
     public MyExam getExamInfo(MyExam myExam);
 
+    public void endExam(MyExam myExam);
 }

@@ -159,6 +159,7 @@ export default {
       index: 0, //全局index
       userInfo: { //用户信息
         name: null,
+        id: null,
       },
       score: [],  //每种类型分数的总数
       examData: { //考试信息
@@ -186,12 +187,19 @@ export default {
     this.showTime()
   },
   methods: {
+    setCookies() {
+      let user_id = this.userInfo.id;
+      let exam_id = this.$route.query.id
+      const {singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag} = this
+      this.$store.dispatch('setExamCookies', {user_id, exam_id, singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag})
+    },
     getCookies() {  //获取用户信息信息和答题信息
       this.$store.dispatch('getUserInfo').then(res=>{
         this.userInfo.name = this.$store.state.user.userinfo.username;
+        this.userInfo.id = this.$store.state.user.userinfo.id;
         let user_id = this.$store.state.user.userinfo.id;
         let exam_id = this.$route.query.id
-
+        // this.$store.dispatch('initExamCookies', {user_id, exam_id})
         //在每次刷新后先同步信息，再上传
         this.$store.dispatch('getExamCookies', {user_id, exam_id}).then(res=>{
           let data = this.$store.state.exam.examcookies;
@@ -212,11 +220,7 @@ export default {
           this.judgeisMark = data.judgeisMark
           this.bg_flag = data.bg_flag
           // console.log(data)
-          const {singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, 
-          multipleisMark, judgeisClick, judgeisMark, bg_flag} = this
-          this.$store.dispatch('setExamCookies', {user_id, exam_id, singleAnswer, 
-          multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick,
-          multipleisMark, judgeisClick, judgeisMark, bg_flag})
+          this.setCookies();
         });
       })
     },
@@ -387,60 +391,7 @@ export default {
       }
     },
     commit() { //答案提交计算分数
-      /* 计算选择题总分 */
-      let topic1Answer = this.topic1Answer
-      let finalScore = 0
-      topic1Answer.forEach((element,index) => { //循环每道选择题根据选项计算分数
-        let right = null
-        if(element != null) {
-          switch(element) { //选项1,2,3,4 转换为 "A","B","C","D"
-            case 1:
-              right = "A"
-              break
-            case 2:
-              right = "B"
-              break
-            case 3:
-              right = "C"
-              break
-            case 4:
-              right = "D"
-          }
-          if(right == this.topic[1][index].rightAnswer) { // 当前选项与正确答案对比
-            finalScore += this.topic[1][index].score // 计算总分数
-          }
-          console.log(right,this.topic[1][index].rightAnswer)
-        }
-        // console.log(topic1Answer)
-      })
-      /**计算判断题总分 */
-      // console.log(`this.fillAnswer${this.fillAnswer}`)
-      // console.log(this.topic[2][this.index])
-      let fillAnswer = this.fillAnswer
-      fillAnswer.forEach((element,index) => { //此处index和 this.index数据不一致，注意
-        element.forEach((inner) => {
-          if(this.topic[2][index].answer.includes(inner)) { //判断填空答案是否与数据库一致
-            console.log("正确")
-            finalScore += this.topic[2][this.index].score
-          }
-        })
-      });
-      /** 计算判断题总分 */
-      let topic3Answer = this.judgeAnswer
-      topic3Answer.forEach((element,index) => {
-        let right = null
-        switch(element) {
-          case 1:
-            right = "T"
-            break
-          case 2:
-            right = "F"
-        }
-        if(right == this.topic[2][index].answer) { // 当前选项与正确答案对比
-            finalScore += this.topic[2][index].score // 计算总分数
-          }
-      })
-      console.log(`目前总分${finalScore}`)
+      
       if(this.time != 0) {
         this.$confirm("考试结束时间未到,是否提前交卷","友情提示",{
           confirmButtonText: '立即交卷',
@@ -448,28 +399,16 @@ export default {
           type: 'warning'
         }).then(() => {
           console.log("交卷")
+          this.setCookies();
           let date = new Date()
           this.endTime = this.getTime(date)
           let answerDate = this.endTime.substr(0,10)
           //提交成绩信息
-          this.$axios({
-            url: '/api/score',
-            method: 'post',
-            data: {
-              examCode: this.examData.examCode, //考试编号
-              studentId: this.userInfo.id, //学号
-              subject: this.examData.source, //课程名称
-              etScore: finalScore, //答题成绩
-              answerDate: answerDate, //答题日期
-            }
-          }).then(res => {
-            if(res.data.code == 200) {
-              this.$router.push({path:'/studentScore',query: {
-                score: finalScore, 
-                startTime: this.startTime,
-                endTime: this.endTime
-              }})
-            }  
+          let user_id = this.userInfo.id;
+          let exam_id = this.$route.query.id;
+          this.$store.dispatch('endExam', {user_id, exam_id}).then(res=>{
+            this.$router.push({path:'/answerScore', query: {id:this.exam_id}})
+            console.log(res)
           })
         }).catch(() => {
           console.log("继续答题")
@@ -495,10 +434,7 @@ export default {
         };
       },1000),
       setInterval(()=>{
-        let user_id = this.$store.state.user.userinfo.id;
-        let exam_id = this.$route.query.id
-        const {singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag} = this
-        this.$store.dispatch('setExamCookies', {user_id, exam_id, singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag})
+        this.setCookies();
       },1000*30*60)
     }
   },

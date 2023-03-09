@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/exam")
@@ -138,5 +135,48 @@ public class ExamController {
         myExam.setStart_time(new Date());
         examService.startExam(myExam);
         return new ResponseResult(200, "已开始考试!");
+    }
+
+    @RequestMapping(value="/endExam", method = RequestMethod.POST)
+    public ResponseResult endExam(@RequestBody MyExam myExam) {
+        Date end_time = new Date();
+        myExam.setEnd_time(end_time);
+        List<Problem> list = examService.getProblemById(myExam.getExam_id());
+        Exam exam = examService.getExamById(myExam.getExam_id());
+        ExamCookie examCookie = redisCache.getCacheObject("examcookies:"+myExam.getUser_id()+myExam.getExam_id());
+        System.out.println(examCookie);
+        List<Integer> singleAnswer = examCookie.getSingleAnswer();
+        List<List<Integer>> multipleAnswer = examCookie.getMultipleAnswer();
+        List<Integer> judgeAnswer = examCookie.getJudgeAnswer();
+        int score = 0;
+        for (int i = 0; i < singleAnswer.size(); i++) {
+            if (Objects.isNull(singleAnswer.get(i))) continue;
+            String ans = "";
+            if (singleAnswer.get(i) == 1) ans = "A";
+            else if (singleAnswer.get(i) == 2) ans = "B";
+            else if (singleAnswer.get(i) == 3) ans = "C";
+            else ans = "D";
+            if (ans.equals(list.get(i).getAccept())) score += exam.getSingleScore();
+        }
+        for (int i = 0; i < multipleAnswer.size(); i++) {
+            if (Objects.isNull(multipleAnswer.get(i))) continue;
+            String ans = "";
+            for (int j = 0; j < multipleAnswer.get(i).size(); j++)
+                if (multipleAnswer.get(i).get(j) == 1) ans += "A";
+                else if (multipleAnswer.get(i).get(j) == 2) ans += "B";
+                else if (multipleAnswer.get(i).get(j) == 3) ans += "C";
+                else ans += "D";
+            if (ans.equals(list.get(i+singleAnswer.size()).getAccept())) score += exam.getMultipleScore();
+        }
+        for (int i = 0; i < judgeAnswer.size(); i++) {
+            if (Objects.isNull(judgeAnswer.get(i))) continue;
+            String ans = "";
+            if (judgeAnswer.get(i) == 1) ans = "A";
+            else ans = "B";
+            if (ans.equals(list.get(i+singleAnswer.size()+multipleAnswer.size()).getAccept())) score += exam.getTfScore();
+        }
+        myExam.setScore(score);
+        examService.endExam(myExam);
+        return new ResponseResult(200, "成功!");
     }
 }

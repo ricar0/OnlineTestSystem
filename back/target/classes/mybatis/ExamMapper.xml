@@ -28,4 +28,8 @@
     <select id="getExamInfo" resultType="com.kaka.entity.MyExam" parameterType="com.kaka.entity.MyExam">
         select * from myexam where (user_id = #{user_id} and exam_id = #{exam_id});
     </select>
+
+    <update id="endExam" parameterType="com.kaka.entity.MyExam">
+        update myexam set end_time = #{end_time}, score = #{score} where (user_id = #{user_id} and exam_id = #{exam_id})
+    </update>
 </mapper>

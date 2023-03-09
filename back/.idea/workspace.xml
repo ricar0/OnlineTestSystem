@@ -55,17 +55,6 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RunManager" selected="Spring Boot.SecurityApplication">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="SecurityApplicationTests.aaa" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="security" />
       <extension name="coverage">
@@ -127,7 +116,8 @@
       <workItem from="1678153544160" duration="12495000" />
       <workItem from="1678237583223" duration="15072000" />
       <workItem from="1678274281565" duration="287000" />
-      <workItem from="1678274809438" duration="5419000" />
+      <workItem from="1678274809438" duration="5583000" />
+      <workItem from="1678341982272" duration="5451000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>

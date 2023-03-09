@@ -56,3 +56,7 @@ export const reqSetExamCookies = (data)=>requests({url:'exam/setExamCookies',dat
 //开始考试
 //url:/api/exam/startExam method: post
 export const reqStartExam = (data)=>requests({url:'exam/startExam',data, method:'post'});
+
+//结束考试
+//url:/api/exam/endExam method: post
+export const reqEndExam = (data)=>requests({url:'exam/endExam',data, method:'post'});
