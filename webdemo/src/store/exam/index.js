@@ -1,12 +1,13 @@
 import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
-    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam } from "@/api";
+    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, reqGetExamResult } from "@/api";
 
 const state = {
     myexam: [],
     examinfo: [],
     probleminfo: [],
     paperinfo:[],
-    examcookies: null
+    examcookies: null,
+    examresult:[]
 }
 
 const mutations = {
@@ -24,6 +25,9 @@ const mutations = {
     },
     GETEXAMCOOKIES(state, examcookies) {
         state.examcookies = examcookies;
+    },
+    GETEXAMRESULT(state, examresult) {
+        state.examresult = examresult;
     }
 }
 
@@ -105,7 +109,16 @@ const actions = {
         } else {
             return Promise.reject(new Error("failure"));
         }
-    }
+    },
+    async getExamResult({commit}, obj) {
+        let {data} = await reqGetExamResult(obj);
+        commit("GETEXAMRESULT", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
 }
 const getters = {};
 export default {

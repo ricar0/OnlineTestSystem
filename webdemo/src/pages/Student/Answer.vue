@@ -129,6 +129,7 @@
               <li @click="previous()"><i class="el-icon-arrow-left"></i><span>上一题</span></li>
               <li @click="mark()"><i class="el-icon-view"></i><span>标记</span></li>
               <li @click="next()"><span>下一题</span><i class="el-icon-arrow-right"></i></li>
+              <li @click="save()"><el-button type="primary">保存进度</el-button></li>
             </ul>
           </div>
         </div>
@@ -187,6 +188,13 @@ export default {
     this.showTime()
   },
   methods: {
+    save() {
+      this.setCookies();
+      this.$message({
+          message: '已成功保存进度!',
+          type: 'success'
+        });
+    },
     setCookies() {
       let user_id = this.userInfo.id;
       let exam_id = this.$route.query.id
@@ -407,7 +415,7 @@ export default {
           let user_id = this.userInfo.id;
           let exam_id = this.$route.query.id;
           this.$store.dispatch('endExam', {user_id, exam_id}).then(res=>{
-            this.$router.push({path:'/answerScore', query: {id:this.exam_id}})
+            this.$router.push({path:'/answerScore', query: {id:exam_id}})
             console.log(res)
           })
         }).catch(() => {

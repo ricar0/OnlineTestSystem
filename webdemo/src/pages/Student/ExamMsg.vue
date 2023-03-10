@@ -83,6 +83,12 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('getUserInfo').then(res=>{
+      this.uid = this.$store.state.user.userinfo.id;
+      let user_id = this.uid;
+      let exam_id = this.$route.query.id;
+      this.$store.dispatch('initExamCookies', {user_id, exam_id})
+    })
     this.init()
   },
   methods: {
@@ -121,11 +127,10 @@ export default {
                 this.uid = this.$store.state.user.userinfo.id;
                 let user_id = this.uid;
                 let exam_id = id;
-                this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
-                  console.log(res) 
-                  this.$router.push({path:"/answer",query:{id: id}})
+                  this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
+                    this.$router.push({path:"/answer",query:{id: id}})
+                  })
                 })
-              })
              
             }   
           }).catch(() => {

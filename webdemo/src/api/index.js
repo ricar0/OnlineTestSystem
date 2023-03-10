@@ -60,3 +60,7 @@ export const reqStartExam = (data)=>requests({url:'exam/startExam',data, method:
 //结束考试
 //url:/api/exam/endExam method: post
 export const reqEndExam = (data)=>requests({url:'exam/endExam',data, method:'post'});
+
+//获取考试结果
+//url:/api/exam/getExamResult method: post
+export const reqGetExamResult = (data)=>requests({url:'exam/getExamResult',data, method:'post'});

@@ -97,6 +97,7 @@ public class ExamController {
         examCookie.setMultipleisMark(list2);
         examCookie.setJudgeisMark(list2);
         examCookie.setBg_flag(false);
+        System.out.println(examCookie);
         redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id(), examCookie);
         return new ResponseResult(200, "设置成功!");
     }
@@ -178,5 +179,10 @@ public class ExamController {
         myExam.setScore(score);
         examService.endExam(myExam);
         return new ResponseResult(200, "成功!");
+    }
+
+    @RequestMapping(value="/getExamResult", method = RequestMethod.POST)
+    public ResponseResult getExamResult(@RequestBody MyExam myExam) {
+        return new ResponseResult(200, "获取成功!", examMapper.getExamInfo(myExam));
     }
 }

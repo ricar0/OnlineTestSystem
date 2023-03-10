@@ -1,9 +1,9 @@
 <template>
   <div class="score">
     <div class="title">
-      <p class="name">计算机网络</p>
-      <p class="description">(总分：100分,限时：100分钟)</p>
-      <p class="description">学生：大咸鱼</p>
+      <p class="name">{{examData.source}}</p>
+      <p class="description">(总分：{{examData.totalScore}}分,限时：{{examData.totalTime}}分钟)</p>
+      <p class="description">学生：{{username}}</p>
     </div>
     <div class="total">
       <div class="look">
@@ -32,6 +32,12 @@ export default {
 
       startTime: null, //考试开始时间
       endTime: null, //考试结束时间
+      examData: {
+        source: null,
+        totalTime: null,
+        totalScore: null
+      },
+      username: null,
     }
   },
   created() {
@@ -46,9 +52,24 @@ export default {
       },1000)
     },
     getScore() {
-      let score = this.$route.query.score
-      let startTime = this.$route.query.startTime
-      let endTime = this.$route.query.endTime
+      this.$store.dispatch('getUserInfo').then(res=>{
+        let user_id = this.$store.state.user.userinfo.id;
+        let exam_id = this.$route.query.id;
+        this.username = this.$store.state.user.userinfo.username;
+        this.$store.dispatch('getExamById', exam_id).then(res=>{
+          this.examData.source = this.$store.state.exam.examinfo.source;
+          this.examData.totalScore = this.$store.state.exam.examinfo.totalScore;
+          this.examData.totalTime = this.$store.state.exam.examinfo.totalTime;
+        })
+        this.$store.dispatch('getExamResult', {user_id, exam_id}).then(res=>{
+          console.log(this.$store.state.exam.examresult)
+          this.startTime = this.$store.state.exam.examresult.start_time;
+          this.endTime = this.$store.state.exam.examresult.end_time;
+          this.score = this.$store.state.exam.examresult.score;
+          this.startTime = this.startTime.substr(0,10)+'  '+this.startTime.substr(11,8)
+          this.endTime = this.endTime.substr(0,10)+'  '+this.endTime.substr(11,8)
+        })
+      })
       this.score = score
       this.startTime = startTime
       this.endTime = endTime
