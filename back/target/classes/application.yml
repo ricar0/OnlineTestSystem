@@ -6,6 +6,7 @@ spring:
     cache: false
   jackson:
     time-zone: GMT+8
+
   redis:
     host: 121.41.45.164
     port: 6379

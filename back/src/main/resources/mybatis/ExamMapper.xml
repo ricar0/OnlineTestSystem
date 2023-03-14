@@ -10,7 +10,7 @@
             #{singleScore}, #{multipleScore}, #{tfScore});
     </insert>
     <select id="getMyExam" parameterType="Long" resultType="com.kaka.entity.Exam">
-        select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by examDate asc;
+        select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by start_time asc;
     </select>
 
     <select id="getExamById" parameterType="Long" resultType="com.kaka.entity.Exam">
@@ -32,4 +32,5 @@
     <update id="endExam" parameterType="com.kaka.entity.MyExam">
         update myexam set end_time = #{end_time}, score = #{score} where (user_id = #{user_id} and exam_id = #{exam_id})
     </update>
+
 </mapper>

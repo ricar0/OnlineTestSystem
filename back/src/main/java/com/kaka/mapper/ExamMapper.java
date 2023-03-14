@@ -3,6 +3,7 @@ package com.kaka.mapper;
 import com.kaka.entity.Exam;
 import com.kaka.entity.MyExam;
 import com.kaka.entity.Problem;
+import com.kaka.entity.Search;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -28,4 +29,5 @@ public interface ExamMapper {
     public MyExam getExamInfo(MyExam myExam);
 
     public void endExam(MyExam myExam);
+
 }

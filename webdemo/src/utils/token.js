@@ -1,12 +1,12 @@
-
+import Cookies from "js-cookie";
 export const getToken = () => {
-    return localStorage.getItem('TOKEN');
+    return Cookies.get("TOKEN");
 }
 
 export const setToken = (token) => {
-    localStorage.setItem('TOKEN', token);
+    Cookies.set("TOKEN", token, {expires: 30});
 }
 
 export const removeToken = () => {
-    localStorage.removeItem('TOKEN');
+    Cookies.remove("TOKEN");
 }

@@ -64,3 +64,7 @@ export const reqEndExam = (data)=>requests({url:'exam/endExam',data, method:'pos
 //获取考试结果
 //url:/api/exam/getExamResult method: post
 export const reqGetExamResult = (data)=>requests({url:'exam/getExamResult',data, method:'post'});
+
+//通过关键词搜索我的考试
+//url:/api/search/searchMyExamByKey method: post
+export const reqSearchMyExamByKey = (data)=>requests({url:'search/searchMyExamByKey',data, method:'post'});

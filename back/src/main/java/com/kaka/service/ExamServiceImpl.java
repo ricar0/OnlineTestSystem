@@ -3,6 +3,7 @@ package com.kaka.service;
 import com.kaka.entity.Exam;
 import com.kaka.entity.MyExam;
 import com.kaka.entity.Problem;
+import com.kaka.entity.Search;
 import com.kaka.mapper.ExamMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;

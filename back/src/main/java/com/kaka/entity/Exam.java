@@ -16,7 +16,8 @@ public class Exam {
     private int totalTime;
     private int totalScore;
     private String teacher;
-    private String examDate;
+    private String start_time;
+    private String end_time;
     private boolean lock;
     private String password;
     private int singleScore;
