@@ -1,24 +1,22 @@
 <template>
   <div id="index">
     <section class="container">
+      <Header></Header>
       <div class="left_side">
         <MainLeft></MainLeft>
       </div>
-      <div class="main_wrapper">
-        <!-- <Navigator class="nav"></Navigator> -->
-        <router-view></router-view>
-      </div>
+      <div class="content"></div>
     </section>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Admin/Header.vue'
 import MainLeft from '@/components/Admin/MainLeft.vue'
-import Navigator from '@/components/Admin/MainLeft.vue'
 export default {
   components:{
     MainLeft,
-    Navigator
+    Header,
   },
   data() {
     return {
@@ -32,13 +30,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#index .nav {
-  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+.left_side {
+  margin-top: 3.2%;
 }
 .container {
   display: flex;
-//   background-color: #fff;
+  background-image: url('@/assets/background.png');
+  // height: 100%;
+  // background-color: #fff;
 }
 .main_wrapper {
   overflow: hidden;

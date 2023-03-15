@@ -18,9 +18,9 @@
           </div>
         </template>
         <el-menu-item-group v-for="(list,index1) in item.content" :key="index1">
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item1 != null">{{list.item1}}</el-menu-item>
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item2 != null">{{list.item2}}</el-menu-item>
-          <el-menu-item @click="handleTitle(item.index)" :index="list.path" v-if="list.item3 != null">{{list.item3}}</el-menu-item>
+          <el-menu-item style="color:#fff;" @click="handleTitle(item.index)" :index="list.path" v-if="list.item1 != null">{{list.item1}}</el-menu-item>
+          <el-menu-item style="color:#fff;" @click="handleTitle(item.index)" :index="list.path" v-if="list.item2 != null">{{list.item2}}</el-menu-item>
+          <el-menu-item style="color:#fff;" @click="handleTitle(item.index)" :index="list.path" v-if="list.item3 != null">{{list.item3}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -28,15 +28,27 @@
 </template>
 
 <script>
+import Bus from '@/utils/bus.js'
 export default {
   name: "mainLeft",
   data() {
     return {
-      menu:[]
+      menu:[],
+      flag: false,
     }
   },
-  created() {
+  mounted() {
     this.addData()
+  },
+  watch: {
+    'flag': {
+      immediate: true,
+      handler() {
+        Bus.$on('flag', (data=>{
+          this.flag = data;
+        }))
+      }
+    }
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -92,6 +104,7 @@ export default {
 
 .el-menu-vertical-demo .el-submenu__title {
   overflow: hidden;
+  /* color: #fff; */
 }
 .left-width .iconfont {
   font-size: 18px;
@@ -103,8 +116,9 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   min-height: 900px;
 }
+
 #left {
-  height: 100%;
+  min-height: 900px;
   background-color: #124280;
   z-index: 0;
 }
