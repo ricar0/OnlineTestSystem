@@ -49,5 +49,32 @@ public class UserController {
         return rest;
     }
 
+    @RequestMapping(value="/getStudentAll", method = RequestMethod.GET)
+    public ResponseResult getStudentAll() {
+        return new ResponseResult(200, "查询成功!", userService.getStudentAll());
+    }
 
+    @RequestMapping(value="/getUserInfoById/{id}", method = RequestMethod.GET)
+    public ResponseResult getUserInfoById(@PathVariable Long id) {
+        return new ResponseResult(200, "查询成功!", userService.getUserInfoById(id));
+    }
+
+    @RequestMapping(value="/updateUserInfo", method = RequestMethod.POST)
+    public ResponseResult updateUserInfo(@RequestBody User user) {
+        User user1 = userService.findUserByName(user.getUsername());
+        if (!Objects.isNull(user1) && !user1.getId().equals(user.getId())) {
+            return new ResponseResult(400, "该用户名已被使用!");
+        }
+        user1 = userService.findUserByPhone(user.getPhone());
+        if (!Objects.isNull(user1) && !user1.getId().equals(user.getId())) {
+            return new ResponseResult(400, "该手机号已被使用!");
+        }
+        user1 = userService.findUserByEmail(user.getEmail());
+        if (!Objects.isNull(user1) && !user1.getId().equals(user.getId())) {
+            return new ResponseResult(400, "该邮箱已被使用!");
+        }
+        userService.updateUserInfo(user);
+        System.out.println(user);
+        return new ResponseResult(200, "修改成功!");
+    }
 }

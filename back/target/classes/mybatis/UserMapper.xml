@@ -16,4 +16,19 @@
     <select id="findUserByPhone" parameterType="String" resultType="com.kaka.entity.User">
         select * from user where phone = #{phone};
     </select>
+    <select id="getStudentAll" resultType="com.kaka.entity.User">
+        select * from user where role = "student";
+    </select>
+    <select id="getUserInfoById" parameterType="Long" resultType="com.kaka.entity.User">
+        select * from user where id = #{id};
+    </select>
+    <update id="updateUserInfo" parameterType="com.kaka.entity.User">
+        update user set username = #{username}, school = #{school}, major = #{major},
+                        grade = #{grade}, sex = #{sex}, phone = #{phone}, email = #{email},
+                        idcard = #{idcard}
+        where id = #{id};
+    </update>
+    <select id="findUserByEmail" parameterType="String" resultType="com.kaka.entity.User">
+        select * from user where email = #{email};
+    </select>
 </mapper>

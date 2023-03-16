@@ -23,4 +23,15 @@ public interface UserMapper {
 
     //根据用户手机号查询用户信息
     public User findUserByPhone(String phone);
+
+    // 获取所有学生
+    public List<User> getStudentAll();
+
+    //根据id查询学生信息
+    public User getUserInfoById(Long id);
+
+    //修改学生信息
+    void updateUserInfo(User user);
+
+    public User findUserByEmail(String email);
 }

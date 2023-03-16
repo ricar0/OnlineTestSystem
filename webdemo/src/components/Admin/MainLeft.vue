@@ -74,7 +74,7 @@ export default {
         index: '2',
         title: '题库管理',
         icon: 'el-icon-s-home',
-        content:[{item1:'功能介绍',path:'/introductionProblem'},{item2: '题库查询',path: '/searchProblem'}, {item3:'添加题库', path:'/addProblem'}],
+        content:[{item1:'功能介绍',path:'/introduction'},{item2: '题库查询',path: '/problemSet'}, {item3:'添加题库', path:'/addProblem'}],
       }),
       this.menu.push({
         index: '3',
@@ -86,7 +86,7 @@ export default {
         index: '4',
         title: '学生管理',
         icon: 'el-icon-user-solid',
-        content:[{item1: '查询学生信息',path: '/searchStudentInfo'}, {item2:'添加学生', path:'/addStudent'}],
+        content:[{item1: '查询学生信息',path: '/studentManage'}, {item2:'添加学生', path:'/addStudent'}],
       }),
       this.menu.push({
         index: '5',

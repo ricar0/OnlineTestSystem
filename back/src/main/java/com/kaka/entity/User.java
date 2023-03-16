@@ -27,4 +27,17 @@ public class User implements Serializable {
     private String role;
     //手机
     private String phone;
+    //邮箱
+    private String email;
+    //学校
+    private String school;
+    //专业
+    private String major;
+    //身份证
+    private String idcard;
+    //年级
+    private String grade;
+    //性别
+    private String sex;
+
 }

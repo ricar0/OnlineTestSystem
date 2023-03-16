@@ -15,6 +15,8 @@ import ExamMsg from '@/pages/Student/ExamMsg'
 import ScoreTable from '@/pages/Student/ScoreTable'
 import AnswerScore from '@/pages/Student/AnswerScore'
 import AdminTable from '@/pages/Admin/index'
+import StudentManage from '@/pages/Admin/StudentManage'
+import ProblemSet from '@/pages/Admin/ProblemSet'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -82,7 +84,20 @@ export default new VueRouter ({
         {
             path: "/adminTable",
             component: AdminTable,
-            meta: {show:false}
+            meta: {show:false},
+            children: [
+                {
+                    path: "/studentManage",
+                    component: StudentManage,
+                    meta: {show:false}
+                },
+                {
+                    path: "/problemSet",
+                    component: ProblemSet,
+                    meta: {show:false}
+                },
+            ]
         },
+        
     ]
 })

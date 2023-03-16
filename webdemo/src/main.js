@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(Cookies)
+ElementUI.TableColumn.props.showOverflowTooltip ={type:Boolean, default: true}
 
 new Vue({
   render: h => h(App),

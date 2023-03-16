@@ -68,3 +68,19 @@ export const reqGetExamResult = (data)=>requests({url:'exam/getExamResult',data,
 //通过关键词搜索我的考试
 //url:/api/search/searchMyExamByKey method: post
 export const reqSearchMyExamByKey = (data)=>requests({url:'search/searchMyExamByKey',data, method:'post'});
+
+//获取所有学生
+//url:/api/user/getStudentAll method: get
+export const reqGetStudentAll = ()=>requests({url:'user/getStudentAll',method:'get'})
+
+//获取用户信息
+//url:/api/auth/getUserInfoById  method:get  
+export const reqGetUserInfoById = (data)=>requests({url:'/user/getUserInfoById/'+data,method:'get'});
+
+//修改用户信息
+//url:/api/auth/updateUserInfo  method:post  
+export const reqUpdateUserInfo = (data)=>requests({url:'/user/updateUserInfo',data,method:'post'});
+
+//获取题库
+//url:/api/problem/getAll method:get
+export const reqGetProblemAll = ()=>requests({url:'/problem/getAll',method:'get'});

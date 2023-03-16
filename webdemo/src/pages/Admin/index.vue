@@ -5,7 +5,9 @@
       <div class="left_side">
         <MainLeft></MainLeft>
       </div>
-      <div class="content"></div>
+      <div class="content">
+        <router-view></router-view>
+      </div>
     </section>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
   },
   data() {
     return {
-      username: '许如梦'
+
     }
   },
   methods: {
@@ -43,5 +45,10 @@ export default {
   overflow: hidden;
   flex: 1;
 //   background-color: #fff;
+}
+.content {
+  margin-top: 5%;
+  height: 100%;
+  width: 100%;
 }
 </style>

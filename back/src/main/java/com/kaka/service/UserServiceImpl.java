@@ -40,4 +40,25 @@ public class UserServiceImpl implements UserService{
     public User findUserByPhone(String phone) {
         return userMapper.findUserByPhone(phone);
     }
+
+    @Override
+    public List<User> getStudentAll() {
+        return userMapper.getStudentAll();
+    }
+
+    @Override
+    public User getUserInfoById(Long id) {
+        return userMapper.getUserInfoById(id);
+    }
+
+    @Override
+    public void updateUserInfo(User user) {
+        userMapper.updateUserInfo(user);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userMapper.findUserByEmail(email);
+    }
+
 }

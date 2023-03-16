@@ -10,7 +10,7 @@
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
             <router-link v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
             <a style="color:white;" v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>
-            <div class="msg" v-if="flag && isLogin">
+            <div style="cursor: pointer;" class="msg" v-if="flag && isLogin">
               <p @click="manage()">个人信息</p>
               <p class="exit" @click="logout()">退出登录</p>
             </div>

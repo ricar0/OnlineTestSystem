@@ -1,10 +1,13 @@
 //user模块小仓库
-import {reqUserLogin, reqUserInfo, reqUserLogout, reqSendCode, reqGetCode} from '@/api'
+import {reqUserLogin, reqUserInfo, reqUserLogout, reqSendCode, reqGetCode, reqGetStudentAll, 
+    reqGetUserInfoById, reqUpdateUserInfo} from '@/api'
 import {setToken, getToken, removeToken} from '@/utils/token'
 const state={
     token: getToken(),
     userinfo:{},
     phone:'',
+    student: [],
+    user: '',
 };
 const mutations = {
     USERLOGIN(state, token) {
@@ -20,6 +23,12 @@ const mutations = {
     },
     SENDCODE(state, phone) {
         state.phone = phone;
+    },
+    GETSTUDENTALL(state, student) {
+        state.student = student;
+    },
+    GETUSERINFOBYID(state, user) {
+        state.user = user;
     }
 };
 const actions = {
@@ -66,6 +75,33 @@ const actions = {
     //提交验证码
     async getCode({commit}, obj) {
         let {data} = await reqGetCode(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getStudentAll({commit}, obj) {
+        let {data} = await reqGetStudentAll(obj);
+        commit("GETSTUDENTALL", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getUserInfoById({commit}, obj) {
+        let {data} = await reqGetUserInfoById(obj);
+        commit("GETUSERINFOBYID", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async updateUserInfo({commit}, obj) {
+        let {data} = await reqUpdateUserInfo(obj);
+        console.log(data)
         if (data.code == 200) {
             return "ok";
         } else {
