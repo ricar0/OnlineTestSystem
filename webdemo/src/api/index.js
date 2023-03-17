@@ -84,3 +84,7 @@ export const reqUpdateUserInfo = (data)=>requests({url:'/user/updateUserInfo',da
 //获取题库
 //url:/api/problem/getAll method:get
 export const reqGetProblemAll = ()=>requests({url:'/problem/getAll',method:'get'});
+
+//通过筛选获取题库
+//url:/api/problem/getProblemByFilter method:post
+export const reqGetProblemByFilter = (data)=>requests({url:'/problem/getProblemByFilter',data,method:'post'});

@@ -16,4 +16,20 @@ public class ProblemServiceImpl implements ProblemService{
     public List<Problem> getAll() {
         return problemMapper.getAll();
     }
+
+    @Override
+    public List<Problem> getProblemByFilter1(String source, String difficulty) {
+        return problemMapper.getProblemByFilter1(source, difficulty);
+    }
+
+    @Override
+    public List<Problem> getProblemByFilter2(String difficulty) {
+        return problemMapper.getProblemByFilter2(difficulty);
+    }
+
+    @Override
+    public List<Problem> getProblemByFilter3(String source) {
+        return problemMapper.getProblemByFilter3(source);
+    }
+
 }
