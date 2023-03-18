@@ -17,7 +17,10 @@ import AnswerScore from '@/pages/Student/AnswerScore'
 import AdminTable from '@/pages/Admin/index'
 import StudentManage from '@/pages/Admin/StudentManage'
 import ProblemSet from '@/pages/Admin/ProblemSet'
+<<<<<<< HEAD
 import AddProblem from '@/pages/Admin/AddProblem'
+=======
+>>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -97,11 +100,14 @@ export default new VueRouter ({
                     component: ProblemSet,
                     meta: {show:false}
                 },
+<<<<<<< HEAD
                 {
                     path: "/addProblem",
                     component: AddProblem,
                     meta: {show:false}
                 },
+=======
+>>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
             ]
         },
         

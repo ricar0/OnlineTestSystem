@@ -97,10 +97,17 @@
             </div>
             <div v-if="currentType == 2">
               <el-checkbox-group v-model="multipleAnswer[index]" @change="getMultipleLabel">
+<<<<<<< HEAD
                 <el-checkbox :label="1">A.{{showAnswer[0]}}</el-checkbox><br>
                 <el-checkbox :label="2">B.{{showAnswer[1]}}</el-checkbox><br>
                 <el-checkbox :label="3">C.{{showAnswer[2]}}</el-checkbox><br>
                 <el-checkbox :label="4">D.{{showAnswer[3]}}</el-checkbox><br>
+=======
+                <el-checkbox :label="1">A.{{showAnswer[0]}}</el-checkbox><br></br>
+                <el-checkbox :label="2">B.{{showAnswer[1]}}</el-checkbox><br></br>
+                <el-checkbox :label="3">C.{{showAnswer[2]}}</el-checkbox><br></br>
+                <el-checkbox :label="4">D.{{showAnswer[3]}}</el-checkbox><br></br>
+>>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
               </el-checkbox-group>
               <div class="analysis" v-if="isPractice">
                 <ul>
@@ -451,7 +458,10 @@ export default {
 </script>
 
 <style lang="less">
+<<<<<<< HEAD
 
+=======
+>>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
 li {
   list-style: none;
 }
