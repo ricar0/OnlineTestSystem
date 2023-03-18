@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.mapper.ProblemMapper">
+    <select id="getAll" resultType="com.kaka.entity.Problem">
+        select * from problems_set;
+    </select>
+    <select id="getProblemByFilter" resultType="com.kaka.entity.Problem" parameterType="com.kaka.entity.ProblemFilter">
+        SELECT * FROM problems_set
+        <where>
+            <if test="sourceList.size() > 0">
+                AND source IN
+                <foreach item="source" collection="sourceList" open="(" separator="," close=")">
+                    #{source}
+                </foreach>
+            </if>
+            <if test="difficultyList.size() > 0">
+                AND difficulty IN
+                <foreach item="difficulty" collection="difficultyList" open="(" separator="," close=")">
+                    #{difficulty}
+                </foreach>
+            </if>
+            <if test="labelList.size() > 0">
+                AND label IN
+                <foreach item="label" collection="labelList" open="(" separator="," close=")">
+                    #{label}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

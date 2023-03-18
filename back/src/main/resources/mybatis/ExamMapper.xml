@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.mapper.ExamMapper">
+    <select id="getAll" resultType="com.kaka.entity.Exam">
+        select * from exam;
+    </select>
+    <insert id="addExam" parameterType="com.kaka.entity.Exam">
+        insert into exam value(null, #{source}, #{description}, #{totalTime},
+            #{totalScore}, #{teacher}, #{examDate}, #{lock}, #{code}, #{password},
+            #{singleScore}, #{multipleScore}, #{tfScore});
+    </insert>
+    <select id="getMyExam" parameterType="Long" resultType="com.kaka.entity.Exam">
+        select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by start_time asc;
+    </select>
+
+    <select id="getExamById" parameterType="Long" resultType="com.kaka.entity.Exam">
+        select * from exam where id = #{id};
+    </select>
+
+    <select id="getProblemById" parameterType="Long" resultType="com.kaka.entity.Problem">
+        select * from problems_set where id in(select problem_id from exam_problem where exam_id = #{id});
+    </select>
+
+    <update id="startExam">
+        update myexam set start_time = #{start_time} where (user_id = #{user_id} and exam_id = #{exam_id})
+    </update>
+
+    <select id="getExamInfo" resultType="com.kaka.entity.MyExam" parameterType="com.kaka.entity.MyExam">
+        select * from myexam where (user_id = #{user_id} and exam_id = #{exam_id});
+    </select>
+
+    <update id="endExam" parameterType="com.kaka.entity.MyExam">
+        update myexam set end_time = #{end_time}, score = #{score} where (user_id = #{user_id} and exam_id = #{exam_id})
+    </update>
+
+</mapper>
