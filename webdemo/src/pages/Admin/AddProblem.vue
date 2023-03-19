@@ -6,7 +6,7 @@
         <section class="append">
           <ul>
             <li>
-              <span>题目类型:</span>
+              <span>题目类型:&nbsp;</span>
               <el-select v-model="optionValue" placeholder="请选择题型" class="w150">
                 <el-option
                   v-for="item in options"
@@ -17,34 +17,7 @@
               </el-select>
             </li>
             <li v-if="optionValue == '单选题'">
-              <span>所属章节：</span>
-              <el-input
-                placeholder="请输入对应章节"
-                v-model="postChange.section"
-                class="w150"
-                clearable>
-              </el-input>
-            </li>
-            <li v-if="optionValue == '多选题'">
-              <span>所属章节：</span>
-              <el-input
-                placeholder="请输入对应章节"
-                v-model="postFill.section"
-                class="w150"
-                clearable>
-              </el-input>
-            </li>
-            <li v-if="optionValue == '判断题'">
-              <span>所属章节：</span>
-              <el-input
-                placeholder="请输入对应章节"
-                v-model="postJudge.section"
-                class="w150"
-                clearable>
-              </el-input>
-            </li>
-            <li v-if="optionValue == '选择题'">
-              <span>难度等级:</span>
+              <span>难度等级:&nbsp;</span>
               <el-select v-model="postChange.level" placeholder="选择难度等级" class="w150">
                 <el-option
                   v-for="item in levels"
@@ -54,9 +27,9 @@
                 </el-option>
               </el-select>
             </li>
-            <li v-if="optionValue == '填空题'">
-              <span>难度等级:</span>
-              <el-select v-model="postFill.level" placeholder="选择难度等级" class="w150">
+            <li v-if="optionValue == '多选题'">
+              <span>难度等级:&nbsp;</span>
+              <el-select v-model="postMultiple.level" placeholder="选择难度等级" class="w150">
                 <el-option
                   v-for="item in levels"
                   :key="item.value"
@@ -66,7 +39,7 @@
               </el-select>
             </li>
             <li v-if="optionValue == '判断题'">
-              <span>难度等级:</span>
+              <span>难度等级:&nbsp;</span>
               <el-select v-model="postJudge.level" placeholder="选择难度等级" class="w150">
                 <el-option
                   v-for="item in levels"
@@ -76,9 +49,20 @@
                 </el-option>
               </el-select>
             </li>
-            <li v-if="optionValue == '选择题'">
-              <span>正确选项:</span>
+            <li v-if="optionValue == '单选题'">
+              <span>正确选项:&nbsp;</span>
               <el-select v-model="postChange.rightAnswer" placeholder="选择正确答案" class="w150">
+                <el-option
+                  v-for="item in rights"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '多选题'">
+              <span>正确选项:&nbsp;</span>
+              <el-select multiple collapse-tags v-model="postMultiple.rightAnswer" placeholder="选择正确答案" class="w150">
                 <el-option
                   v-for="item in rights"
                   :key="item.value"
@@ -89,9 +73,10 @@
             </li>
           </ul>
           <!-- 选择题部分 -->
-          <div class="change" v-if="optionValue == '选择题'">
+          <div class="change" v-if="optionValue == '单选题'">
             <div class="title">
-              <el-tag>题目:</el-tag>
+              <el-tag>题目:</el-tag><span> 在下面的输入框中输入题目</span>
+              
               <el-input
                 type="textarea"
                 rows="4"
@@ -102,6 +87,8 @@
               </el-input>
             </div>
             <div class="options">
+              <el-tag>选项:</el-tag><span> 在下面的输入框中输入选项</span>
+              
               <ul>
                 <li>
                   <el-tag type="success">A</el-tag>
@@ -138,7 +125,7 @@
               </ul>
             </div>
             <div class="title">
-              <el-tag>解析:</el-tag><span>在下面的输入框中输入题目解析</span>
+              <el-tag>解析:</el-tag><span> 在下面的输入框中输入答案解析</span>
               <el-input
                 type="textarea"
                 rows="4"
@@ -152,29 +139,64 @@
               <el-button type="primary" @click="changeSubmit()">立即添加</el-button>
             </div>
           </div>
-          <!-- 填空题部分 -->
-          <div class="change fill" v-if="optionValue == '填空题'">
+          <!-- 多选题部分 -->
+          <div class="change" v-if="optionValue == '多选题'">
             <div class="title">
-              <el-tag>题目:</el-tag><span>输入题目,形如--从计算机网络系统组成的角度看，计算机网络可以分为()和()。注意需要考生答题部分一定要用括号（英文半角）括起来。</span>
+              <el-tag>题目:</el-tag>
+              在下面的输入框中输入题目
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postFill.question"
+                v-model="postMultiple.question"
                 placeholder="请输入题目内容"
                 resize="none"
                 class="answer">
               </el-input>
             </div>
-            <div class="fillAnswer">
-              <el-tag>正确答案:</el-tag>
-              <el-input v-model="postFill.answer"></el-input>
+            <div class="options">
+              <el-tag>选项:</el-tag><span> 在下面的输入框中输入选项</span>
+              
+              <ul>
+                <li>
+                  <el-tag type="success">A</el-tag>
+                  <el-input
+                    placeholder="请输入选项A的内容"
+                    v-model="postMultiple.answerA"
+                    clearable="">
+                  </el-input>
+                </li>
+                <li>
+                  <el-tag type="success">B</el-tag>
+                  <el-input
+                    placeholder="请输入选项B的内容"
+                    v-model="postMultiple.answerB"
+                    clearable="">
+                  </el-input>
+                </li>
+                <li>
+                  <el-tag type="success">C</el-tag>
+                  <el-input
+                    placeholder="请输入选项C的内容"
+                    v-model="postMultiple.answerC"
+                    clearable="">
+                  </el-input>
+                </li>
+                <li>
+                  <el-tag type="success">D</el-tag>
+                  <el-input
+                    placeholder="请输入选项D的内容"
+                    v-model="postMultiple.answerD"
+                    clearable="">
+                  </el-input>
+                </li>
+              </ul>
             </div>
-            <div class="title analysis">
-              <el-tag type="success">解析:</el-tag><span>下方输入框中输入答案解析</span>
+            <div class="title">
+              <el-tag>解析:</el-tag><span> 在下面的输入框中输入答案解析</span>
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postFill.analysis"
+                v-model="postMultiple.analysis"
                 placeholder="请输入答案解析"
                 resize="none"
                 class="answer">
@@ -197,6 +219,7 @@
                 class="answer">
               </el-input>
             </div>
+            <el-tag>选项:</el-tag>
             <div class="judgeAnswer">
               <el-radio v-model="postJudge.answer" label="T">正确</el-radio>
               <el-radio v-model="postJudge.answer" label="F">错误</el-radio>
@@ -262,12 +285,12 @@
         activeName: 'first',  //活动选项卡
         options: [ //题库类型
           {
-            value: '选择题',
-            label: '选择题'
+            value: '单选题',
+            label: '单选题'
           },
           {
-            value: '填空题',
-            label: '填空题'
+            value: '多选题',
+            label: '多选题'
           },
           {
             value: '判断题',
@@ -291,24 +314,16 @@
         difficultyValue: '简单',
         levels: [ //难度等级
           {
-            value: '1',
-            label: '1'
+            value: '简单',
+            label: '简单'
           },
           {
-            value: '2',
-            label: '2'
+            value: '中等',
+            label: '中等'
           },
           {
-            value: '3',
-            label: '3'
-          },
-          {
-            value: '4',
-            label: '4'
-          },
-          {
-            value: '5',
-            label: '5'
+            value: '困难',
+            label: '困难'
           },
         ],
         rights: [ //正确答案
@@ -330,13 +345,12 @@
           },
         ],
         paperId: null,
-        optionValue: '选择题', //题型选中值
+        optionValue: '单选题', //题型选中值
         subject: '', //试卷名称用来接收路由参数
-        postChange: { //选择题提交内容
+        postChange: { //单选题提交内容
           subject: '', //试卷名称
           level: '', //难度等级选中值 
           rightAnswer: '', //正确答案选中值
-          section: '', //对应章节
           question: '', //题目
           analysis: '', //解析
           answerA: '',
@@ -344,19 +358,21 @@
           answerC: '',
           answerD: '',
         },
-        postFill: { //填空题提交内容
+        postMultiple: { //多选题提交内容
           subject: '', //试卷名称
           level: '', //难度等级选中值 
           answer: '', //正确答案
-          section: '', //对应章节
           question: '', //题目
           analysis: '', //解析
+          answerA: '',
+          answerB: '',
+          answerC: '',
+          answerD: '',
         },
         postJudge: { //判断题提交内容
           subject: '', //试卷名称
           level: '', //难度等级选中值 
           answer: '', //正确答案
-          section: '', //对应章节
           question: '', //题目
           analysis: '', //解析
         },
