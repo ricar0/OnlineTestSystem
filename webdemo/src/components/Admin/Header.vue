@@ -5,14 +5,10 @@
       <el-col :span="24">
         <ul style="padding-left:0;" class="list">
           <li style="cursor: pointer;" @click="change()"><i style="font-size: 150%;" class="el-icon-menu"></i></li>
-          <li style="padding-right: 0;"><i style="font-size:250%;"class="el-icon-collection"></i></li>
+          <li style="padding-right: 0;"><i style="font-size:250%;" class="el-icon-collection"></i></li>
           <li class="logo"><span style="font-size:25px; color: white;">Exam-Online</span></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
-<<<<<<< HEAD
             <router-link style="color:white;" v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
-=======
-            <router-link v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
             <a style="color:white;" v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>
             <div style="cursor: pointer;" class="msg" v-if="flag && isLogin">
               <p @click="manage()">个人信息</p>
@@ -81,11 +77,7 @@ li i {
   background-color:#124280; 
   position: fixed;
   box-shadow: 3px 3px 10px 4px rgba(0,0,0,0.3);
-<<<<<<< HEAD
   height: 65px;
-=======
-  
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
 }
 .list {
   margin-bottom: 0px;

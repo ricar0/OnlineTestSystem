@@ -4,7 +4,6 @@
     <select id="getAll" resultType="com.kaka.entity.Problem">
         select * from problems_set;
     </select>
-<<<<<<< HEAD
     <select id="getProblemByFilter" resultType="com.kaka.entity.Problem" parameterType="com.kaka.entity.ProblemFilter">
         SELECT * FROM problems_set
         <where>
@@ -27,17 +26,5 @@
                 </foreach>
             </if>
         </where>
-=======
-    <select id="getProblemByFilter1" resultType="com.kaka.entity.Problem" parameterType="String">
-        select * from problems_set where source = #{source} and difficulty = #{difficulty};
-    </select>
-
-    <select id="getProblemByFilter2" resultType="com.kaka.entity.Problem" parameterType="String">
-        select * from problems_set where difficulty = #{difficulty};
-    </select>
-
-    <select id="getProblemByFilter3" resultType="com.kaka.entity.Problem" parameterType="String">
-        select * from problems_set where source = #{source};
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
     </select>
 </mapper>

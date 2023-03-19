@@ -33,20 +33,12 @@ export default {
 
 <style lang="less" scoped>
 .left_side {
-<<<<<<< HEAD
   margin-top: 60px;
-=======
-  margin-top: 3.2%;
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
 }
 .container {
   display: flex;
   background-image: url('@/assets/background.png');
-<<<<<<< HEAD
   // height: 900px;
-=======
-  // height: 100%;
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
   // background-color: #fff;
 }
 .main_wrapper {

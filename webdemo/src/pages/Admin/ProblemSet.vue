@@ -1,6 +1,5 @@
 <template>
   <div class="all">
-<<<<<<< HEAD
     <p style="margin:0 ; font-size:25px;">题库管理</p>
     <el-divider></el-divider>
     <el-table ref="filterTable" :data="pagination.records" @filter-change="filterChange" border>
@@ -14,18 +13,6 @@
       ></el-table-column>
       <el-table-column prop="description" label="题目" width="200"></el-table-column>
       <el-table-column prop="accept" label="答案" width="50%"></el-table-column>
-=======
-    <p style="margin:0; font-size:25px;">题库管理</p>
-    <el-divider></el-divider>
-    <el-table ref="filterTable" :data="pagination.records" @filter-change="filterChange" border>
-      <el-table-column fixed="left" prop="source" label="学科" width="180"
-       :filters="[{text: '思想道德基础和法律修养', value: '思想道德基础和法律修养'}, {text: '数据结构', value: '数据结构'}, {text: '计算机网络', value: '计算机网络'}]"
-       column-key="source"
-      ></el-table-column>
-      <el-table-column showOverflowTooltip: true prop="label" label="题型" width="80"></el-table-column>
-      <el-table-column prop="description" label="题目" width="200"></el-table-column>
-      <el-table-column prop="accept" label="答案" width="100"></el-table-column>
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
       <el-table-column prop="difficulty" label="难度" width="80"
        :filters="[{text: '简单', value: '简单'}, {text: '中等', value: '中等'}, {text: '困难', value: '困难'}]"
        column-key="difficulty"
@@ -101,14 +88,9 @@ export default {
       },
       dialogVisible: false, //对话框
       form: {}, 
-<<<<<<< HEAD
       difficultyList: [],
       sourceList:[],
       labelList:[],
-=======
-      difficulty: [],
-      source:[]
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
     };
   },
   created() {
@@ -123,7 +105,6 @@ export default {
           else if (filter['difficulty'][i] == "中等") difficulty.push("2");
           else difficulty.push("3");
         }
-<<<<<<< HEAD
         this.difficultyList = difficulty;
       } else if (filter['source']){
         this.sourceList = filter['source'];
@@ -135,11 +116,6 @@ export default {
           else label.push("tf");
         }
         this.labelList = label;
-=======
-        this.difficulty = difficulty;
-      } else {
-        this.source = filter['source'];
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
       }
       this.getStudentInfoByFilter()
     },
@@ -158,15 +134,9 @@ export default {
       }
     },
     getStudentInfoByFilter() {
-<<<<<<< HEAD
       const {sourceList, difficultyList, labelList} = this;
       console.log(sourceList, difficultyList, labelList)
       this.$store.dispatch('getProblemByFilter', {sourceList, difficultyList, labelList}).then(res=>{
-=======
-      const {source, difficulty} = this;
-      console.log(source, difficulty)
-      this.$store.dispatch('getProblemByFilter', {source, difficulty}).then(res=>{
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
         this.work();
       })
     },
@@ -180,11 +150,7 @@ export default {
     //改变当前记录条数
     handleSizeChange(val) {
       this.pagination.size = val;
-<<<<<<< HEAD
       if (this.difficultyList.length || this.sourceList.length || this.labelList.length) {
-=======
-      if (this.difficulty.length || this.source.length) {
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
         this.getStudentInfoByFilter()
       } else {
         this.getStudentInfo();
@@ -193,11 +159,7 @@ export default {
     //改变当前页码，重新发送请求
     handleCurrentChange(val) {
       this.pagination.current = val;
-<<<<<<< HEAD
       if (this.difficultyList.length || this.sourceList.length || this.labelList.length) {
-=======
-      if (this.difficulty.length || this.source.length) {
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
         this.getStudentInfoByFilter()
       } else {
         this.getStudentInfo();

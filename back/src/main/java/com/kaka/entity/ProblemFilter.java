@@ -10,12 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProblemFilter {
-<<<<<<< HEAD
     private List<String> sourceList;
     private List<String> difficultyList;
     private List<String> labelList;
-=======
     private List<String> source;
     private List<String> difficulty;
->>>>>>> d05ed3986ccc16b970daa509d36c355f343d6d85
 }
