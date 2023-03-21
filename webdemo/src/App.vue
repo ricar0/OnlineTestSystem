@@ -32,6 +32,7 @@ export default {
   top: 0;
   left: 0;
   position: absolute;
-  background-image: url('@/assets/background.png');
+  /* background-image: url('@/assets/background.png'); */
+  background-color: #eff3f5!important;
 }
 </style>

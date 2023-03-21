@@ -86,7 +86,7 @@ ul.top {
 .block {
     height: auto;
     width: 100%;
-    background-image: url('@/assets/background.png');
+    background-color: #eff3f5!important;
     min-height: 80%;
 }
 li {

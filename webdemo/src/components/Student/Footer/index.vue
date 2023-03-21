@@ -20,6 +20,6 @@ a {
     height: 50px;
     width: 100%;
     /* background-color: black; */
-    background: url('@/assets/background.png') repeat;
+    background-color: #eff3f5!important;
 }
 </style>

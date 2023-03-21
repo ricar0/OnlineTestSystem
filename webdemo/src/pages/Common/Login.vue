@@ -128,7 +128,8 @@ a:link {
   justify-content: center;
   align-items: center;
   margin-bottom: 10%;
-  background-image: url('@/assets/background.png');
+  // background-image: url('@/assets/background.png');
+  background-color: #eff3f5!important;
 }
 #login .main-container .top {
   margin-top: 10%;

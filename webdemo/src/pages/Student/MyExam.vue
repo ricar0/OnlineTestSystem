@@ -197,7 +197,7 @@ ul.top {
 .block {
     height: auto;
     width: 100%;
-    background: url('@/assets/background.png') repeat;
+    background-color: #eff3f5!important;
     // position: relative;
     min-height: 80%;
 }
