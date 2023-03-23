@@ -32,4 +32,16 @@
     <select id="getAllNumber" resultType="Integer">
         select count(*) from problems_set;
     </select>
+
+    <select id="getProblemById" resultType="com.kaka.entity.Problem" parameterType="Long">
+        select * from problems_set where id = #{id};
+    </select>
+
+    <update id="accept" parameterType="com.kaka.entity.Problem">
+        update problems_set set acnumber = acnumber + 1, totalsubmit = totalsubmit + 1 where id = #{id};
+    </update>
+
+    <update id="wrongAnswer" parameterType="com.kaka.entity.Problem">
+        update problems_set set totalsubmit = totalsubmit + 1 where id = #{id};
+    </update>
 </mapper>

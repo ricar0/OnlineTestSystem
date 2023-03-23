@@ -28,4 +28,19 @@ public class ProblemServiceImpl implements ProblemService{
         return problemMapper.getAllNumber();
     }
 
+    @Override
+    public Problem getProblemById(Long id) {
+        return problemMapper.getProblemById(id);
+    }
+
+    @Override
+    public void accept(Long id) {
+        problemMapper.accept(id);
+    }
+
+    @Override
+    public void wrongAnswer(Long id) {
+        problemMapper.wrongAnswer(id);
+    }
+
 }

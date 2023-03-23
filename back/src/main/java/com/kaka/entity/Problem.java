@@ -19,4 +19,7 @@ public class Problem {
     private String C;
     private String D;
     private String source;
+    private String solution;
+    private int totalsubmit;
+    private int acnumber;
 }

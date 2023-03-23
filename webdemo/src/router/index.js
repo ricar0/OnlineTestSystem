@@ -19,6 +19,7 @@ import StudentManage from '@/pages/Admin/StudentManage'
 import ProblemManage from '@/pages/Admin/ProblemManage'
 import AddProblem from '@/pages/Admin/AddProblem'
 import ProblemSet from '@/pages/Student/ProblemSet'
+import Problem from '@/pages/Student/Problem'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -87,6 +88,11 @@ export default new VueRouter ({
             path: "/problemSet",
             component: ProblemSet,
             meta: {show:true}
+        },
+        {
+            path: "/problem",
+            component: Problem,
+            mata: {show: true}
         },
         {
             path: "/adminTable",

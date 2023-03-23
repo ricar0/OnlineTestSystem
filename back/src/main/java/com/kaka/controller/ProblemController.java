@@ -31,4 +31,18 @@ public class ProblemController {
     ResponseResult getAllNumber() {
         return new ResponseResult(200, "获取成功!", problemService.getAllNumber());
     }
+    @RequestMapping(value="/getProblemById", method = RequestMethod.POST)
+    ResponseResult getProblemById(@RequestBody Problem problem) {
+        return new ResponseResult(200, "获取成功!", problemService.getProblemById(problem.getId()));
+    }
+    @RequestMapping(value="/accept", method = RequestMethod.POST)
+    ResponseResult accept(@RequestBody Problem problem) {
+        problemService.accept(problem.getId());
+        return new ResponseResult(200, "操作成功");
+    }
+    @RequestMapping(value="/wrongAnswer", method = RequestMethod.POST)
+    ResponseResult wrongAnswer(@RequestBody Problem problem) {
+        problemService.wrongAnswer(problem.getId());
+        return new ResponseResult(200, "操作成功");
+    }
 }

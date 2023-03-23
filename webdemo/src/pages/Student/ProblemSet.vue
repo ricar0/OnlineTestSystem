@@ -76,6 +76,9 @@
                         prop="description"
                         label="题面"
                         min-width="20%">
+                    <template slot-scope="scope">
+                        <a style="cursor: pointer;" @click="goToProblem(scope.row.id)">{{scope.row.description}}</a>
+                    </template>
                     </el-table-column>
                     <el-table-column
                         prop="label"
@@ -104,7 +107,7 @@
                         min-width="10%">
                     </el-table-column>
                     <el-table-column
-                        prop="num"
+                        prop="totalsubmit"
                         label="总数"
                         min-width="20%">
                     </el-table-column>
@@ -113,7 +116,10 @@
                         label="通过率"
                         min-width="20%">
                         <template slot-scope="scope">
-                            <el-progress :text-inside="true" :stroke-width="20" :percentage="0" status="exception"></el-progress>
+                            <el-progress v-if="scope.row.per < 30" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="exception"></el-progress>
+                            <el-progress v-if="scope.row.per < 50 && scope.row.per >= 30" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="warning"></el-progress>
+                            <el-progress v-if="scope.row.per < 70 && scope.row.per >= 50" :text-inside="true" :stroke-width="20" :percentage="scope.row.per"></el-progress>
+                            <el-progress v-if="scope.row.per >= 70" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="success"></el-progress>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -126,7 +132,7 @@
                 :current-page="pagination.current"
                 :page-sizes="[10, 30, 50]"
                 :page-size="pagination.size"
-                layout="total, sizes, prev, pager, next, jumper"
+                layout="total, sizes, prev, pager, next"
                 :total="pagination.total">
             </el-pagination>
         </div>
@@ -189,10 +195,21 @@ export default {
             // console.log(start, pageSize)
             this.$store.dispatch('getProblemByFilter', {start,pageSize}).then(res=>{
                 this.pagination.problem = this.$store.state.problem.problem;
+                for (let i = 0; i < this.pagination.problem.length; i++) {
+                    if (this.pagination.problem[i].totalsubmit == 0) this.pagination.problem[i].per = 0;
+                    else {
+                        this.pagination.problem[i].per = this.pagination.problem[i].acnumber * 1.0 / this.pagination.problem[i].totalsubmit * 100;
+                        this.pagination.problem[i].per = Math.ceil(this.pagination.problem[i].per * 100) / 100;
+                    }
+                    
+                }
             })
             this.$store.dispatch('getAllNumber').then(res=>{
                 this.pagination.total = this.$store.state.problem.count;
             })
+        },
+        goToProblem(id) {
+            this.$router.push('/problem'+ "?id=" + id);
         }
     }
 }
@@ -200,8 +217,11 @@ export default {
 
 <style lang="less" scoped>
 
+ /deep/ .el-progress-bar__innerText {
+	  color: white !important; 
+}
 .pagination {
-  padding: 3% 0 5% 0;
+  padding: 2% 0 5% 0;
   .el-pagination {
     display: flex;
     justify-content: center;
@@ -241,9 +261,10 @@ export default {
     margin: 90px auto 0 auto;
     border-radius: 4px;
     color: #303133;
-    border: 1px solid #ebeef5;
+    border: 2px solid #ebeef5;
     overflow: hidden;
     transition: .3s;
+    box-shadow: 1px 1px 5px 5px rgba(206, 228, 228, 0.3);
 }
 .card_header {
     padding: 18px 20px;
@@ -258,6 +279,7 @@ export default {
 .card_body {
     height: auto;
     width: 100%;
+    padding: 0 0 25px 0;
 }
 .search {
 

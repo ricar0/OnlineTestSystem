@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ProblemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ProblemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/ProblemFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/ProblemFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Problem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ProblemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ProblemMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/ProblemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/ProblemService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/ProblemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/ProblemServiceImpl.java" afterDir="false" />
@@ -136,6 +135,7 @@
       <workItem from="1679140507229" duration="3183000" />
       <workItem from="1679399837296" duration="696000" />
       <workItem from="1679538961891" duration="3589000" />
+      <workItem from="1679553629656" duration="10152000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>

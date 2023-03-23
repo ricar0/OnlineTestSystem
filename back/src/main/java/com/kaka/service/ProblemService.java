@@ -12,4 +12,10 @@ public interface ProblemService {
     public List<Problem> getProblemByFilter(ProblemFilter problemFilter);
 
     public Integer getAllNumber();
+
+    public Problem getProblemById(Long id);
+
+    void accept(Long id);
+
+    void wrongAnswer(Long id);
 }

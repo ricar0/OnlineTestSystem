@@ -106,7 +106,7 @@ export default {
         this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
       },
       toExamMsg(id) {
-        this.$router.push('/ExamMsg'+ "?id=" + id);
+        this.$router.push('/examMsg'+ "?id=" + id);
       },
       search() {
         this.$store.dispatch('getUserInfo').then(res=>{

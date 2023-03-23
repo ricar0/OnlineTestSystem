@@ -33,10 +33,6 @@ export const reqGetMyPractice = ()=>requests({url:'practice/getMyPractice',metho
 //url:/api/exam/getMyExam method: get
 export const reqGetExamById = (id)=>requests({url:'exam/getExamById/'+id,method:'get'});
 
-//获取题目列表
-//url:/api/exam/getMyExam method: post
-export const reqGetProblemById = (data)=>requests({url:'exam/getProblemById',data, method:'post'});
-
 //获取试题信息
 //url:/api/exam/getMyExam method: post
 export const reqGetPaperInfoById = (data)=>requests({url:'exam/getPaperInfoById',data, method:'post'});
@@ -92,3 +88,15 @@ export const reqGetProblemByFilter = (data)=>requests({url:'/problem/getProblemB
 //获取题目数量
 //url:/api/problem/getAllNumber method:get
 export const reqGetAllNumber = ()=>requests({url:'/problem/getAllNumber',method:'get'});
+
+//通过id获取题目信息
+//url:/api/problem/getProblemById method:post
+export const reqGetProblemById = (data)=>requests({url:'/problem/getProblemById',data,method:'post'});
+
+//答对题目
+//url:/api/problem/accept method:post
+export const reqAccept = (data)=>requests({url:'/problem/accept',data,method:'post'});
+
+//答错题目
+//url:/api/problem/wrongAnswer method:post
+export const reqWrongAnswer = (data)=>requests({url:'/problem/wrongAnswer',data,method:'post'});

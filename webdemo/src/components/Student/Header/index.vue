@@ -5,6 +5,7 @@
       <el-col :span="24">
         <ul class="list">
           <li class="logo"><i class="el-icon-s-opportunity"></i><span>Exam-Online</span></li>
+          <li><router-link to="/problemSet">题库</router-link></li>
           <li><router-link to="/myexam">我的考试</router-link></li>
           <li><router-link to="/practice">我的练习</router-link></li>
           <li><router-link to="/wrongbook">我的错题本</router-link></li>

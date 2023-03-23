@@ -1,8 +1,10 @@
-import {reqGetAllNumber, reqGetProblemAll, reqGetProblemByFilter } from "@/api";
+import {reqAccept, reqGetAllNumber, reqGetProblemAll, reqGetProblemByFilter, 
+    reqGetProblemById, reqWrongAnswer} from "@/api";
 
 const state = {
     problem: [],
     count: 0,
+    probleminfo: []
 }
 
 const mutations = {
@@ -14,7 +16,10 @@ const mutations = {
     },
     GETALLNUMBER(state, count) {
         state.count = count;
-    }
+    },
+    GETPROBELMBYID(state, probleminfo) {
+        state.probleminfo = probleminfo;
+    },
 }
 
 const actions = {
@@ -44,7 +49,32 @@ const actions = {
         } else {
             return Promise.reject(new Error("failure"));
         }
-    }
+    },
+    async getProblemById({commit}, obj) {
+        let {data} = await reqGetProblemById(obj);
+        if (data.code == 200) {
+            commit("GETPROBELMBYID", data.data);
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async accept({commit}, obj) {
+        let {data} = await reqAccept(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async wrongAnswer({commit}, obj) {
+        let {data} = await reqWrongAnswer(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
 }
 const getters = {};
 export default {
