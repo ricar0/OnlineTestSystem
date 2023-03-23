@@ -15,4 +15,6 @@ public class ProblemFilter {
     private List<String> labelList;
     private List<String> source;
     private List<String> difficulty;
+    int pageSize;
+    int start;
 }

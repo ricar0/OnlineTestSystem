@@ -172,16 +172,27 @@ export default {
         Header
     },
     mounted() {
-        this.$store.dispatch('getProblemAll').then(res=>{
-            this.pagination.problem = this.$store.state.problem.problem.slice(0,20);
-        })
+        this.getProblem();
     },
     methods: {
         handleSizeChange(val) {
             this.pagination.size = val;
+            this.getProblem();
         },
         handleCurrentChange(val) {
             this.pagination.current = val;
+            this.getProblem();
+        },
+        getProblem() {
+            let start = this.pagination.size * (this.pagination.current - 1);
+            let pageSize = this.pagination.size;
+            // console.log(start, pageSize)
+            this.$store.dispatch('getProblemByFilter', {start,pageSize}).then(res=>{
+                this.pagination.problem = this.$store.state.problem.problem;
+            })
+            this.$store.dispatch('getAllNumber').then(res=>{
+                this.pagination.total = this.$store.state.problem.count;
+            })
         }
     }
 }

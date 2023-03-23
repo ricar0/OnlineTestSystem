@@ -23,4 +23,9 @@ public class ProblemServiceImpl implements ProblemService{
         return problemMapper.getProblemByFilter(problemFilter);
     }
 
+    @Override
+    public Integer getAllNumber() {
+        return problemMapper.getAllNumber();
+    }
+
 }

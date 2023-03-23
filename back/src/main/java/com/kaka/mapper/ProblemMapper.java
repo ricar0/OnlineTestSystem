@@ -14,4 +14,5 @@ public interface ProblemMapper {
 
     public List<Problem> getProblemByFilter(ProblemFilter problemFilter);
 
+    public Integer getAllNumber();
 }

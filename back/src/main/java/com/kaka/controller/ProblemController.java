@@ -24,6 +24,11 @@ public class ProblemController {
 
     @RequestMapping(value="/getProblemByFilter", method = RequestMethod.POST)
     ResponseResult getProblemByFilter(@RequestBody ProblemFilter problemFilter) {
+        System.out.println(problemFilter);
         return new ResponseResult(200, "获取成功!", problemService.getProblemByFilter(problemFilter));
+    }
+    @RequestMapping(value="/getAllNumber", method = RequestMethod.GET)
+    ResponseResult getAllNumber() {
+        return new ResponseResult(200, "获取成功!", problemService.getAllNumber());
     }
 }

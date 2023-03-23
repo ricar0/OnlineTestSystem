@@ -88,3 +88,7 @@ export const reqGetProblemAll = ()=>requests({url:'/problem/getAll',method:'get'
 //通过筛选获取题库
 //url:/api/problem/getProblemByFilter method:post
 export const reqGetProblemByFilter = (data)=>requests({url:'/problem/getProblemByFilter',data,method:'post'});
+
+//获取题目数量
+//url:/api/problem/getAllNumber method:get
+export const reqGetAllNumber = ()=>requests({url:'/problem/getAllNumber',method:'get'});

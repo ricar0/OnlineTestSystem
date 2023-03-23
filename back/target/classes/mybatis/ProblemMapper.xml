@@ -7,24 +7,29 @@
     <select id="getProblemByFilter" resultType="com.kaka.entity.Problem" parameterType="com.kaka.entity.ProblemFilter">
         SELECT * FROM problems_set
         <where>
-            <if test="sourceList.size() > 0">
+            <if test="sourceList != null and sourceList.size() > 0">
                 AND source IN
                 <foreach item="source" collection="sourceList" open="(" separator="," close=")">
                     #{source}
                 </foreach>
             </if>
-            <if test="difficultyList.size() > 0">
+            <if test="difficultyList != null and difficultyList.size() > 0">
                 AND difficulty IN
                 <foreach item="difficulty" collection="difficultyList" open="(" separator="," close=")">
                     #{difficulty}
                 </foreach>
             </if>
-            <if test="labelList.size() > 0">
+            <if test="labelList != null and labelList.size() > 0">
                 AND label IN
                 <foreach item="label" collection="labelList" open="(" separator="," close=")">
                     #{label}
                 </foreach>
             </if>
         </where>
+        limit #{start}, #{pageSize}
+    </select>
+
+    <select id="getAllNumber" resultType="Integer">
+        select count(*) from problems_set;
     </select>
 </mapper>
