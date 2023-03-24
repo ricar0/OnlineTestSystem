@@ -87,7 +87,7 @@ export const reqGetProblemByFilter = (data)=>requests({url:'/problem/getProblemB
 
 //获取题目数量
 //url:/api/problem/getAllNumber method:get
-export const reqGetAllNumber = ()=>requests({url:'/problem/getAllNumber',method:'get'});
+export const reqGetAllNumber = (data)=>requests({url:'/problem/getAllNumber',data,method:'post'});
 
 //通过id获取题目信息
 //url:/api/problem/getProblemById method:post

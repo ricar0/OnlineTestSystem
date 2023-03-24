@@ -43,6 +43,7 @@ const actions = {
     },
     async getAllNumber({commit}, obj) {
         let {data} = await reqGetAllNumber(obj);
+        console.log(data)
         if (data.code == 200) {
             commit("GETALLNUMBER", data.data);
             return "ok";

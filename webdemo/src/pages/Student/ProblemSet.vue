@@ -13,7 +13,7 @@
                             <el-checkbox style="size:20px;" v-model="showTags"><span style="font-size:15px;">显示标签</span></el-checkbox>
                         </el-col>
                         <el-col :span="8" style="padding-left:40%;">
-                            <el-button style="padding: 9px 15px;" type="primary" icon="el-icon-refresh" round>重置</el-button>
+                            <el-button style="padding: 9px 15px;" type="primary" icon="el-icon-refresh" @click="reset()" round>重置</el-button>
                         </el-col>
                     </el-row>
                 </div>
@@ -26,7 +26,8 @@
                                     cursor:pointer;"
                         v-for="item in source"
                         :key="item.label"
-                        effect="plain">
+                        :effect="item.color"
+                        @click="changeSource(item.id)">
                         {{ item.label }}
                     </el-tag>
                     </div>
@@ -40,7 +41,8 @@
                                     cursor:pointer;"
                         v-for="item in difficulty"
                         :key=item.label
-                        effect="plain">
+                        :effect="item.color"
+                        @click="changeDifficulty(item.id)">
                         {{ item.label }}
                     </el-tag>
                     </div>
@@ -54,13 +56,13 @@
                                     cursor:pointer;"
                         v-for="item in label"
                         :key=item.label
-                        effect="plain">
+                        :effect=item.color
+                        @click="changeLabel(item.id)">
                         {{ item.label }}
                     </el-tag>
                     </div>
                 </section>
             </div>
-            <!-- <el-divider></el-divider> -->
             <div class="card_body">
                 <el-table 
                     :data="pagination.problem"
@@ -154,24 +156,27 @@ export default {
             input:'',
             showTags: true,
             source: [
-                { color: 'dark', label: '全部' },
-                { color: 'plain', label: '数据结构' },
-                { color: 'plain', label: '计算机网络' },
-                { color: 'plain', label: '操作系统' },
-                { color: 'plain', label: '思想道德基础和法律修养' },
+                { id: 0, color: 'dark', label: '全部' },
+                { id: 1, color: 'plain', label: '数据结构' },
+                { id: 2, color: 'plain', label: '计算机网络' },
+                { id: 3, color: 'plain', label: '操作系统' },
+                { id: 4, color: 'plain', label: '思想道德基础和法律修养' },
             ],
             difficulty: [
-                { color: 'dark', label: '全部' },
-                { color: 'plain', label: '简单' },
-                { color: 'plain', label: '中等' },
-                { color: 'plain', label: '困难' },
+                { id: 0, color: 'dark', label: '全部' },
+                { id: 1, color: 'plain', label: '简单' },
+                { id: 2, color: 'plain', label: '中等' },
+                { id: 3, color: 'plain', label: '困难' },
             ],
             label: [
-                { color: 'dark', label: '全部' },
-                { color: 'plain', label: '单选题' },
-                { color: 'plain', label: '多选题' },
-                { color: 'plain', label: '判断题' },
+                { id: 0, color: 'dark', label: '全部' },
+                { id: 1, color: 'plain', label: '单选题' },
+                { id: 2, color: 'plain', label: '多选题' },
+                { id: 3, color: 'plain', label: '判断题' },
             ],
+            sourceList: [],
+            difficultyList: [],
+            labelList: []
         }
     },
     components: {
@@ -191,9 +196,12 @@ export default {
         },
         getProblem() {
             let start = this.pagination.size * (this.pagination.current - 1);
-            let pageSize = this.pagination.size;
+            let pageSize = this.pagination.size
+            let sourceList = this.sourceList
+            let difficultyList = this.difficultyList
+            let labelList = this.labelList
             // console.log(start, pageSize)
-            this.$store.dispatch('getProblemByFilter', {start,pageSize}).then(res=>{
+            this.$store.dispatch('getProblemByFilter', {start,pageSize,sourceList,difficultyList,labelList}).then(res=>{
                 this.pagination.problem = this.$store.state.problem.problem;
                 for (let i = 0; i < this.pagination.problem.length; i++) {
                     if (this.pagination.problem[i].totalsubmit == 0) this.pagination.problem[i].per = 0;
@@ -201,15 +209,86 @@ export default {
                         this.pagination.problem[i].per = this.pagination.problem[i].acnumber * 1.0 / this.pagination.problem[i].totalsubmit * 100;
                         this.pagination.problem[i].per = Math.ceil(this.pagination.problem[i].per * 100) / 100;
                     }
-                    
                 }
+                this.$store.dispatch('getAllNumber', {sourceList,difficultyList,labelList}).then(res=>{
+                    this.pagination.total = this.$store.state.problem.count
+                })
             })
-            this.$store.dispatch('getAllNumber').then(res=>{
-                this.pagination.total = this.$store.state.problem.count;
-            })
+            
         },
         goToProblem(id) {
             this.$router.push('/problem'+ "?id=" + id);
+        },
+        resetSource() {
+            this.sourceList = []
+            for (let i = 0; i < this.source.length; i++) {
+                this.source[i].color = 'plain'
+            }
+        },
+        resetDifficulty() {
+            this.difficultyList = []
+            for (let i = 0; i < this.difficulty.length; i++) {
+                this.difficulty[i].color = 'plain'
+            }
+        },
+        resetLabel() {
+            this.labelList = []
+            for (let i = 0; i < this.label.length; i++) {
+                this.label[i].color = 'plain'
+            }
+        },
+        changeSource(id) {
+            this.resetSource()
+            this.source[id].color = 'dark'
+            if (this.source[id].label == '全部') {
+                this.getProblem()
+            } else {
+                this.sourceList.push(this.source[id].label)
+                this.getProblem()
+            }
+            
+        },
+        changeDifficulty(id) {
+            this.resetDifficulty()
+            this.difficulty[id].color = 'dark'
+            if (this.difficulty[id].label == '全部') {
+                this.getProblem()
+            } else {
+                if (this.difficulty[id].label == '简单')
+                    this.difficultyList.push(1)
+                else if (this.difficulty[id].label == '中等') {
+                    this.difficultyList.push(2)
+                } else {
+                    this.difficultyList.push(3)
+                }
+                this.getProblem()
+            }
+        },
+        changeLabel(id) {
+            this.resetLabel()
+            this.label[id].color = 'dark'
+            if (this.label[id].label == '全部') {
+                this.getProblem()
+            } else {
+                if (this.label[id].label == '单选题') {
+                    this.labelList.push('single')
+                }
+                else if (this.label[id].label == '多选题') {
+                    this.labelList.push('multiple')
+                } else {
+                    this.labelList.push('tf')
+                }
+                this.getProblem()
+            } 
+        },
+        reset() {
+            this.resetSource()
+            this.resetDifficulty()
+            this.resetLabel()
+            this.source[0].color = 'dark'
+            this.difficulty[0].color = 'dark'
+            this.label[0].color = 'dark'
+            this.getProblem()
         }
     }
 }

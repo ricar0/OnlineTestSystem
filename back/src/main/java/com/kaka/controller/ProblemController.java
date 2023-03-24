@@ -2,19 +2,22 @@ package com.kaka.controller;
 
 import com.kaka.entity.Problem;
 import com.kaka.entity.ProblemFilter;
-import com.kaka.mapper.ProblemMapper;
 import com.kaka.service.ProblemService;
+import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/problem")
 public class ProblemController {
+
+    @Autowired
+    private RedisCache redisCache;
+
     @Autowired
     private ProblemService problemService;
     @RequestMapping(value="/getAll", method = RequestMethod.GET)
@@ -24,12 +27,12 @@ public class ProblemController {
 
     @RequestMapping(value="/getProblemByFilter", method = RequestMethod.POST)
     ResponseResult getProblemByFilter(@RequestBody ProblemFilter problemFilter) {
-        System.out.println(problemFilter);
         return new ResponseResult(200, "获取成功!", problemService.getProblemByFilter(problemFilter));
     }
-    @RequestMapping(value="/getAllNumber", method = RequestMethod.GET)
-    ResponseResult getAllNumber() {
-        return new ResponseResult(200, "获取成功!", problemService.getAllNumber());
+    @RequestMapping(value="/getAllNumber", method = RequestMethod.POST)
+    ResponseResult getAllNumber(@RequestBody ProblemFilter problemFilter) {
+        List<Problem> list = problemService.getProblemByFilter(problemFilter);
+        return new ResponseResult(200, "获取成功!", list.size());
     }
     @RequestMapping(value="/getProblemById", method = RequestMethod.POST)
     ResponseResult getProblemById(@RequestBody Problem problem) {

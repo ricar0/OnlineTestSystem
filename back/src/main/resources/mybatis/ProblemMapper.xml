@@ -26,11 +26,13 @@
                 </foreach>
             </if>
         </where>
-        limit #{start}, #{pageSize}
+        <if test="pageSize != 0">
+            limit #{start}, #{pageSize};
+        </if>
     </select>
 
     <select id="getAllNumber" resultType="Integer">
-        select count(*) from problems_set;
+        SELECT FOUND_ROWS();
     </select>
 
     <select id="getProblemById" resultType="com.kaka.entity.Problem" parameterType="Long">

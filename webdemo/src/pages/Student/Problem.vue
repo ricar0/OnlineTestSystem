@@ -37,6 +37,16 @@
                     <el-radio :label="3">C.{{problem.c}}</el-radio>
                     <el-radio :label="4">D.{{problem.d}}</el-radio>
                 </el-radio-group>
+                <el-checkbox-group v-if="problem.label=='multiple'" v-model="multipleAnswer" @change="getMultipleLabel">
+                    <el-checkbox :label="1">A.{{problem.a}}</el-checkbox><br>
+                    <el-checkbox :label="2">B.{{problem.b}}</el-checkbox><br>
+                    <el-checkbox :label="3">C.{{problem.c}}</el-checkbox><br>
+                    <el-checkbox :label="4">D.{{problem.d}}</el-checkbox><br>
+                </el-checkbox-group>
+                <el-radio-group v-if="problem.label=='tf'" v-model="tfAnswer" @change="gettfLabel">
+                    <el-radio :label="1">A.正确</el-radio>
+                    <el-radio :label="2">B.错误</el-radio>
+                </el-radio-group>
                 </div>
                 <div v-if="isAnswered && opensolution" class="solution">
                     <div class="title">
@@ -64,7 +74,9 @@ export default {
             singleAnswer: null,
             isAnswered: false,
             opensolution: false,
-            ac: []
+            ac: [],
+            multipleAnswer:[],
+            tfAnswer: null
         }
     },
     components: {
@@ -87,24 +99,44 @@ export default {
         getSingleLabel(val) {
             this.singleAnswer = val
         },
+        getMultipleLabel(val) {
+            val.sort()
+            this.multipleAnswer = val;
+        },
         submit() {
-            console.log(this.ac)
-            if (this.singleAnswer == null) {
-                this.$message.error('请选择答案');
-            } else {
-                
-                if (this.ac[0] == this.singleAnswer) {
-                    let id = this.$route.query.id;
-                    this.$store.dispatch('accept', {id}).then(res=>{
-                        this.$message.success('答案正确');
-                    })
+            if (this.problem.label == 'single') {//单选题
+                if (this.singleAnswer == null) {
+                    this.$message.error('请选择答案');
                 } else {
-                    let id = this.$route.query.id;
-                    this.$store.dispatch('wrongAnswer', {id}).then(res=>{
-                        this.$message.error('答案错误');
-                    })
+                    if (this.ac[0] == this.singleAnswer) {
+                        this.accept()
+                    } else {
+                        this.wrongAnswer()
+                    }
+                    this.isAnswered = true;
                 }
-                this.isAnswered = true;
+            } else if (this.problem.label == 'multiple') {//多选
+                if (this.multipleAnswer.length == 0) {
+                    this.$message.error('请选择答案')
+                } else {
+                    if (JSON.stringify(this.ac) == JSON.stringify(this.multipleAnswer)) {
+                        this.accept()
+                    } else {
+                        this.wrongAnswer()
+                    }
+                    this.isAnswered = true;
+                }
+            } else {
+                if (this.tfAnswer == null) {
+                    this.$message.error('请选择答案')
+                } else {
+                    if (this.ac[0] == this.tfAnswer) {
+                        this.accept()
+                    } else {
+                        this.wrongAnswer()
+                    }
+                    this.isAnswered = true;
+                }
             }
         }, 
         open() {
@@ -113,6 +145,18 @@ export default {
             else {
                 this.$message.error('请先作答');
             }
+        },
+        accept() {
+            let id = this.$route.query.id;
+            this.$store.dispatch('accept', {id}).then(res=>{
+                this.$message.success('答案正确');
+            })
+        },
+        wrongAnswer() {
+            let id = this.$route.query.id;
+            this.$store.dispatch('wrongAnswer', {id}).then(res=>{
+                this.$message.error('答案错误');
+            })
         }
     }
 }

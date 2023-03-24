@@ -22,4 +22,5 @@ public class Problem {
     private String solution;
     private int totalsubmit;
     private int acnumber;
+    private int category;
 }
