@@ -1,328 +1,268 @@
 <template>
-    <!-- <Header></Header> -->
-    <div class="block">
-    <Header></Header>
-    <div id="myExam">
-      <li class="order" style="font-size:25px;margin:3% 3%; height: 50%; font-weight:bold; color: dodgerblue;"><i class="el-icon-alarm-clock"> 我的考试</i></li>
-        <div class="wrapper">
-            <ul class="top" style="height: 40px;">
-                <li class="order">
-                  <el-badge :value="num1" class="item" type="primary">
-                    <span @click="get1()">全部</span>
-                  </el-badge>
-                </li>
-                <li class="order">
-                  <el-badge :value="num2" class="item" type="primary">
-                    <span @click="get2()">未开始</span>
-                  </el-badge>
-                </li>
-                <li class="order">
-                  <el-badge :value="num3" class="item" type="primary">
-                    <span @click="get3()">已开始</span>
-                  </el-badge>
-                </li>
-                <li class="order">
-                  <el-badge :value="num4" class="item">
-                    <span @click="get4()">已过期</span>
-                  </el-badge>
-                </li>
-                
-                <li class="search-li"><div class="icon"><input type="text" placeholder="试卷名称" class="search" v-model="key"><i class="el-icon-search"></i></div></li>
-                <li><el-button type="primary" @click="search()">搜索试卷</el-button></li>
-            </ul>
-            <ul class="paper" v-loading="loading">
-                <li class="item" v-for="(item,index) in pagination.nowrecords" :key="index">
-                    <h4 @click="toExamMsg(item.id)">{{item.source}} <i v-if="item.lock" style="margin:0;"class="el-icon-lock"></i></h4>
-                    <p class="name">{{item.source}}-{{item.description}}</p>
-                    <span class="name">出卷人：</span> 
-                    <span style="color:red;">{{item.teacher}}</span>
-                    <div class="info">
-                        <i class="el-icon-date"></i><span>{{item.start_time}} 至 {{item.end_time}}</span>
-                        <i class="el-icon-bell"></i><span v-if="item.totalTime != null">限时{{item.totalTime}}分钟</span>
-                        <i class="el-icon-tickets"></i><span>满分{{item.totalScore}}分</span></br>
-                        <i class="el-icon-user"></i><span class="name">参与人数：{{item.number}}</span>
-                    </div>
-                </li>
-            </ul>
-            <div class="pagination">
-                <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="pagination.current"
-                    :page-sizes="[3, 5, 10]"
-                    :page-size="pagination.size"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="pagination.total">
-                </el-pagination>
+  <div id="content">
+      <Header></Header>
+      <div class="box">
+         <el-tabs v-model="activeName" @tab-click="handleClick" style="width: 200px;">
+            <el-tab-pane label="所有考试" name="all"></el-tab-pane>
+            <el-tab-pane label="我的考试" name="my"></el-tab-pane>
+        </el-tabs>
+          <div class="shadow">
+            <div class="card_header">
+                <div style="border-box;">
+                  <span class="panel-title">考试列表</span>
+                  <div class="row1" style="float: right; margin-right: 80px;">
+                      <el-row :gutter="20">
+                          <el-col :span="5" style="">
+                            <span style="vertical-align: middle;">
+                            <el-dropdown>
+                              <span class="el-dropdown-link">
+                                状态<i class="el-icon-caret-bottom"></i>
+                              </span>
+                              <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>全部</el-dropdown-item>
+                                <el-dropdown-item>未开始</el-dropdown-item>
+                                <el-dropdown-item>已开始</el-dropdown-item>
+                                <el-dropdown-item>已结束</el-dropdown-item>
+                              </el-dropdown-menu>
+                            </el-dropdown>
+                            </span>
+                          </el-col>
+                          <el-col :span="5" style="">
+                            <span style="vertical-align: middle;">
+                            <el-dropdown>
+                              <span class="el-dropdown-link">
+                                权限<i class="el-icon-caret-bottom"></i>
+                              </span>
+                              <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>全部</el-dropdown-item>
+                                <el-dropdown-item>私有</el-dropdown-item>
+                                <el-dropdown-item>公开</el-dropdown-item>
+                              </el-dropdown-menu>
+                            </el-dropdown>
+                            </span>
+                          </el-col>
+                          <el-col :span="10">
+                              <el-input style="width:200px;" placeholder="输入关键词" suffix-icon="el-icon-search" v-model="input"></el-input>
+                          </el-col>
+                      </el-row>
+                  </div>
+                </div>
             </div>
-        </div>
-    </div>
-    </div>
+          </div>
+          <div class="card_body">
+            <div>
+              <p v-if="pagination.total==1" class="no-contest">
+                <el-empty description="暂无考试"></el-empty>
+              </p>
+              <ol class="contest-list">
+                <li class="item-list" v-for="item in pagination.exam">
+                  <div style="align-items: center;justify-content: space-between;display: flex;">
+                    <el-row :gutter="100">
+                      <el-col :span="5">
+                        <img style="width:95px;" src="@/assets/logo.png">
+                      </el-col>
+                      <el-col :span="10">
+                        <p class="title">{{item.source}}-{{item.description}}</p>
+                        <ul class="detail">
+                          <li><i class="el-icon-date"></i></li>
+                        </ul>
+                      </el-col>
+                    </el-row>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+      </div>
+      <div class="pagination">
+          <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="pagination.current"
+              :page-sizes="[5, 10, 15]"
+              :page-size="pagination.size"
+              layout="total, sizes, prev, pager, next"
+              :total="pagination.total">
+          </el-pagination>
+      </div>
+  </div>
 </template>
 
 <script>
 import Header from '@/components/Student/Header'
-import Footer from '@/components/Student/Footer'
 export default {
+    components: {
+        Header
+    },
     data() {
         return {
-            loading: false,
-            key: null,
-            allExam: null,
             pagination: {
+                exam:[
+                  {
+                    description: '2021年第二学期期末考试',
+                    source: '数据库原理'
+                  }
+                ],
                 current: 1,
-                total: null,
-                size: 3,
-                totalrecords: [],
-                copy: [],
-                nowrecords: [],
-                endrecords: [],
-                startrecords: [],
-                nostartrecords: []
+                size: 5,
+                total: 0,
             },
-            num1: 0,
-            num2: 0,
-            num3: 0,
-            num4: 0
+            input: null,
+            
+            activeName: 'all'
         }
-    },
-    methods: {  
-      getTime(date) { //日期格式化
-        let year = date.getFullYear()
-        let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        let day=date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        let hours=date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-        let minutes=date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-        let seconds=date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-        // 拼接
-        return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-      },
-      handleSizeChange(val) {
-        this.pagination.size = val;
-        this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
-      },
-      handleCurrentChange(val) {
-        this.pagination.current = val;
-        this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
-      },
-      toExamMsg(id) {
-        this.$router.push('/examMsg'+ "?id=" + id);
-      },
-      search() {
-        this.$store.dispatch('getUserInfo').then(res=>{
-          let user_id = this.$store.state.user.userinfo.id;
-          let source = this.key;
-          this.$store.dispatch('searchMyExamByKey', {user_id, source}).then(res=>{
-            this.pagination.totalrecords = this.$store.state.search.myexam
-            this.pagination.nostartrecords = [];
-            this.pagination.startrecords = [];
-            this.pagination.endrecords = [];
-            let date1 = new Date();
-            let date = this.getTime(date1);
-            let re = this.pagination.totalrecords;
-            for (let i = 0; i < re.length; i++) {
-              if (re[i].start_time > date) {
-                this.pagination.nostartrecords.push(re[i])
-              } else if (re[i].start_time < date && re[i].end_time > date) {
-                this.pagination.startrecords.push(re[i]);
-              } else {
-                this.pagination.endrecords.push(re[i]);
-              }
-            }  
-            this.pagination.copy = this.pagination.totalrecords;
-            this.num1 = re.length;
-            this.num2 = this.pagination.nostartrecords.length;
-            this.num3 = this.pagination.startrecords.length;
-            this.num4 = this.pagination.endrecords.length;
-          })
-        })
-      },
-      get1() {
-        this.pagination.totalrecords = this.pagination.copy;
-      },
-      get2() {
-        this.pagination.totalrecords = this.pagination.nostartrecords;
-      },
-      get3() {
-        this.pagination.totalrecords = this.pagination.startrecords;
-      },
-      get4() {
-        this.pagination.totalrecords = this.pagination.endrecords;
-      }
     },
     mounted() {
-      this.$store.dispatch('getMyExam').then(res=>{
-          this.pagination.totalrecords = this.$store.state.exam.myexam;
-          let date1 = new Date();
-          let date = this.getTime(date1);
-          let re = this.pagination.totalrecords;
-          for (let i = 0; i < re.length; i++) {
-            if (re[i].start_time > date) {
-              this.pagination.nostartrecords.push(re[i])
-            } else if (re[i].start_time < date && re[i].end_time > date) {
-              this.pagination.startrecords.push(re[i]);
-            } else {
-              this.pagination.endrecords.push(re[i]);
-            }
-          }  
-          this.pagination.copy = this.pagination.totalrecords;
-          this.num1 = re.length;
-          this.num2 = this.pagination.nostartrecords.length;
-          this.num3 = this.pagination.startrecords.length;
-          this.num4 = this.pagination.endrecords.length;
-      })
+        // this.getPractice()
     },
-    components: {
-        Header,
-        Footer
-    },
-    watch: {
-      'pagination.totalrecords': {
-        immediate: true,
-        handler() {
-          this.pagination.total = this.pagination.totalrecords.length;
-          this.pagination.nowrecords = this.pagination.totalrecords.slice((this.pagination.current-1)*this.pagination.size, this.pagination.current*this.pagination.size);
-        }
-      }
+    methods: {
+        
+        handleSizeChange(val) {
+            this.pagination.size = val
+        },
+        handleCurrentChange(val) {
+            this.pagination.current = val
+        },
+        // getExam() {
+        //     let permissionList = this.permissionList
+        //     let sourceList = this.sourceList
+        //     let difficultyList = this.difficultyList
+        //     let pageSize = this.pagination.size
+        //     let start = this.pagination.size * (this.pagination.current - 1)
+        //     this.$store.dispatch('getPracticeByFilter', {permissionList,sourceList,difficultyList,pageSize,start}).then(res=>{
+        //         this.pagination.practice = this.$store.state.practice.practice;
+        //         this.$store.dispatch('getAllNumber2', {permissionList,sourceList,difficultyList}).then(res=>{
+        //             this.pagination.total = this.$store.state.practice.count
+        //         })
+                
+        //     })
+        // },
+        
     }
 }
 </script>
 
-<style lang="less" scoped>
 
-ul.top {
-    margin: 0 auto;
-    padding: 0 auto;
+<style lang="less" scoped>
+.detail {
+  font-size: .875rem;
+  padding-left: 0;
+  padding-bottom: 10px;
 }
-.block {
-    height: auto;
-    width: 100%;
-    background-color: #eff3f5!important;
-    // position: relative;
-    min-height: 80%;
+.title {
+  font-size: 1.25rem;
+  padding-left: 8px;
+  margin-bottom: 0;
 }
-li {
-    list-style: none;
+.contest-list>li {
+  border-left: 4px solid rgb(25, 190, 107);
+  padding: 5px;
+  margin-left: -20px;
+  margin-top: 10px;
+  width: 100%;
+  border-bottom: 1px solid hsla(0,0%,73.3%,.5);
+  list-style: none;
+}
+/deep/ .el-dropdown {
+    display: inline-block;
+    position: relative;
+    color: #606266;
+    font-size: 14px;
+}
+.panel-title {
+    font-size: 21px;
+    font-weight: 500;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    line-height: 30px;
+}
+.el-dropdown-link {
+  cursor: pointer;
+  // color: #409EFF;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+/deep/ .el-tabs__item {
+    font-size: 20px;
+    font-weight: 700;
+}
+ /deep/ .el-progress-bar__innerText {
+	  color: white !important; 
 }
 .pagination {
-  padding: 3% 0 5% 0;
+  padding: 2% 0 5% 0;
   .el-pagination {
     display: flex;
     justify-content: center;
   }
 }
-.paper {
-  h4 {
-    cursor: pointer;
-  }
+.filter {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.8em;
 }
-.paper .item a {
-  color: #000;
+.sub_title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 30px;
+    margin-right: 1em;
+    font-weight: bolder;
+    white-space: nowrap;
+    font-size: 16px;
+    margin-top: 8px;
 }
-.wrapper .top .order {
-  cursor: pointer;
-  margin-left: 3%;
+::v-deep .el-input__inner{
+    height: 32px;
+    /* width: auto; */
 }
-.wrapper .top .order:hover {
-  color: #0195ff;
-  border-bottom: 2px solid #0195ff;
+::v-deep .el-input__icon {
+    line-height: 32px !important;
+    font-size: 17px;
 }
-.wrapper .top .order:visited {
-  color: #0195ff;
-  border-bottom: 2px solid #0195ff;
+.shadow {
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    background-color: #fff;
+    overflow: hidden;
+    color: #303133;
+    transition: .3s;
 }
-.item .info i {
-  margin-right: 2%;
-  color: #0195ff;
+#content {
+    background-color: #eff3f5!important;
 }
-.item .info span {
-  margin-right: 5%;
+.box {
+    width: 90%;
+    margin: 90px auto 0 auto;
+    border-radius: 4px;
+    color: #303133;
+
+    transition: .3s;
+    box-sizing: border-box;
+    position: relative;
 }
-.paper .item {
-  margin-right: 5%;  
-  width: 100%;
-  border-radius: 1rem;
-  padding: 3% 3% 3% 10%;
-  border: 2px solid #eee;
-  box-shadow: 3px 3px 4px 10px rgba(217,222,234,0.3);
-  transition: all 0.6s ease;
-  padding-top: 0;
-  padding-bottom: 0;
-//   background-color: rgba(120, 200, 255, 0.075);
+.card_body {
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    background-color: #fff;
+    overflow: hidden;
+    color: #303133;
+    transition: .3s;
+    padding: 20px 20px;
 }
-.paper .item:hover {
-  box-shadow: 0 0 4px 2px rgba(140, 193, 248, 0.45);
-  transform: scale(1.03);
+.card_header {
+  padding: 18px 20px;
+  border-bottom: 1px solid #ebeef5;
+  box-sizing: border-box;
 }
-.paper .item .info {
-  font-size: 15px;
-  color: #88949b;
-}
-.paper .item .name {
-  font-size: 16px;
-  color: #88949b;
-}
-.paper * {
-  margin: 2% 0;
-}
-.wrapper .paper {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.top .el-icon-search {
-  position: absolute;
-  right: 0%;
-  top: 30%;
-}
-.top .icon {
-  position: relative;
-}
-.wrapper .top {
-//   border-bottom: 1px solid #eee;
-  margin-bottom: 3%;
+.problem_title {
+    font-size: 1.6em;
+    font-weight: 500;
+    line-height: 30px;
 }
 
-.top .search-li {
-  margin-left: 25%;
-  margin-right: 10%;
-}
-.top li {
-  display: flex;
-  align-items: center;
-}
-.top .search {
-  margin-left: auto;
-  padding: 7%;
-  border-radius: 4px;
-  border: 1px solid #eee;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-}
-.top .search:hover {
-  color: #0195ff;
-  border-color: #0195ff;
-}
-.wrapper .top {
-  display: flex;
+.search {
 
 }
-.wrapper .top li {
-  margin-top: 3%;
-}
-#myExam {
-  width: 50%;
-  margin: 4% auto 0 auto;
-}
-#myExam .title {
-  margin: 0;
-}
-#myExam .wrapper {
-  background-color: #fff;
-  border-radius: 2rem;
-//   opacity: 70%;
-  box-shadow: 0px 2px 4px 2px rgba(140, 193, 248, 0.45);
-  position: sticky;
-}
-
 </style>

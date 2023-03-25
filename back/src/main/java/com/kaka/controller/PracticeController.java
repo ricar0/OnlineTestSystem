@@ -1,6 +1,7 @@
 package com.kaka.controller;
 
 import com.kaka.entity.Practice;
+import com.kaka.entity.PracticeFilter;
 import com.kaka.service.PracticeService;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/practice")
@@ -27,5 +29,21 @@ public class PracticeController {
     @RequestMapping(value = "/getMyPractice", method = RequestMethod.GET)
     ResponseResult getMyPractice(HttpServletRequest request) {
         return new ResponseResult(200, "获取成功!", practiceService.getMyPractice(request));
+    }
+
+    @RequestMapping(value = "/getPracticeAll", method = RequestMethod.GET)
+    ResponseResult getPracticeAll() {
+        return new ResponseResult(200, "获取成功!", practiceService.getPracticeAll());
+    }
+
+    @RequestMapping(value="/getPracticeByFilter", method = RequestMethod.POST)
+    ResponseResult getPracticeByFilter(@RequestBody PracticeFilter practiceFilter) {
+        return new ResponseResult(200, "获取成功!", practiceService.getPracticeByFilter(practiceFilter));
+    }
+
+    @RequestMapping(value="/getAllNumber", method = RequestMethod.POST)
+    ResponseResult getAllNumber(@RequestBody PracticeFilter practiceFilter) {
+        List<Practice> list = practiceService.getPracticeByFilter(practiceFilter);
+        return new ResponseResult(200, "获取成功!", list.size());
     }
 }

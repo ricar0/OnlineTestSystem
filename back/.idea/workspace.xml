@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/PracticeFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/PracticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/PracticeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Practice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Practice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/PracticeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/PracticeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/PracticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/PracticeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/PracticeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/PracticeServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/PracticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/PracticeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/PracticeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/PracticeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/PracticeMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/PracticeMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/PracticeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/PracticeService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/PracticeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/PracticeServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/PracticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/PracticeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/Practice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/Practice.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/ProblemSet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/ProblemSet.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/practice/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/practice/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +70,17 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RunManager" selected="Spring Boot.SecurityApplication">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SecurityApplicationTests.aaa" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="security" />
       <extension name="coverage">
@@ -132,6 +156,7 @@
       <workItem from="1679553629656" duration="10152000" />
       <workItem from="1679646897984" duration="4888000" />
       <workItem from="1679712057959" duration="1400000" />
+      <workItem from="1679727981626" duration="5031000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>

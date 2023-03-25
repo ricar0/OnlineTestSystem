@@ -1,6 +1,7 @@
 package com.kaka.service;
 
 import com.kaka.entity.Practice;
+import com.kaka.entity.PracticeFilter;
 import com.kaka.mapper.PracticeMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,15 @@ public class PracticeServiceImpl implements PracticeService{
         }
         Long userid= Long.valueOf(user_id);
         return practiceMapper.getMyPractice(userid);
+    }
+
+    @Override
+    public List<Practice> getPracticeAll() {
+        return practiceMapper.getPracticeAll();
+    }
+
+    @Override
+    public List<Practice> getPracticeByFilter(PracticeFilter practiceFilter) {
+        return practiceMapper.getPracticeByFilter(practiceFilter);
     }
 }

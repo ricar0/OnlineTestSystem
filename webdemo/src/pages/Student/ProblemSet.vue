@@ -5,7 +5,7 @@
             <div class="card_header">
                 <div class="row1" style="margin-right:-10px;margin-bottom:10px;">
                     <el-row :gutter="20">
-                        <el-col style="" :span="3"><span class="problem_title">题目列表</span></el-col>
+                        <el-col style="" :span="2"><span class="problem_title">题目列表</span></el-col>
                         <el-col :span="6">
                             <el-input  placeholder="输入关键词" suffix-icon="el-icon-search" v-model="input"></el-input>
                         </el-col>
@@ -343,7 +343,7 @@ export default {
     border: 2px solid #ebeef5;
     overflow: hidden;
     transition: .3s;
-    box-shadow: 1px 1px 5px 5px rgba(206, 228, 228, 0.3);
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 }
 .card_header {
     padding: 18px 20px;

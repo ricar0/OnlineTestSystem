@@ -100,3 +100,15 @@ export const reqAccept = (data)=>requests({url:'/problem/accept',data,method:'po
 //答错题目
 //url:/api/problem/wrongAnswer method:post
 export const reqWrongAnswer = (data)=>requests({url:'/problem/wrongAnswer',data,method:'post'});
+
+//获取所有训练
+//url:/api/practice/getPracticeAll method:get
+export const reqGetPracticeAll = ()=>requests({url:'/practice/getPracticeAll',method:'get'});
+
+//通过筛选获取训练
+//url:/api/problem/getPracticeByFilter method:post
+export const reqGetPracticeByFilter = (data)=>requests({url:'/practice/getPracticeByFilter',data,method:'post'});
+
+//获取训练数量
+//url:/api/practice/getAllNumber method:get
+export const reqGetAllNumber2 = (data)=>requests({url:'/practice/getAllNumber',data,method:'post'});

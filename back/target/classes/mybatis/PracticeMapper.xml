@@ -8,4 +8,35 @@
     <select id="getMyPractice" resultType="com.kaka.entity.Practice">
         select * from practice where id in(select practice_id from mypractice where user_id = #{id});
     </select>
+
+    <select id="getPracticeAll" resultType="com.kaka.entity.Practice">
+        select * from practice;
+    </select>
+
+    <select id="getPracticeByFilter" resultType="com.kaka.entity.Practice" parameterType="com.kaka.entity.PracticeFilter">
+        SELECT * FROM practice
+        <where>
+            <if test="sourceList != null and sourceList.size() > 0">
+                AND source IN
+                <foreach item="source" collection="sourceList" open="(" separator="," close=")">
+                    #{source}
+                </foreach>
+            </if>
+            <if test="difficultyList != null and difficultyList.size() > 0">
+                AND difficulty IN
+                <foreach item="difficulty" collection="difficultyList" open="(" separator="," close=")">
+                    #{difficulty}
+                </foreach>
+            </if>
+            <if test="permissionList != null and permissionList.size() > 0">
+                AND permission IN
+                <foreach item="permission" collection="permissionList" open="(" separator="," close=")">
+                    #{permission}
+                </foreach>
+            </if>
+        </where>
+        <if test="pageSize != 0">
+            limit #{start}, #{pageSize};
+        </if>
+    </select>
 </mapper>
