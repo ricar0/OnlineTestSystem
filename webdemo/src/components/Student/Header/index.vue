@@ -4,13 +4,11 @@
     <el-row class="padding-50">
       <el-col :span="24">
         <ul class="list">
-          <li class="logo"><i class="el-icon-s-opportunity"></i><span>Exam-Online</span></li>
-          <li><router-link to="/problemSet">题库</router-link></li>
-          <li><router-link to="/myexam">我的考试</router-link></li>
-          <li><router-link to="/practice">我的练习</router-link></li>
-          <li><router-link to="/wrongbook">我的错题本</router-link></li>
-          <li><router-link to="/message">给我留言</router-link></li>
-          <li><a href="javascript:;">搜索试卷</a></li>
+          <li class="logo"><i class="el-icon-s-data"></i><span>Exam-Online</span></li>
+          <li><router-link to="/problemSet"><i class="el-icon-s-grid"></i> 题库</router-link></li>
+          <li><router-link to="/myexam"><i class="el-icon-trophy"></i> 考试</router-link></li>
+          <li><router-link to="/practice"><i class="el-icon-s-claim"></i> 练习</router-link></li>
+          <li><router-link to="/wrongbook"><i class="el-icon-collection"></i> 错题本</router-link></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
             <router-link v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
             <a v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>

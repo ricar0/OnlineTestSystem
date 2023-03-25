@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kaka.mapper.PracticeMapper">
     <insert id="addPractice" parameterType="com.kaka.entity.Practice">
-        insert into practice value(null, #{source}, #{description}, #{teacher}, #{totalTime}, #{totalScore}, #{lock}, #{code}, #{password});
+        insert into practice value(null, #{source}, #{description}, #{author}, #{totalTime}, #{totalScore}, #{lock}, #{code}, #{password}, #{difficulty});
     </insert>
 
     <select id="getMyPractice" resultType="com.kaka.entity.Practice">

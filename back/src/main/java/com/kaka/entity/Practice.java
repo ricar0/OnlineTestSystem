@@ -14,7 +14,8 @@ public class Practice {
     private String description;
     private int totalTime;
     private int totalScore;
-    private String teacher;
+    private String author;
     private boolean lock;
     private String password;
+    private int difficulty;
 }
