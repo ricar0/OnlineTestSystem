@@ -1,9 +1,6 @@
 package com.kaka.service;
 
-import com.kaka.entity.Exam;
-import com.kaka.entity.MyExam;
-import com.kaka.entity.Problem;
-import com.kaka.entity.Search;
+import com.kaka.entity.*;
 import com.kaka.mapper.ExamMapper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +28,8 @@ public class ExamServiceImpl implements ExamService{
     }
 
     @Override
-    public List<Exam> getMyExam(HttpServletRequest request) {
-        String token = request.getHeader("token");
-        //解析token
-        String user_id;
-        try {
-            Claims claims = parseJWT(token);
-            user_id = claims.getSubject();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("tolen非法");
-        }
-        Long userid= Long.valueOf(user_id);
-        return examMapper.getMyExam(userid);
+    public List<Exam> getMyExam(MyExamFilter myExamFilter) {
+        return examMapper.getMyExam(myExamFilter);
     }
 
     @Override
@@ -64,6 +50,16 @@ public class ExamServiceImpl implements ExamService{
     @Override
     public void endExam(MyExam myExam) {
         examMapper.endExam(myExam);
+    }
+
+    @Override
+    public List<Exam> getExamByFilter(ExamFilter examFilter) {
+        return examMapper.getExamByFilter(examFilter);
+    }
+
+    @Override
+    public Integer getUserNumberByExamId(Long id) {
+        return examMapper.getUserNumberByExamId(id);
     }
 
 }

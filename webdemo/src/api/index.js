@@ -23,11 +23,11 @@ export const reqGetCode = (data)=>requests({url:'auth/getCode',data,method:'post
 
 //获取我的考试
 //url:/api/exam/getMyExam method: get
-export const reqGetMyExam = ()=>requests({url:'exam/getMyExam',method:'get'});
+export const reqGetMyExam = (data)=>requests({url:'exam/getMyExam',data,method:'post'});
 
 //获取我的练习
 //url:/api/exam/getMyExam method: get
-export const reqGetMyPractice = ()=>requests({url:'practice/getMyPractice',method:'get'});
+export const reqGetMyPractice = (data)=>requests({url:'practice/getMyPractice',data,method:'post'});
 
 //获取考试信息
 //url:/api/exam/getMyExam method: get
@@ -112,3 +112,21 @@ export const reqGetPracticeByFilter = (data)=>requests({url:'/practice/getPracti
 //获取训练数量
 //url:/api/practice/getAllNumber method:get
 export const reqGetAllNumber2 = (data)=>requests({url:'/practice/getAllNumber',data,method:'post'});
+
+//通过筛选获取考试
+//url:/api/exam/getExamByFilter method:post
+export const reqGetExamByFilter = (data)=>requests({url:'/exam/getExamByFilter',data,method:'post'});
+
+//通过筛选获取考试数量
+//url:/api/exam/getAllNumber3 method:post
+export const reqGetAllNumber3 = (data)=>requests({url:'/exam/getAllNumber3',data,method:'post'});
+
+//通过考试Id获取学生数
+//url:/api/exam/getUserNumberByExamId method:post
+export const reqGetUserNumberByExamId = (data)=>requests({url:'/exam/getUserNumberByExamId',data,method:'post'});
+
+//获取我的考试数量
+export const reqGetMyExamNumber = (data)=>requests({url:'/exam/getMyExamNumber',data,method:'post'});
+
+//获取我的练习数量
+export const reqGetMyPracticeNumber = (data)=>requests({url:'/practice/getMyPracticeNumber',data,method:'post'});

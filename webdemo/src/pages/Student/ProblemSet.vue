@@ -5,7 +5,7 @@
             <div class="card_header">
                 <div class="row1" style="margin-right:-10px;margin-bottom:10px;">
                     <el-row :gutter="20">
-                        <el-col style="" :span="2"><span class="problem_title">题目列表</span></el-col>
+                        <el-col style="" :span="3"><span class="problem_title">题目列表</span></el-col>
                         <el-col :span="6">
                             <el-input  placeholder="输入关键词" suffix-icon="el-icon-search" v-model="input"></el-input>
                         </el-col>

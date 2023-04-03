@@ -9,8 +9,11 @@
             #{totalScore}, #{teacher}, #{examDate}, #{lock}, #{code}, #{password},
             #{singleScore}, #{multipleScore}, #{tfScore});
     </insert>
-    <select id="getMyExam" parameterType="Long" resultType="com.kaka.entity.Exam">
-        select * from exam where id in(select exam_id from myexam where user_id = #{id}) order by start_time asc;
+    <select id="getMyExam" parameterType="com.kaka.entity.MyExamFilter" resultType="com.kaka.entity.Exam">
+        select * from exam where id in(select exam_id from myexam where user_id = #{user_id}) order by end_time desc
+        <if test="pageSize != 0">
+            limit #{start}, #{pageSize};
+        </if>
     </select>
 
     <select id="getExamById" parameterType="Long" resultType="com.kaka.entity.Exam">
@@ -33,4 +36,32 @@
         update myexam set end_time = #{end_time}, score = #{score} where (user_id = #{user_id} and exam_id = #{exam_id})
     </update>
 
+    <select id="getExamByFilter" resultType="com.kaka.entity.Exam" parameterType="com.kaka.entity.ExamFilter">
+        SELECT * FROM exam
+        <where>
+            <if test="permissionList != null and permissionList.size() > 0">
+                AND permission IN
+                <foreach item="permission" collection="permissionList" open="(" separator="," close=")">
+                    #{permission}
+                </foreach>
+            </if>
+            <if test="state == 1">
+                AND start_time &gt; #{time}
+            </if>
+            <if test="state == 2">
+                AND start_time &lt; #{time} and end_time &gt; #{time}
+            </if>
+            <if test="state == 3">
+                AND end_time &lt; #{time}
+            </if>
+        </where>
+        order by end_time desc
+        <if test="pageSize != 0">
+            limit #{start}, #{pageSize};
+        </if>
+    </select>
+
+    <select id="getUserNumberByExamId" resultType="Integer" parameterType="Integer">
+        select count(*) from myexam where exam_id = #{id}
+    </select>
 </mapper>

@@ -10,7 +10,7 @@
             <div class="card_body">
                 <div class="row1" style="margin-right:-10px;margin-bottom:10px;">
                     <el-row :gutter="20">
-                        <el-col style="" :span="2"><span class="problem_title">训练列表</span></el-col>
+                        <el-col style="" :span="3"><span class="problem_title">训练列表</span></el-col>
                         <el-col :span="6">
                             <el-input placeholder="输入关键词" suffix-icon="el-icon-search" v-model="input"></el-input>
                         </el-col>
@@ -22,7 +22,7 @@
                         </el-col>
                     </el-row>
                 </div>
-                <div v-if="!showMyPractice">
+                <div v-if="activeName == 'all'">
                 <section class="filter">
                     <b class="sub_title">权限</b>
                     <div class="tag-group">
@@ -175,7 +175,6 @@ export default {
             },
             showSource: true,
             input: null,
-            showMyPractice: false,
             source: [
                 { id: 0, color: 'dark', label: '全部' },
                 { id: 1, color: 'plain', label: '数据结构' },
@@ -206,26 +205,38 @@ export default {
     methods: {
         handleClick(tab, event) {
             if (tab.name == 'my') {
-                this.showMyPractice = true
-                this.$store.dispatch('getUserInfo').then(res=>{
-                    let user_id = this.$store.state.user.userinfo.id;
-                    this.$store.dispatch('getMyPractice', {user_id}).then(res=>{
-                        this.pagination.practice = this.$store.state.practice.mypractice
-                        this.pagination.total = this.pagination.practice.length
-                    })
-                })
+                this.getMyPractice()
             } else {
-                this.showMyPractice = false
                 this.getPractice()
             }
         },
         handleSizeChange(val) {
             this.pagination.size = val
-            this.getPractice()
+            if (this.activeName == 'all')
+                this.getPractice()
+            else 
+                this.getMyPractice()
         },
         handleCurrentChange(val) {
             this.pagination.current = val
-            this.getPractice()
+            if (this.activeName == 'all')
+                this.getPractice()
+            else 
+                this.getMyPractice()
+        },
+        getMyPractice() {
+            this.$store.dispatch('getUserInfo').then(res=>{
+                let user_id = this.$store.state.user.userinfo.id;
+                let pageSize = this.pagination.size
+                let start = this.pagination.size * (this.pagination.current - 1)
+                this.$store.dispatch('getMyPractice', {user_id, start, pageSize}).then(res=>{
+                    this.pagination.practice = this.$store.state.practice.mypractice
+                    this.$store.dispatch('getMyPracticeNumber', {user_id}).then(res=>{
+                        this.pagination.total = this.$store.state.practice.count
+                    })
+                    
+                })
+            })
         },
         getPractice() {
             let permissionList = this.permissionList

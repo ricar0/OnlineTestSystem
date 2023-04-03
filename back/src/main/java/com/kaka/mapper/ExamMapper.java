@@ -1,9 +1,6 @@
 package com.kaka.mapper;
 
-import com.kaka.entity.Exam;
-import com.kaka.entity.MyExam;
-import com.kaka.entity.Problem;
-import com.kaka.entity.Search;
+import com.kaka.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +15,7 @@ public interface ExamMapper {
 
     public void addExam(Exam exam);
 
-    public List<Exam> getMyExam(Long user_id);
+    public List<Exam> getMyExam(MyExamFilter myExamFilter);
 
     public Exam getExamById(Long id);
 
@@ -30,4 +27,7 @@ public interface ExamMapper {
 
     public void endExam(MyExam myExam);
 
+    public List<Exam> getExamByFilter(ExamFilter examFilter);
+
+    public Integer getUserNumberByExamId(Long id);
 }

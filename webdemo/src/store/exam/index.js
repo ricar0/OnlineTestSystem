@@ -1,5 +1,6 @@
 import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
-    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, reqGetExamResult } from "@/api";
+    reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, 
+    reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber } from "@/api";
 
 const state = {
     myexam: [],
@@ -7,7 +8,10 @@ const state = {
     probleminfo: [],
     paperinfo:[],
     examcookies: null,
-    examresult:[]
+    examresult:[],
+    exam:[],
+    count: null,
+    number: 0,
 }
 
 const mutations = {
@@ -25,13 +29,24 @@ const mutations = {
     },
     GETEXAMRESULT(state, examresult) {
         state.examresult = examresult;
+    },
+    GETEXAMBYFILTER(state, exam) {
+        state.exam = exam;
+    },
+    GETALLNUMBER3(state, count) {
+        state.count = count;
+    },
+    GETUSERNUMBERBYEXAMID(state, number) {
+        state.number = number;
+    },
+    GETMYEXAMNUMBER(state,number) {
+        state.number = number;
     }
 }
 
 const actions = {
-    async getMyExam({commit}) {
-        let {data} = await reqGetMyExam();
-        console.log(data)
+    async getMyExam({commit}, obj) {
+        let {data} = await reqGetMyExam(obj);
         if (data.code == 200) {
             commit("GETMYEXAM", data.data);
             return "ok";
@@ -101,6 +116,42 @@ const actions = {
     async getExamResult({commit}, obj) {
         let {data} = await reqGetExamResult(obj);
         commit("GETEXAMRESULT", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getExamByFilter({commit}, obj) {
+        let {data} = await reqGetExamByFilter(obj);
+        commit("GETEXAMBYFILTER", data.data);
+        if (data.code == 200) {
+            return "ok"
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getAllNumber3({commit}, obj) {
+        let {data} = await reqGetAllNumber3(obj);
+        commit("GETALLNUMBER3", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getUserNumberByExamId({commit}, obj) {
+        let {data} = await reqGetUserNumberByExamId(obj);
+        commit("GETUSERNUMBERBYEXAMID", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getMyExamNumber({commit}, obj) {
+        let {data} = await reqGetMyExamNumber(obj);
+        commit("GETMYEXAMNUMBER", data.data);
         if (data.code == 200) {
             return "ok";
         } else {

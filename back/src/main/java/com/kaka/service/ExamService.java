@@ -10,7 +10,7 @@ public interface ExamService {
 
     public void addExam(Exam exam);
 
-    public List<Exam> getMyExam(HttpServletRequest request);
+    public List<Exam> getMyExam(MyExamFilter myExamFilter);
 
     public Exam getExamById(Long id);
 
@@ -20,4 +20,7 @@ public interface ExamService {
 
     public void endExam(MyExam myExam);
 
+    public List<Exam> getExamByFilter(ExamFilter examFilter);
+
+    public Integer getUserNumberByExamId(Long id);
 }

@@ -37,9 +37,19 @@ public class ExamController {
         return new ResponseResult(200, "添加成功!");
     }
 
-    @RequestMapping(value = "/getMyExam", method = RequestMethod.GET)
-    public ResponseResult getMyExam(HttpServletRequest request) {
-        return new ResponseResult(200, "获取成功!", examService.getMyExam(request));
+    @RequestMapping(value = "/getMyExam", method = RequestMethod.POST)
+    public ResponseResult getMyExam(@RequestBody MyExamFilter myExamFilter) {
+        return new ResponseResult(200, "获取成功!", examService.getMyExam(myExamFilter));
+    }
+
+    @RequestMapping(value = "/getMyExamNumber", method = RequestMethod.POST)
+    public ResponseResult getMyExamNumber(@RequestBody MyExamFilter myExamFilter) {
+        return new ResponseResult(200, "获取成功!", examService.getMyExam(myExamFilter).size());
+    }
+
+    @RequestMapping(value="/getUserNumberByExamId", method=RequestMethod.POST)
+    public ResponseResult getUserByExamId(@RequestBody Exam exam) {
+        return new ResponseResult(200, "获取成功!", examService.getUserNumberByExamId(exam.getId()));
     }
 
     @RequestMapping(value = "/getExamById/{id}")
@@ -184,5 +194,15 @@ public class ExamController {
     @RequestMapping(value="/getExamResult", method = RequestMethod.POST)
     public ResponseResult getExamResult(@RequestBody MyExam myExam) {
         return new ResponseResult(200, "获取成功!", examMapper.getExamInfo(myExam));
+    }
+
+    @RequestMapping(value="/getExamByFilter", method = RequestMethod.POST)
+    public ResponseResult getExamByFilter(@RequestBody ExamFilter examFilter) {
+        return new ResponseResult(200, "获取成功!", examService.getExamByFilter(examFilter));
+    }
+
+    @RequestMapping(value="/getAllNumber3", method = RequestMethod.POST)
+    public ResponseResult getAllNumber3(@RequestBody ExamFilter examFilter) {
+        return new ResponseResult(200, "获取成功!", examService.getExamByFilter(examFilter).size());
     }
 }

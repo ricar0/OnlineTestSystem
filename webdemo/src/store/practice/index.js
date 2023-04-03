@@ -1,4 +1,5 @@
-import { reqGetAllNumber2, reqGetMyPractice, reqGetPracticeAll, reqGetPracticeByFilter } from "@/api";
+import { reqGetAllNumber2, reqGetMyPractice, reqGetPracticeAll, reqGetPracticeByFilter
+,reqGetMyPracticeNumber} from "@/api";
 
 const state = {
     mypractice: [],
@@ -18,12 +19,15 @@ const mutations = {
     },
     GETALLNUMBER(state, count) {
         state.count = count;
+    },
+    GETMYPRACTICENUMBER(state, count) {
+        state.count = count;
     }
 }
 
 const actions = {
-    async getMyPractice({commit}) {
-        let {data} = await reqGetMyPractice();
+    async getMyPractice({commit},obj) {
+        let {data} = await reqGetMyPractice(obj);
         if (data.code == 200) {
             commit("GETMYPRACTICE", data.data);
             return "ok";
@@ -53,6 +57,15 @@ const actions = {
         let {data} = await reqGetAllNumber2(obj);
         if (data.code == 200) {
             commit("GETALLNUMBER", data.data);
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async getMyPracticeNumber({commit}, obj) {
+        let {data} = await reqGetMyPracticeNumber(obj);
+        if (data.code == 200) {
+            commit("GETMYPRACTICENUMBER", data.data);
             return "ok";
         } else {
             return Promise.reject(new Error("failure"));

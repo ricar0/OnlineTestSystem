@@ -1,5 +1,6 @@
 package com.kaka.controller;
 
+import com.kaka.entity.MyPracticeFilter;
 import com.kaka.entity.Practice;
 import com.kaka.entity.PracticeFilter;
 import com.kaka.service.PracticeService;
@@ -26,9 +27,14 @@ public class PracticeController {
         return new ResponseResult(200, "添加成功!");
     }
 
-    @RequestMapping(value = "/getMyPractice", method = RequestMethod.GET)
-    ResponseResult getMyPractice(HttpServletRequest request) {
-        return new ResponseResult(200, "获取成功!", practiceService.getMyPractice(request));
+    @RequestMapping(value = "/getMyPractice", method = RequestMethod.POST)
+    ResponseResult getMyPractice(@RequestBody MyPracticeFilter myPracticeFilter) {
+        return new ResponseResult(200, "获取成功!", practiceService.getMyPractice(myPracticeFilter));
+    }
+
+    @RequestMapping(value = "/getMyPracticeNumber", method = RequestMethod.POST)
+    ResponseResult getMyPracticeNumber(@RequestBody MyPracticeFilter myPracticeFilter) {
+        return new ResponseResult(200, "获取成功!", practiceService.getMyPractice(myPracticeFilter).size());
     }
 
     @RequestMapping(value = "/getPracticeAll", method = RequestMethod.GET)

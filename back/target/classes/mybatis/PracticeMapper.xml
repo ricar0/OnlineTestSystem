@@ -5,8 +5,11 @@
         insert into practice value(null, #{source}, #{description}, #{author}, #{totalTime}, #{totalScore}, #{lock}, #{code}, #{password}, #{difficulty});
     </insert>
 
-    <select id="getMyPractice" resultType="com.kaka.entity.Practice">
-        select * from practice where id in(select practice_id from mypractice where user_id = #{id});
+    <select id="getMyPractice" resultType="com.kaka.entity.Practice" parameterType="com.kaka.entity.MyPracticeFilter">
+        select * from practice where id in(select practice_id from mypractice where user_id = #{user_id})
+        <if test="pageSize != 0">
+            limit #{start}, #{pageSize};
+        </if>
     </select>
 
     <select id="getPracticeAll" resultType="com.kaka.entity.Practice">

@@ -1,5 +1,6 @@
 package com.kaka.mapper;
 
+import com.kaka.entity.MyPracticeFilter;
 import com.kaka.entity.Practice;
 import com.kaka.entity.PracticeFilter;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,9 +14,9 @@ import java.util.List;
 public interface PracticeMapper {
     public void addPractice(Practice practice);
 
-    public List<Practice> getMyPractice(Long user_id);
-
     public List<Practice> getPracticeAll();
 
     public List<Practice> getPracticeByFilter(PracticeFilter practiceFilter);
+
+    public List<Practice> getMyPractice(MyPracticeFilter myPracticeFilter);
 }

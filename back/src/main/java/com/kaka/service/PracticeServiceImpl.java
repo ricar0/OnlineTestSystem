@@ -1,5 +1,6 @@
 package com.kaka.service;
 
+import com.kaka.entity.MyPracticeFilter;
 import com.kaka.entity.Practice;
 import com.kaka.entity.PracticeFilter;
 import com.kaka.mapper.PracticeMapper;
@@ -24,19 +25,8 @@ public class PracticeServiceImpl implements PracticeService{
     }
 
     @Override
-    public List<Practice> getMyPractice(HttpServletRequest request) {
-        String token = request.getHeader("token");
-        //解析token
-        String user_id;
-        try {
-            Claims claims = parseJWT(token);
-            user_id = claims.getSubject();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("tolen非法");
-        }
-        Long userid= Long.valueOf(user_id);
-        return practiceMapper.getMyPractice(userid);
+    public List<Practice> getMyPractice(MyPracticeFilter myPracticeFilter) {
+        return practiceMapper.getMyPractice(myPracticeFilter);
     }
 
     @Override
