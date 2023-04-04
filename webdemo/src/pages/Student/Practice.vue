@@ -126,7 +126,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="totalsubmit"
+                        prop="number"
                         label="参与人数"
                         min-width="10%">
                     </el-table-column>
@@ -161,6 +161,7 @@
 
 <script>
 import Header from '@/components/Student/Header'
+import {getToken} from '@/utils/token'
 export default {
     components: {
         Header
@@ -204,10 +205,14 @@ export default {
     },
     methods: {
         handleClick(tab, event) {
-            if (tab.name == 'my') {
-                this.getMyPractice()
-            } else {
+            if (tab.name == 'all') {
                 this.getPractice()
+            } else {
+                if (!getToken()) {
+                    this.$router.push('/login')
+                } else {
+                    this.getMyPractice()
+                }
             }
         },
         handleSizeChange(val) {

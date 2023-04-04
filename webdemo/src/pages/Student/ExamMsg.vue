@@ -1,5 +1,6 @@
 <template>
   <div id="msg">
+    <Header></Header>
     <div class="title">
       <span @click="toExam" style="cursor: pointer; color: blue;text-decoration:underline;">试卷列表</span>
       <span>/  {{examData.source}}</span>
@@ -15,7 +16,6 @@
         </li>
       </ul>
       <ul class="bottom">
-        <li><i class="el-icon-upload"></i>发布于 {{examData.examDate}}</li>
         <li><i class="el-icon-edit"></i>来自 {{examData.teacher}}</li>
         <li class="right"><el-button @click="toAnswer(examData.id)">开始答题</el-button></li>
       </ul>
@@ -23,7 +23,7 @@
         <li @click="dialogVisible = true"><a href="javascript:;"><i class="el-icon-info"></i>考生须知</a></li>
       </ul>
     </div>
-    <div class="content" style="margin-bottom: 30%;">
+    <div class="content" style="margin-bottom: 20%;">
       <el-collapse v-model="activeName" >
         <el-collapse-item class="header" name="0">
           <template slot="title" class="stitle" >
@@ -68,7 +68,11 @@
 </template>
 
 <script>
+import Header from '@/components/Student/Header'
 export default {
+  components: {
+    Header
+  },
   data() {
     return {
       dialogVisible: false, //对话框属性
@@ -83,12 +87,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getUserInfo').then(res=>{
-      this.uid = this.$store.state.user.userinfo.id;
-      let user_id = this.uid;
-      let exam_id = this.$route.query.id;
-      this.$store.dispatch('initExamCookies', {user_id, exam_id})
-    })
     this.init()
   },
   methods: {
@@ -108,6 +106,15 @@ export default {
           this.totalScore[0] = this.single * list.singleScore;
           this.totalScore[1] = this.multiple * list.multipleScore;
           this.totalScore[2] = this.tf * list.tfScore;
+          this.$store.dispatch('getUserInfo').then(res=>{
+            this.uid = this.$store.state.user.userinfo.id;
+            let user_id = this.uid;
+            let exam_id = this.$route.query.id;
+            let singleNum = this.single
+            let multipleNum = this.multiple
+            let tfNum = this.tf
+            // this.$store.dispatch('initExamCookies', {user_id, exam_id, singleNum, multipleNum, tfNum})
+          })
         })
     },
     toAnswer(id) {
@@ -145,7 +152,6 @@ export default {
           let user_id = this.uid;
           let exam_id = id;
           this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
-            console.log(res) 
             this.$router.push({path:"/answer",query:{id: id}})
           })
         })
@@ -229,7 +235,7 @@ li {
 } 
 .wrapper .bottom {
   display: flex;
-  margin-left: 20px;
+  // margin-left: 20px;
   color: #999;
   font-size: 14px;
   align-items: center;
@@ -238,12 +244,14 @@ li {
   margin-right: 14px;
 }
 #msg {
-  background-color: #eee;
+  // background-color: #eee;
+  background-color: #eff3f5!important;
   width: 50%;
   margin: 0 auto;
 }
 #msg .title {
   margin: 2%;
+  margin-top: 80px;
 }
 #msg .wrapper {
   background-color: #fff;
@@ -251,7 +259,7 @@ li {
 }
 .wrapper .top {
   display: flex;
-  margin: 2%;
+  // margin: 2%;
   align-items: center;
 }
 .wrapper .top .right {

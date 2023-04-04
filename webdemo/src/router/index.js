@@ -47,7 +47,7 @@ export default new VueRouter ({
         {
             path: "/answer",
             component: Answer,
-            meta: {show:true},
+            meta: {requiresAuth: true, show:true},
         },
         {
             path: "/practice",
@@ -72,17 +72,17 @@ export default new VueRouter ({
         {
             path: "/examMsg",
             component: ExamMsg,
-            meta: {show:true}
+            meta: {requiresAuth: true, show:true}
         }, 
         {
             path: "/scoreTable",
             component: ScoreTable,
-            meta: {show:true}
+            meta: {requiresAuth: true, show:true}
         },
         {
             path: "/answerScore",
             component: AnswerScore,
-            meta: {show:true}
+            meta: {requiresAuth: true, show:true}
         },
         {
             path: "/problemSet",
@@ -92,30 +92,29 @@ export default new VueRouter ({
         {
             path: "/problem",
             component: Problem,
-            mata: {show: true}
+            meta: {requiresAuth: true, show:true}
         },
         {
             path: "/adminTable",
             component: AdminTable,
-            meta: {show:false},
+            meta: {requiresAuth: true, show:false},
             children: [
                 {
                     path: "/studentManage",
                     component: StudentManage,
-                    meta: {show:false}
+                    meta: {requiresAuth: true, show:false}
                 },
                 {
                     path: "/problemManage",
                     component: ProblemManage,
-                    meta: {show:false}
+                    meta: {requiresAuth: true, show:false}
                 },
                 {
                     path: "/addProblem",
                     component: AddProblem,
-                    meta: {show:false}
+                    meta: {requiresAuth: true, show:false}
                 },
             ]
         },
-        
     ]
 })

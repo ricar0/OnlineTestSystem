@@ -18,4 +18,5 @@ public class Practice {
     private boolean permission;
     private String password;
     private int difficulty;
+    private int number;
 }

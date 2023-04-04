@@ -62,7 +62,7 @@
                           <img style="width:95px; height: 75px;" src="@/assets/acm.jpg">
                       </el-col>
                       <el-col :xs="10" :sm="16" :md="19" :lg="20">
-                        <p class="title">{{item.source}}-{{item.description}} <i v-if="item.permission" class="el-icon-lock" style="color:red;"></i></p>
+                        <a class="title" @click="goToExamMsg(item.id)">{{item.source}}-{{item.description}} <i v-if="item.permission" class="el-icon-lock" style="color:red;"></i></a>
                         
                         <ul class="detail">
                           <li>
@@ -127,6 +127,7 @@
 <script>
 import Header from '@/components/Student/Header'
 import {getDateDiff} from '@/utils/time'
+import {getToken} from '@/utils/token'
 export default {
     components: {
         Header
@@ -149,11 +150,21 @@ export default {
         this.getExam()
     },
     methods: {
+      goToExamMsg(id) {
+        this.$router.push({
+          path: '/examMsg',
+          query:{id:id}
+        })
+      },
       handleClick(tab, event) {
         if (tab.name == 'all') {
           this.getExam()
         } else {
-          this.getMyExam()
+          if (!getToken()) {
+            this.$router.push('/login')
+          } else {
+            this.getMyExam()
+          }
         }
       },
       handleExam() {
@@ -243,6 +254,17 @@ export default {
 
 
 <style lang="less" scoped>
+a {
+    text-decoration: none;
+    background-color: transparent;
+    color: black;
+    outline: 0;
+    cursor: pointer;
+    transition: color .2s ease;
+}
+a:hover {
+  color: #409EFF;
+}
 .detail li {
   display: inline-block;
   padding: 10px 0 0 10px;

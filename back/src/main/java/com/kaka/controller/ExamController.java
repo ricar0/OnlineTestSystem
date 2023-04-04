@@ -89,7 +89,7 @@ public class ExamController {
         examCookie.setMinutes(examService.getExamById(examCookie.getExam_id()).getTotalTime());
         examCookie.setSeconds(0);
         List<List<Integer>> list = new ArrayList<List<Integer>>();
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < examCookie.getMultipleNum(); i++) {
             List<Integer> l = new ArrayList<Integer>();
             list.add(l);
         }
@@ -99,7 +99,7 @@ public class ExamController {
         examCookie.setJudgeAnswer(list1);
 
         List<Boolean> list2 = new ArrayList<Boolean>();
-        for (int i = 0; i < 14; i++) list2.add(false);
+        for (int i = 0; i < examCookie.getMultipleNum(); i++) list2.add(false);
         examCookie.setSingleisClick(list2);
         examCookie.setMultipleisClick(list2);
         examCookie.setJudgeisClick(list2);
@@ -107,7 +107,6 @@ public class ExamController {
         examCookie.setMultipleisMark(list2);
         examCookie.setJudgeisMark(list2);
         examCookie.setBg_flag(false);
-        System.out.println(examCookie);
         redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id(), examCookie);
         return new ResponseResult(200, "设置成功!");
     }
@@ -142,10 +141,18 @@ public class ExamController {
 
     @RequestMapping(value="/startExam", method = RequestMethod.POST)
     public ResponseResult startExam(@RequestBody MyExam myExam) {
-
-        myExam.setStart_time(new Date());
-        examService.startExam(myExam);
-        return new ResponseResult(200, "已开始考试!");
+        ExamCookie examCookie = redisCache.getCacheObject("examcookies:"+myExam.getUser_id()+myExam.getExam_id());
+        System.out.println(examCookie);
+        MyExam tmp = examMapper.getExamInfo(myExam);
+        if (!Objects.isNull(tmp.getEnd_time())) {
+            return new ResponseResult(400, "考试已结束!");
+        } else {
+            if (Objects.isNull(tmp.getStart_time())) {
+                myExam.setStart_time(new Date());
+                examService.startExam(myExam);
+            }
+            return new ResponseResult(200, "已开始考试!");
+        }
     }
 
     @RequestMapping(value="/endExam", method = RequestMethod.POST)
@@ -155,7 +162,6 @@ public class ExamController {
         List<Problem> list = examService.getProblemById(myExam.getExam_id());
         Exam exam = examService.getExamById(myExam.getExam_id());
         ExamCookie examCookie = redisCache.getCacheObject("examcookies:"+myExam.getUser_id()+myExam.getExam_id());
-        System.out.println(examCookie);
         List<Integer> singleAnswer = examCookie.getSingleAnswer();
         List<List<Integer>> multipleAnswer = examCookie.getMultipleAnswer();
         List<Integer> judgeAnswer = examCookie.getJudgeAnswer();
@@ -172,19 +178,20 @@ public class ExamController {
         for (int i = 0; i < multipleAnswer.size(); i++) {
             if (Objects.isNull(multipleAnswer.get(i))) continue;
             String ans = "";
-            for (int j = 0; j < multipleAnswer.get(i).size(); j++)
+            for (int j = 0; j < multipleAnswer.get(i).size(); j++) {
                 if (multipleAnswer.get(i).get(j) == 1) ans += "A";
                 else if (multipleAnswer.get(i).get(j) == 2) ans += "B";
                 else if (multipleAnswer.get(i).get(j) == 3) ans += "C";
                 else ans += "D";
-            if (ans.equals(list.get(i+singleAnswer.size()).getAccept())) score += exam.getMultipleScore();
+            }
+            if (ans.equals(list.get(i+ examCookie.getSingleNum()).getAccept())) score += exam.getMultipleScore();
         }
         for (int i = 0; i < judgeAnswer.size(); i++) {
             if (Objects.isNull(judgeAnswer.get(i))) continue;
             String ans = "";
             if (judgeAnswer.get(i) == 1) ans = "A";
             else ans = "B";
-            if (ans.equals(list.get(i+singleAnswer.size()+multipleAnswer.size()).getAccept())) score += exam.getTfScore();
+            if (ans.equals(list.get(i+examCookie.getSingleNum()+ examCookie.getMultipleNum()).getAccept())) score += exam.getTfScore();
         }
         myExam.setScore(score);
         examService.endExam(myExam);

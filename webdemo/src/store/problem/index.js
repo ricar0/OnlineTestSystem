@@ -34,6 +34,7 @@ const actions = {
     },
     async getProblemByFilter({commit}, obj) {
         let {data} = await reqGetProblemByFilter(obj);
+        console.log(data)
         if (data.code == 200) {
             commit("GETPROBLEMBYFILTER", data.data);
             return "ok";

@@ -56,6 +56,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/user/getAll",
                         "/api/practice/addPractice"
                 ).anonymous()
+                .and()
+                .authorizeRequests()
+                .antMatchers(
+                        "/api/problem/getProblemByFilter",
+                        "/api/problem/getAllNumber",
+                        "/api/practice/getPracticeByFilter",
+                        "/api/practice/getAllNumber",
+                        "/api/exam/getExamByFilter",
+                        "/api/exam/getAllNumber3"
+                ).permitAll()
                 //除上面外所有请求都需要鉴权认证
                 .anyRequest().authenticated();
 

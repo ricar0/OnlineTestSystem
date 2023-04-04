@@ -102,7 +102,7 @@ const actions = {
         if (data.code == 200) {
             return "ok";
         } else {
-            return Promise.reject(new Error("failure"));
+            return "over";
         }
     },
     async endExam({commit}, obj) {

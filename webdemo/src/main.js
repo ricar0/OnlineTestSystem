@@ -16,3 +16,14 @@ new Vue({
   router,
   store,
 }).$mount('#app')
+
+import {getToken} from '@/utils/token'
+router.beforeEach((to,from,next)=>{
+  const isAuthenticated = getToken()
+  console.log(to)
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next('/login')
+  } else {
+    next()
+  }
+})

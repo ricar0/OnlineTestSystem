@@ -200,7 +200,6 @@ export default {
             let sourceList = this.sourceList
             let difficultyList = this.difficultyList
             let labelList = this.labelList
-            // console.log(start, pageSize)
             this.$store.dispatch('getProblemByFilter', {start,pageSize,sourceList,difficultyList,labelList}).then(res=>{
                 this.pagination.problem = this.$store.state.problem.problem;
                 for (let i = 0; i < this.pagination.problem.length; i++) {
@@ -217,7 +216,10 @@ export default {
             
         },
         goToProblem(id) {
-            this.$router.push('/problem'+ "?id=" + id);
+            this.$router.push({
+                path: '/problem',
+                query: {id:id}
+            })
         },
         resetSource() {
             this.sourceList = []
