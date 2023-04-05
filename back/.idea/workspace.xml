@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Practice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Practice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/MyExam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/MyExam.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/Practice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/Practice.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/ProblemSet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/ProblemSet.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/exam/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/exam/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/WrongBookController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/WrongBook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/WrongProblem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/WrongProblemFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/WrongBookMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/WrongBookService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/WrongBookServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mybatis/WrongBookMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ProblemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ProblemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/ProblemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/ProblemController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/AnswerScore.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/AnswerScore.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/Problem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/Problem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/WrongBook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/WrongBook.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/problem/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/problem/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="mapper" />
         <option value="Class" />
       </list>
     </option>
@@ -142,6 +152,9 @@
       <workItem from="1679750929835" duration="1484000" />
       <workItem from="1680489700682" duration="16590000" />
       <workItem from="1680572929933" duration="12563000" />
+      <workItem from="1680660692325" duration="13255000" />
+      <workItem from="1680687114626" duration="64000" />
+      <workItem from="1680697190923" duration="649000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>

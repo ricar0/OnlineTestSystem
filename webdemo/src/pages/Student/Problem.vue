@@ -61,12 +61,28 @@
                 </div>
             </div>
         </div>
-        
+        <Popup :visible="visible" :type="type" @close="closePopup" @add-to-mistakes="addToMistakes">
+            <span v-if="type === 'success'">
+                <el-result icon="success"></el-result>
+                恭喜你，答案正确！<br> Accepted!
+            </span>
+            <span v-if="type === 'error'">
+                <el-result icon="error"></el-result>
+                很遗憾，答案错误! <br> wrongAnswer!
+            </span>
+        </Popup>
+        <div class="slider_left">  
+            <span @click="pre"><i class="el-icon-d-arrow-left">上一题</i></span>
+        </div>
+        <div class="slider_right">  
+            <span @click="next">下一题<i class="el-icon-d-arrow-right"></i></span>
+        </div>
     </div>
 </template>
 
 <script>
 import Header from '@/components/Student/Header'
+import Popup from '@/components/Student/Popup'
 export default {
     data() {
         return {
@@ -76,26 +92,95 @@ export default {
             opensolution: false,
             ac: [],
             multipleAnswer:[],
-            tfAnswer: null
+            tfAnswer: null,
+            visible: false,
+            type: 'error'
         }
     },
     components: {
-        Header
+        Header,
+        Popup
     },
     mounted() {
-        let id = this.$route.query.id;
-        this.$store.dispatch('getProblemById', {id}).then(res=>{
-            this.problem = this.$store.state.problem.probleminfo
-            this.ac = []
-            for (let i = 0; i < this.problem.accept.length; i++) {
-                if (this.problem.accept[i] == 'A') this.ac.push(1);
-                if (this.problem.accept[i] == 'B') this.ac.push(2);
-                if (this.problem.accept[i] == 'C') this.ac.push(3);
-                if (this.problem.accept[i] == 'D') this.ac.push(4);
-            }
-        })
+        this.getProblem()
     },
     methods: {
+        init() {
+            this.singleAnswer = null,
+            this.isAnswered = false,
+            this.opensolution = false,
+            this.ac = []
+            this.multipleAnswer = []
+            this.tfAnswer = null
+        },
+        pre() {
+            let id = this.$route.query.id;
+            id--;
+            this.$store.dispatch('getProblemById',{id}).then(res=>{
+                if (res == 'ok') {
+                    this.$router.push({
+                        path: '/problem',
+                        query: {id: id}
+                    })
+                    this.getProblem()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '已经是第一题了'
+                    })
+                }
+            })
+        },
+        next() {
+            let id = this.$route.query.id;
+            id++;
+            this.$store.dispatch('getProblemById',{id}).then(res=>{
+                if (res == 'ok') {
+                    this.$router.push({
+                        path: '/problem',
+                        query: {id: id}
+                    })
+                    this.getProblem()
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: '已经是最后一题了'
+                    })
+                }
+            })
+        },
+        getProblem() {
+            this.init()
+            let id = this.$route.query.id;
+            this.$store.dispatch('getProblemById', {id}).then(res=>{
+                this.problem = this.$store.state.problem.probleminfo
+                this.ac = []
+                for (let i = 0; i < this.problem.accept.length; i++) {
+                    if (this.problem.accept[i] == 'A') this.ac.push(1);
+                    if (this.problem.accept[i] == 'B') this.ac.push(2);
+                    if (this.problem.accept[i] == 'C') this.ac.push(3);
+                    if (this.problem.accept[i] == 'D') this.ac.push(4);
+                }
+            })
+        },
+        addToMistakes() {
+            let problem_id = this.$route.query.id;
+            this.$store.dispatch('getUserInfo').then(res=>{
+                let user_id = this.$store.state.user.userinfo.id
+                let last_submit = new Date().format("yyyy-MM-dd hh:mm:ss")
+                this.$store.dispatch('addProblemToWrongBook', {user_id,problem_id,last_submit}).then(res=>{
+                    if (res == 'ok') {
+                        this.$message({type:'success', message: '成功添加到错题本!'})
+                        this.closePopup()
+                    } else {
+                        this.$message({type:'error', message: '已经在错题本中!'})
+                    }
+                })
+            })
+        },
+        closePopup() {
+            this.visible = false
+        },  
         getSingleLabel(val) {
             this.singleAnswer = val
         },
@@ -149,13 +234,15 @@ export default {
         accept() {
             let id = this.$route.query.id;
             this.$store.dispatch('accept', {id}).then(res=>{
-                this.$message.success('答案正确');
+                this.type = 'success'
+                this.visible = true
             })
         },
         wrongAnswer() {
             let id = this.$route.query.id;
             this.$store.dispatch('wrongAnswer', {id}).then(res=>{
-                this.$message.error('答案错误');
+                this.type = 'error'
+                this.visible = true
             })
         }
     }
@@ -170,7 +257,7 @@ export default {
 }
 .box {
     margin: 0 auto;
-    height: 70%;
+    height: auto;
     width: 50%;
     background-color: white;
     transform: translateY(-50%);
@@ -210,5 +297,21 @@ export default {
     font-weight: 600;
     margin: 25px 0 8px 0;
     color: #3091f2;
+}
+.slider_left {
+    position: fixed;
+    left: 50px;
+    top: 120px;
+    color: #3091f2;
+    font-size: 20px;
+    cursor: pointer;
+}
+.slider_right {
+    position: fixed;
+    right: 50px;
+    top: 120px;
+    color: #3091f2;
+    font-size: 20px;
+    cursor: pointer;
 }
 </style>

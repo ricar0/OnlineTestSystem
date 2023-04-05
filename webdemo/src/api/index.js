@@ -130,3 +130,15 @@ export const reqGetMyExamNumber = (data)=>requests({url:'/exam/getMyExamNumber',
 
 //获取我的练习数量
 export const reqGetMyPracticeNumber = (data)=>requests({url:'/practice/getMyPracticeNumber',data,method:'post'});
+
+//添加题目到错题本
+export const reqAddProblemToWrongBook = (data)=>requests({url:'/wrongbook/addProblemToWrongBook',data,method:'post'});
+
+//获取一个用户所有的错题
+export const reqGetWrongProblemByUserId = (data)=>requests({url:'/wrongbook/getWrongProblemByUserId',data,method:'post'});
+
+//删除错题
+export const reqDeleteWrongProblem = (data)=>requests({url:'/wrongbook/deleteWrongProblem',data,method:'post'});
+
+//获取错题数量
+export const reqGetWrongProblemNumber = (data)=>requests({url:'/wrongbook/getWrongProblemNumber',data,method:'post'});

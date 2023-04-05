@@ -10,6 +10,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/problem")
@@ -36,7 +37,12 @@ public class ProblemController {
     }
     @RequestMapping(value="/getProblemById", method = RequestMethod.POST)
     ResponseResult getProblemById(@RequestBody Problem problem) {
-        return new ResponseResult(200, "获取成功!", problemService.getProblemById(problem.getId()));
+        Problem tmp = problemService.getProblemById(problem.getId());
+        if (Objects.isNull(tmp)) {
+            return new ResponseResult(400, "获取失败!");
+        } else {
+            return new ResponseResult(200, "获取成功!", tmp);
+        }
     }
     @RequestMapping(value="/accept", method = RequestMethod.POST)
     ResponseResult accept(@RequestBody Problem problem) {

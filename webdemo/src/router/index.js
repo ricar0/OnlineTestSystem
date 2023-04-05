@@ -20,6 +20,7 @@ import ProblemManage from '@/pages/Admin/ProblemManage'
 import AddProblem from '@/pages/Admin/AddProblem'
 import ProblemSet from '@/pages/Student/ProblemSet'
 import Problem from '@/pages/Student/Problem'
+import UserInfo from '@/pages/Common/UserInfo'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -57,7 +58,7 @@ export default new VueRouter ({
         {
             path: "/wrongbook",
             component: WrongBook,
-            meta: {show:false}
+            meta: {show:true}
         }, 
         {
             path: "/myexam",
@@ -116,5 +117,10 @@ export default new VueRouter ({
                 },
             ]
         },
+        {
+            path: "/userInfo",
+            component: UserInfo,
+            mate: {requiresAuth: true, show:true}
+        }
     ]
 })

@@ -58,7 +58,7 @@ const actions = {
             commit("GETPROBELMBYID", data.data);
             return "ok";
         } else {
-            return Promise.reject(new Error("failure"));
+            return "error"
         }
     },
     async accept({commit}, obj) {

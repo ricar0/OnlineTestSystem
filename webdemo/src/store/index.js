@@ -9,6 +9,8 @@ import user from './user'
 import search from './search'
 import exam from './exam'
 import practice from './practice';
+import wrongbook from './wrongbook'
+
 //对外暴露Store类的一个实例
 export default new Vuex.Store({
     //实现Vuex仓库模块式开发存储数据
@@ -17,6 +19,7 @@ export default new Vuex.Store({
         search,
         user,
         exam,
-        practice
+        practice,
+        wrongbook
     }
 });

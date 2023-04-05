@@ -1,30 +1,36 @@
 <template>
-  <div class="score">
-    <div class="title">
-      <p class="name">{{examData.source}}</p>
-      <p class="description">(总分：{{examData.totalScore}}分,限时：{{examData.totalTime}}分钟)</p>
-      <p class="description">学生：{{username}}</p>
-    </div>
-    <div class="total">
-      <div class="look">
-        本次考试成绩
+  <div class="block">
+    <div class="score">
+      <Header></Header>
+      <div class="title">
+        <p class="name">{{examData.source}}</p>
+        <p class="description">(总分：{{examData.totalScore}}分,限时：{{examData.totalTime}}分钟) &nbsp;&nbsp;学生：{{username}}</p>
       </div>
-      <div class="show">
-        <div class="number" :class="{'border': isTransition}">
-          <span>{{score}}</span>
-          <span>分数</span>
+      <div class="total">
+        <div class="look">
+          本次考试成绩
         </div>
+        <div class="show">
+          <div class="number" :class="{'border': isTransition}">
+            <span>{{score}}</span>
+            <span>分数</span>
+          </div>
+        </div>
+        <ul class="time">
+          <li class="start"><span>开始时间</span> <span>{{startTime}}</span></li>
+          <li class="end"><span>结束时间</span> <span>{{endTime}}</span></li>
+        </ul>
       </div>
-      <ul class="time">
-        <li class="start"><span>开始时间</span> <span>{{startTime}}</span></li>
-        <li class="end"><span>结束时间</span> <span>{{endTime}}</span></li>
-      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Student/Header'
 export default {
+  components: {
+    Header
+  },
   data() {
     return {
       isTransition: false, //是否渲染完成
@@ -79,6 +85,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.block {
+  width: 100%;
+  height: auto;
+  background-color: #eff3f5!important;
+}
 .show {
   display: flex;
   justify-content: center;
@@ -136,12 +147,16 @@ export default {
 .score {
   max-width: 800px;
   margin: 0 auto;
+  // margin-bottom: 100px;
   .title {
-    margin: 60px 0px 30px 0px;
+    margin: 60px 0px 20px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    p {
+      margin-bottom: 10px;
+    }
     .name {
       font-size: 26px;
       color: inherit;

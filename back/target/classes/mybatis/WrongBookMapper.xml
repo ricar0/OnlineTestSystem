@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.mapper.WrongBookMapper">
+    <insert id="addProblemToWrongBook" parameterType="com.kaka.entity.WrongBook">
+        insert into wrongbook value(#{user_id}, #{problem_id}, #{last_submit}, 0, 0);
+    </insert>
+
+    <select id="findWrongProblem" parameterType="com.kaka.entity.WrongBook" resultType="com.kaka.entity.WrongBook">
+        select * from wrongbook where user_id = #{user_id} and problem_id = #{problem_id};
+    </select>
+
+    <select id="getWrongBookByUserId" parameterType="Long" resultType="com.kaka.entity.WrongBook">
+        select * from wrongbook where user_id = #{user_id} order by problem_id;
+    </select>
+
+    <delete id="deleteWrongProblem" parameterType="com.kaka.entity.WrongBook">
+        delete from wrongbook where user_id = #{user_id} and problem_id = #{problem_id};
+    </delete>
+
+    <select id="getWrongProblemNumber" parameterType="Long" resultType="Integer">
+        select count(*) from wrongbook where user_id = #{user_id};
+    </select>
+</mapper>
