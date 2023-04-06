@@ -34,6 +34,7 @@ const mutations = {
 const actions = {
     //登录业务
     async userLogin({commit}, obj) {
+        removeToken()
         let {data} = await reqUserLogin(obj);
         if (data.code == 200) {
             commit("USERLOGIN", data.data.token);

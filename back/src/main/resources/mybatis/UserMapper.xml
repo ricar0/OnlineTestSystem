@@ -8,7 +8,7 @@
         select * from user where username = #{name};
     </select>
     <insert id="addUser" parameterType="com.kaka.entity.User">
-        insert into user value(#{username}, #{password},"student",null,#{phone});
+        insert into user value(#{username}, #{password},"student",null,#{phone},null,null,null,null,null,null,null,null);
     </insert>
     <select id="findRoleById" parameterType="Long" resultType="String">
         select role from user where id = #{id};
@@ -25,7 +25,7 @@
     <update id="updateUserInfo" parameterType="com.kaka.entity.User">
         update user set username = #{username}, school = #{school}, major = #{major},
                         grade = #{grade}, sex = #{sex}, phone = #{phone}, email = #{email},
-                        idcard = #{idcard}
+                        idcard = #{idcard},region = #{region}, birthday = #{birthday}
         where id = #{id};
     </update>
     <select id="findUserByEmail" parameterType="String" resultType="com.kaka.entity.User">

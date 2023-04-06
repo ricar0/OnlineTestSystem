@@ -21,6 +21,7 @@ import AddProblem from '@/pages/Admin/AddProblem'
 import ProblemSet from '@/pages/Student/ProblemSet'
 import Problem from '@/pages/Student/Problem'
 import UserInfo from '@/pages/Common/UserInfo'
+import AccountInfo from '@/pages/Common/AccountInfo'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -120,6 +121,11 @@ export default new VueRouter ({
         {
             path: "/userInfo",
             component: UserInfo,
+            mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/accountInfo",
+            component: AccountInfo,
             mate: {requiresAuth: true, show:true}
         }
     ]

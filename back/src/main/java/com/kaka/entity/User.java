@@ -39,5 +39,9 @@ public class User implements Serializable {
     private String grade;
     //性别
     private String sex;
+    //地区
+    private String region;
+    //生日
+    private String birthday;
 
 }

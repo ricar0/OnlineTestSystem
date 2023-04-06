@@ -34,7 +34,7 @@ public class LoginController {
 
     //根据token获取用户信息
     @RequestMapping(value="/getLoginInfo", method = RequestMethod.GET)
-    public ResponseResult getLoginInfo(HttpServletRequest request) { ;
+    public ResponseResult getLoginInfo(HttpServletRequest request) {
         return loginService.getLoginInfo(request);
     }
 

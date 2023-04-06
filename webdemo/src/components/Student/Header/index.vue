@@ -43,7 +43,7 @@ export default {
     },
     methods: {
       userinfo() {
-        this.$router.push('/userinfo')
+        this.$router.push({path:'/userinfo',query:{id:0}})
       },
       logout() {
         this.$store.dispatch('userLogout').then(res=>{
