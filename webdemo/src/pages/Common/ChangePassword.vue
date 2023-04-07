@@ -23,7 +23,7 @@
                                 {{message}}
                             </li>
                             <li style="padding: 20px 0 0 108px;">
-                                <button v-if="!(password1!=''&&password2!='')" class="confirm_btn2" disabled>确认</button>
+                                <button v-if="!(password1!=''&&password2!='')" class="confirm_btn2" disabled="disabled">确认</button>
                                 <button v-if="password1!=''&&password2!=''" class="confirm_btn1" @click="changePassword()">确认</button>
                             </li>
                         </ul>
@@ -100,7 +100,7 @@ export default {
     text-align: center;
 }
 .confirm_btn2 {
-    color: #4d4d4d;
+    color: #c2c2c2;
     background: #f5f5f5;
     border: 1px solid #f5f5f5;
     cursor: pointer;
@@ -110,6 +110,7 @@ export default {
     border-radius: 4px;
     font-size: 14px;
     text-align: center;
+    pointer-events:none;
 }
 .acc_pass_list .error_tips {
     font-size: 14px;

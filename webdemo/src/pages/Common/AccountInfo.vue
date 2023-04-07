@@ -26,7 +26,7 @@
                                 <p>
                                     <span v-if="baseInfo.phone != null">{{baseInfo.phone.substr(0,3)}}****{{baseInfo.phone.substr(7,10)}}</span>
                                     <span v-if="baseInfo.phone == null">还没有绑定手机，马上绑定？</span>
-                                    <a v-if="baseInfo.phone != null" @click="changePhoneNumber()">修改手机</a>
+                                    <a v-if="baseInfo.phone != null" @click="setPhoneNumber()">修改手机</a>
                                     <a v-if="baseInfo.phone == null" @click="setPhoneNumber()">绑定手机</a>
                                 </p>
                             </li>
@@ -38,7 +38,7 @@
                                 <p>
                                     <span v-if="baseInfo.email != null">{{baseInfo.email.split('@')[0].substr(0,2)+'***@'+baseInfo.email.split('@')[1]}}</span>
                                     <span v-if="baseInfo.email == null">还没有绑定邮箱，马上绑定？</span>
-                                    <a v-if="baseInfo.email != null" @click="changeEmail()">修改邮箱</a>
+                                    <a v-if="baseInfo.email != null" @click="setEmail()">修改邮箱</a>
                                     <a v-if="baseInfo.email == null" @click="setEmail()">绑定邮箱</a>
                                 </p>
                             </li>
@@ -74,6 +74,12 @@ export default {
     methods: {
         changePassword() {
             this.$router.push('/accountInfo/password')
+        },
+        setPhoneNumber() {
+            this.$router.push('/accountInfo/phoneNumber')
+        },
+        setEmail() {
+            this.$router.push('/accountInfo/email')
         }
     }
 }
