@@ -142,3 +142,6 @@ export const reqDeleteWrongProblem = (data)=>requests({url:'/wrongbook/deleteWro
 
 //获取错题数量
 export const reqGetWrongProblemNumber = (data)=>requests({url:'/wrongbook/getWrongProblemNumber',data,method:'post'});
+
+//修改密码
+export const reqUpdatePassword = (data)=>requests({url:'/user/updatePassword',data,method:'post'});

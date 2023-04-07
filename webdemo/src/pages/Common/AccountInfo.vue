@@ -24,8 +24,10 @@
                                     <span>机</span>
                                 </span>
                                 <p>
-                                    <span>157****2010</span>
-                                    <a @click="changePassword()">修改手机</a>
+                                    <span v-if="baseInfo.phone != null">{{baseInfo.phone.substr(0,3)}}****{{baseInfo.phone.substr(7,10)}}</span>
+                                    <span v-if="baseInfo.phone == null">还没有绑定手机，马上绑定？</span>
+                                    <a v-if="baseInfo.phone != null" @click="changePhoneNumber()">修改手机</a>
+                                    <a v-if="baseInfo.phone == null" @click="setPhoneNumber()">绑定手机</a>
                                 </p>
                             </li>
                             <li class="account-body-item">
@@ -34,8 +36,10 @@
                                     <span>箱</span>
                                 </span>
                                 <p>
-                                    <span>19***@qq.com</span>
-                                    <a @click="changePassword()">修改邮箱</a>
+                                    <span v-if="baseInfo.email != null">{{baseInfo.email.split('@')[0].substr(0,2)+'***@'+baseInfo.email.split('@')[1]}}</span>
+                                    <span v-if="baseInfo.email == null">还没有绑定邮箱，马上绑定？</span>
+                                    <a v-if="baseInfo.email != null" @click="changeEmail()">修改邮箱</a>
+                                    <a v-if="baseInfo.email == null" @click="setEmail()">绑定邮箱</a>
                                 </p>
                             </li>
                         </ul>
@@ -53,6 +57,24 @@ export default {
     components: {
         Header,
         Nav
+    },
+    data() {
+        return {
+            baseInfo: ''
+        }
+    },
+    mounted() {
+        this.$store.dispatch('getUserInfo').then(res=>{
+            let id = this.$store.state.user.userinfo.id
+            this.$store.dispatch('getUserInfoById', id).then(res=>{
+                this.baseInfo = this.$store.state.user.user
+            })
+        })
+    },
+    methods: {
+        changePassword() {
+            this.$router.push('/accountInfo/password')
+        }
     }
 }
 </script>
@@ -63,6 +85,7 @@ export default {
     min-width: 56px;
     margin-left: 32px;
     color: #1989fa;
+    cursor: pointer;
 }
 .account-body-item p {
     margin: 0;
@@ -89,10 +112,10 @@ export default {
     height: 24px;
     padding: 32px 0 16px;
     color: #555666;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(216, 207, 207);
 }
 .container-account {
-    width: 1000px;
+    width: 70%;
 }
 .account-body-title {
     min-width: 72px;
@@ -105,21 +128,21 @@ export default {
 .container {
     position: relative;
     width: auto;
-    min-width: 896px;
+    min-width: 50%;
     min-height: 800px;
     background: transparent;
     margin-top: 80px;
     margin-left: 20%;
 }
 .container .container-right {
-    min-width: 1000px;
+    min-width: 50%;
     margin-left: 200px;
     min-height: 800px;
 }
 
 .account-body {
     width: 100%;
-    padding: 24px 16px 0;
+    padding: 24px 16px 10px;
     min-height: 200px;
     background: #fff;
     font-size: 14px;

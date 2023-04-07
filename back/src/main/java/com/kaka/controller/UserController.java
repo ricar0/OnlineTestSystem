@@ -87,4 +87,10 @@ public class UserController {
         userService.updateUserInfo(user);
         return new ResponseResult(200, "修改成功!");
     }
+
+    @RequestMapping(value="/updatePassword", method = RequestMethod.POST)
+    public ResponseResult updatePassword(@RequestBody User user) {
+        userService.updatePassword(user);
+        return new ResponseResult(200, "修改成功!");
+    }
 }

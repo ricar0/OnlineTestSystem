@@ -61,4 +61,10 @@ public class UserServiceImpl implements UserService{
         return userMapper.findUserByEmail(email);
     }
 
+    @Override
+    public void updatePassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userMapper.updatePassword(user);
+    }
+
 }

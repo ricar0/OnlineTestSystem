@@ -31,4 +31,8 @@
     <select id="findUserByEmail" parameterType="String" resultType="com.kaka.entity.User">
         select * from user where email = #{email};
     </select>
+
+    <update id="updatePassword" parameterType="com.kaka.entity.User">
+        update user set password = #{password} where id = #{id};
+    </update>
 </mapper>

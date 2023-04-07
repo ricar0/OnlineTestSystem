@@ -17,16 +17,20 @@ export default {
         }
     },
     mounted() {
-        this.items[this.$route.query.id].selected = true
+        if (this.$route.path == '/userInfo') 
+            this.items[0].selected = true
+        else if (this.$route.path == '/accountInfo') 
+            this.items[1].selected = true
     },
     methods: {
         select(index) {
             for (let i = 0; i < this.items.length; i++) this.items[i].selected = false
             this.items[index].selected = true
-            if (index == 0)
-                this.$router.push({path:'/userInfo',query:{id:index}})
+            if (index == 0) {
+                this.$router.push('/userInfo')
+            }
             else if (index == 1) {
-                this.$router.push({path:'/accountInfo',query:{id:index}})
+                this.$router.push('/accountInfo')
             }
         }
     }

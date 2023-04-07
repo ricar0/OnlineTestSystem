@@ -266,7 +266,7 @@ ul li:hover .edit-icon {
     align-items: baseline;
 }
 .base-info {
-    width: 1000px;
+    width: 70%;
     background: #fff;
     margin-bottom: 10px;
 }
@@ -289,7 +289,7 @@ ul li:hover .edit-icon {
 .container {
     position: relative;
     width: auto;
-    min-width: 896px;
+    min-width: 50%;
     min-height: 800px;
     background: transparent;
     margin-top: 80px;
@@ -297,7 +297,7 @@ ul li:hover .edit-icon {
 }
 
 .container-right {
-    min-width: 1000px;
+    min-width: 50%;
     margin-left: 200px;
     min-height: 800px;
 }
