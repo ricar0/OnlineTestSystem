@@ -1,6 +1,6 @@
 //user模块小仓库
 import {reqUserLogin, reqUserInfo, reqUserLogout, reqSendCode, reqGetCode, reqGetStudentAll, 
-    reqGetUserInfoById, reqUpdateUserInfo, reqUpdatePassword} from '@/api'
+    reqGetUserInfoById, reqUpdateUserInfo, reqUpdatePassword, reqSendEmail, reqVerifyEmail} from '@/api'
 import {setToken, getToken, removeToken} from '@/utils/token'
 const state={
     token: getToken(),
@@ -114,6 +114,22 @@ const actions = {
             return "ok";
         } else {
             return data.msg;
+        }
+    },
+    async sendEmail({commit}, obj) {
+        let {data} = await reqSendEmail(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async verifyEmail({commit}, obj) {
+        let {data} = await reqVerifyEmail(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return 'error';
         }
     },
 };

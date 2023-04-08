@@ -35,4 +35,8 @@
     <update id="updatePassword" parameterType="com.kaka.entity.User">
         update user set password = #{password} where id = #{id};
     </update>
+
+    <update id="updateEmail" parameterType="com.kaka.entity.User">
+        update user set email = #{email} where id = #{id};
+    </update>
 </mapper>

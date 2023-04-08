@@ -38,8 +38,8 @@
                                 <p>
                                     <span v-if="baseInfo.email != null">{{baseInfo.email.split('@')[0].substr(0,2)+'***@'+baseInfo.email.split('@')[1]}}</span>
                                     <span v-if="baseInfo.email == null">还没有绑定邮箱，马上绑定？</span>
-                                    <a v-if="baseInfo.email != null" @click="setEmail()">修改邮箱</a>
-                                    <a v-if="baseInfo.email == null" @click="setEmail()">绑定邮箱</a>
+                                    <a v-if="baseInfo.email != null" @click="setEmail(1)">修改邮箱</a>
+                                    <a v-if="baseInfo.email == null" @click="setEmail(2)">绑定邮箱</a>
                                 </p>
                             </li>
                         </ul>
@@ -78,7 +78,8 @@ export default {
         setPhoneNumber() {
             this.$router.push('/accountInfo/phoneNumber')
         },
-        setEmail() {
+        setEmail(index) {
+            localStorage.setItem('index', index)
             this.$router.push('/accountInfo/email')
         }
     }

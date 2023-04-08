@@ -36,4 +36,6 @@ public interface UserMapper {
     public User findUserByEmail(String email);
 
     void updatePassword(User user);
+
+    void updateEmail(User user);
 }

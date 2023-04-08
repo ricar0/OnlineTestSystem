@@ -7,7 +7,7 @@
                 <div class="user-account-content">
                     <div class="user-center-bread">
                         <span @click="goToAccount()">账号设置<em>/</em></span>
-                        <span>手机设置</span>
+                        <span>邮箱设置</span>
                     </div>
                     <div v-if="step==1" class="form-custom">
                         <div class="form-info">
@@ -16,12 +16,12 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">请填写验证码：</label>
-                            <el-input v-model="code" style="margin-left: 10px; width:40%;">
+                            <el-input @click="write()" v-model="code" style="margin-left: 10px; width:40%;">
                                 <el-button class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
                             </el-input>
                         </div>
                         <div class="form-group-error">
-                            <div v-if="show" class="text-error">验证码不正确!</div>
+                            <div v-if="show" class="text-error">验证码不正确！</div>
                         </div>
                         <div class="form-group">
                             <div class="form-submit">
@@ -37,17 +37,17 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">填写验证码：</label>
-                            <el-input v-model="new_code" style="margin-left:20px;width:40%;">
-                                <el-button class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
+                            <el-input @click="write()" v-model="new_code" style="margin-left:20px;width:40%;">
+                                <el-button @click="sendEmail()" class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
                             </el-input>
                         </div>
                         <div class="form-group-error">
-                            <div v-if="show" class="text-error">{{ error_message }}</div>
+                            <div v-if="show" class="text-error">验证码不正确！</div>
                         </div>
                         <div class="form-group">
                             <div class="form-submit">
-                                <button v-if="code != ''" class="btn1">下一步</button>
-                                <button v-if="code == ''" class="btn2" disabled="disabled">下一步</button>
+                                <button v-if="new_code != ''" @click="verifyEmail()" class="btn1">下一步</button>
+                                <button v-if="new_code == ''" class="btn2" disabled="disabled">下一步</button>
                             </div>
                         </div>
                     </div>
@@ -67,17 +67,48 @@ export default {
     },
     data() {
         return {
-            baseInfo: {email: '1933743508@qq.com'},
+            baseInfo: {},
             show: false,
             code: '',
-            step: 2,
+            step: 1,
             new_email: '',
+            new_code: '',
             error_message: ''
         }
     },
+    mounted() {
+        this.step = localStorage.getItem('index')
+        this.$store.dispatch('getUserInfo').then(res=>{
+            let id = this.$store.state.user.userinfo.id
+            this.$store.dispatch('getUserInfoById',id).then(res=>{
+                this.baseInfo = this.$store.state.user.user
+            })
+        })
+    },
     methods: {
+        write() {
+            this.show = false
+        },
         goToAccount() {
             this.$router.push('/accountInfo');
+        },
+        sendEmail() {
+            let id = this.baseInfo.id
+            let email = this.new_email
+            this.$store.dispatch('sendEmail', {id,email});
+        },
+        verifyEmail() {
+            let id = this.baseInfo.id;
+            let email = this.new_email
+            let code = this.new_code
+            this.$store.dispatch('verifyEmail', {id,email,code}).then(res=>{
+                if (res == 'ok') {
+                    this.$message({type: 'success', message: '修改成功!'});
+                    this.$router.push('/accountInfo')
+                } else {
+                    this.show = true
+                }
+            })
         }
     }
 }

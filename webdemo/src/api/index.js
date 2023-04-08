@@ -145,3 +145,9 @@ export const reqGetWrongProblemNumber = (data)=>requests({url:'/wrongbook/getWro
 
 //修改密码
 export const reqUpdatePassword = (data)=>requests({url:'/user/updatePassword',data,method:'post'});
+
+//发送邮箱验证码
+export const reqSendEmail = (data)=>requests({url:'/email/sendEmail',data,method:'post'});
+
+//验证邮箱验证码
+export const reqVerifyEmail = (data)=>requests({url:'/email/verifyEmail',data,method:'post'});

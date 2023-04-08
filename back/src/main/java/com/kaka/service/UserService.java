@@ -31,5 +31,7 @@ public interface UserService {
 
     public User findUserByEmail(String email);
 
-    void updatePassword(User user);
+    public void updatePassword(User user);
+
+    public void updateEmail(User user);
 }
