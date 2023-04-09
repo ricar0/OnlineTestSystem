@@ -6,12 +6,8 @@ import com.kaka.service.ExamService;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.ReactiveListCommands;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Timestamp;
 import java.util.*;
 
 @RestController
@@ -65,23 +61,23 @@ public class ExamController {
     @RequestMapping(value = "/getPaperInfoById", method = RequestMethod.POST)
     public ResponseResult getPaperInfoById(@RequestBody Exam exam) {
         Long id = exam.getId();
-        Paper paper = new Paper();
+        PaperBean paperBean = new PaperBean();
         List<Problem> list = examService.getProblemById(id);
         Exam e = examService.getExamById(id);
-        paper.setProblems(list);
+        paperBean.setProblems(list);
         int singleNum = 0, multipleNum = 0, tfNum = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getLabel().equals("single")) singleNum++;
             if (list.get(i).getLabel().equals("multiple")) multipleNum++;
             if (list.get(i).getLabel().equals("tf")) tfNum++;
         }
-        paper.setSingleNum(singleNum);
-        paper.setMultipleNum(multipleNum);
-        paper.setTfNum(tfNum);
-        paper.setSingleScore(e.getSingleScore());
-        paper.setMultipleScore(e.getMultipleScore());
-        paper.setTfScore(e.getTfScore());
-        return new ResponseResult(200, "获取成功!", paper);
+        paperBean.setSingleNum(singleNum);
+        paperBean.setMultipleNum(multipleNum);
+        paperBean.setTfNum(tfNum);
+        paperBean.setSingleScore(e.getSingleScore());
+        paperBean.setMultipleScore(e.getMultipleScore());
+        paperBean.setTfScore(e.getTfScore());
+        return new ResponseResult(200, "获取成功!", paperBean);
     }
 
     @RequestMapping(value = "/initExamCookies", method = RequestMethod.POST)

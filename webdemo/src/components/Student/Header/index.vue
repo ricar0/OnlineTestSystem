@@ -5,10 +5,10 @@
       <el-col :span="24">
         <ul class="list">
           <li class="logo"><i class="el-icon-s-data"></i><span>Exam-Online</span></li>
-          <li><router-link to="/problemSet"><i class="el-icon-s-grid"></i> 题库</router-link></li>
-          <li><router-link to="/myexam"><i class="el-icon-trophy"></i> 考试</router-link></li>
-          <li><router-link to="/practice"><i class="el-icon-s-claim"></i> 练习</router-link></li>
-          <li><router-link to="/wrongbook"><i class="el-icon-collection"></i> 错题本</router-link></li>
+          <li :class="{active:selected[0]}"><router-link to="/problemSet"><i class="el-icon-s-grid"></i> 题库</router-link></li>
+          <li :class="{active:selected[1]}"><router-link to="/myexam"><i class="el-icon-trophy"></i> 考试</router-link></li>
+          <li :class="{active:selected[2]}"><router-link to="/practice"><i class="el-icon-s-claim"></i> 练习</router-link></li>
+          <li :class="{active:selected[3]}"><router-link to="/wrongbook"><i class="el-icon-collection"></i> 错题本</router-link></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
             <router-link v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
             <a v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>
@@ -30,10 +30,15 @@ export default {
         return {
             user: {},
             flag: false,
-            isLogin: false
+            isLogin: false,
+            selected: [false,false,false,false]
         }
     },
     created() {
+      if (this.$route.fullPath=="/problemSet") this.selected[0] = true
+      else if (this.$route.fullPath=="/myexam") this.selected[1] = true
+      else if (this.$route.fullPath=="/practice") this.selected[2] = true
+      else this.selected[3] = true
       this.$store.dispatch('getUserInfo').then(res=>{
         if (this.$store.state.user.token) {
           this.isLogin = true;
@@ -43,18 +48,28 @@ export default {
     },
     methods: {
       userinfo() {
-        this.$router.push({path:'/userinfo',query:{id:0}})
+        this.$router.push('/userinfo')
       },
       logout() {
         this.$store.dispatch('userLogout').then(res=>{
           this.$router.push('/login')
         })
+      },
+      change(index) {
+        for (let i = 0; i < 4; i++) this.selected[i] = false
+        this.selected[index] = true 
       }
     }
 }
 </script>
 
 <style scoped>
+.list li.active {
+  background:#4da9eb;
+}
+.list li.active a {
+  color: #fff;
+}
 .right .icon {
   margin-right: 100%;
 }

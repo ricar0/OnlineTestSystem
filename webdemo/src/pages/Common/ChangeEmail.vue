@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label class="form-label">请填写验证码：</label>
                             <el-input @click="write()" v-model="code" style="margin-left: 10px; width:40%;">
-                                <el-button class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
+                                <el-button @click="sendEmail1()" class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
                             </el-input>
                         </div>
                         <div class="form-group-error">
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-submit">
-                                <button v-if="code != ''" class="btn1">下一步</button>
+                                <button @click="verifyEmail1()" v-if="code != ''" class="btn1">下一步</button>
                                 <button v-if="code == ''" class="btn2" disabled="disabled">下一步</button>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="form-label">填写验证码：</label>
                             <el-input @click="write()" v-model="new_code" style="margin-left:20px;width:40%;">
-                                <el-button @click="sendEmail()" class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
+                                <el-button @click="sendEmail2()" class="btn" slot="append" icon="el-icon-s-promotion"></el-button>
                             </el-input>
                         </div>
                         <div class="form-group-error">
@@ -46,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <div class="form-submit">
-                                <button v-if="new_code != ''" @click="verifyEmail()" class="btn1">下一步</button>
+                                <button v-if="new_code != ''" @click="verifyEmail2()" class="btn1">下一步</button>
                                 <button v-if="new_code == ''" class="btn2" disabled="disabled">下一步</button>
                             </div>
                         </div>
@@ -92,12 +92,29 @@ export default {
         goToAccount() {
             this.$router.push('/accountInfo');
         },
-        sendEmail() {
+        sendEmail1() {
+            let id = this.baseInfo.id
+            let email = this.baseInfo.email
+            this.$store.dispatch('sendEmail', {id,email});
+        },
+        sendEmail2() {
             let id = this.baseInfo.id
             let email = this.new_email
             this.$store.dispatch('sendEmail', {id,email});
         },
-        verifyEmail() {
+        verifyEmail1() {
+            let id = this.baseInfo.id;
+            let email = this.baseInfo.email
+            let code = this.code
+            this.$store.dispatch('verifyEmail', {id,email,code}).then(res=>{
+                if (res == 'ok') {
+                    this.step = 2;
+                } else {
+                    this.show = true
+                }
+            })
+        },
+        verifyEmail2() {
             let id = this.baseInfo.id;
             let email = this.new_email
             let code = this.new_code

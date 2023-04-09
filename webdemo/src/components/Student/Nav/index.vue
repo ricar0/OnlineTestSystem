@@ -19,7 +19,7 @@ export default {
     mounted() {
         if (this.$route.path == '/userInfo') 
             this.items[0].selected = true
-        else if (this.$route.path == '/accountInfo') 
+        else if (this.$route.path.split('/')[1] == 'accountInfo') 
             this.items[1].selected = true
     },
     methods: {

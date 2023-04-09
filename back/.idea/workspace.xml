@@ -5,33 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_jakarta_mail_1_6_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_mail_2_7_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/config/MailConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/EmailController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/EmailCheck.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/utils/EmailUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/PaperBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Population.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/RuleBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/GeneticAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/security.iml" beforeDir="false" afterPath="$PROJECT_DIR$/security.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Common/AccountInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Common/AccountInfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Paper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Paper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Student/Header/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Student/Header/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Student/Nav/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Student/Nav/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Common/ChangeEmail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Common/ChangeEmail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/user/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="mapper" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -63,7 +46,6 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -178,7 +160,7 @@
       <workItem from="1680697190923" duration="649000" />
       <workItem from="1680758031183" duration="5407000" />
       <workItem from="1680838677667" duration="1570000" />
-      <workItem from="1680954362339" duration="10959000" />
+      <workItem from="1681003993496" duration="10942000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>
