@@ -3,10 +3,20 @@ package com.kaka.service;
 import com.kaka.entity.Paper;
 import com.kaka.entity.Population;
 import com.kaka.entity.Problem;
+import com.kaka.entity.ProblemFilter;
 import com.kaka.entity.RuleBean;
+import com.kaka.mapper.ProblemMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
+
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class GeneticAlgorithm {
     /**
      * 变异概率
@@ -86,9 +96,8 @@ public class GeneticAlgorithm {
             } else {
                 int type = getTypeByIndex(i, rule);
                 // getQuestionArray()用来选择指定类型和知识点的试题数组
-                Problem[] singleArray = QuestionService.getQuestionArray(type, idString.substring(1, idString
-                        .indexOf("]")));
-                child.saveQuestion(i, singleArray[(int) (Math.random() * singleArray.length)]);
+                List<Problem> singleArray = QuestionService.getQuestionArray(type, rule.getPointIds(), rule.getSource());
+                child.saveQuestion(i, singleArray.get((int) (Math.random() * singleArray.size())));
             }
         }
         for (int i = endPos; i < parent2.getQuestionSize(); i++) {
@@ -96,9 +105,8 @@ public class GeneticAlgorithm {
                 child.saveQuestion(i, parent2.getQuestion(i));
             } else {
                 int type = getTypeByIndex(i, rule);
-                Problem[] singleArray = QuestionService.getQuestionArray(type, idString.substring(1, idString
-                        .indexOf("]")));
-                child.saveQuestion(i, singleArray[(int) (Math.random() * singleArray.length)]);
+                List<Problem> singleArray = QuestionService.getQuestionArray(type, rule.getPointIds(), rule.getSource());
+                child.saveQuestion(i, singleArray.get((int) (Math.random() * singleArray.size())));
             }
         }
 
@@ -110,11 +118,11 @@ public class GeneticAlgorithm {
         // 单选
         if (index < rule.getSingleNum()) {
             type = 1;
-        } else if (index < rule.getSingleNum() + rule.getCompleteNum()) {
-            // 填空
+        } else if (index < rule.getSingleNum() + rule.getMultipleNum()) {
+            // 多选
             type = 2;
         } else {
-            // 主观
+            // 判断
             type = 3;
         }
         return type;
@@ -134,7 +142,11 @@ public class GeneticAlgorithm {
                 // 进行突变，第i道
                 tmpQuestion = paper.getQuestion(i);
                 // 从题库中获取和变异的题目类型一样分数相同的题目（不包含变异题目）
-                list = QuestionService.getQuestionListWithOutSId(tmpQuestion);
+                int type = 0;
+                if (tmpQuestion.getLabel().equals("single")) type = 1;
+                else if (tmpQuestion.getLabel().equals("multiple")) type = 2;
+                else type = 3;
+                list = QuestionService.getQuestionArray(type,null,tmpQuestion.getSource());
                 if (list.size() > 0) {
                     // 随机获取一道
                     index = (int) (Math.random() * list.size());
@@ -158,4 +170,5 @@ public class GeneticAlgorithm {
         }
         return pop.getFitness();
     }
+
 }

@@ -1,5 +1,8 @@
 package com.kaka.entity;
 
+import com.kaka.service.QuestionService;
+
+import java.util.List;
 import java.util.Random;
 
 public class Population {
@@ -16,21 +19,20 @@ public class Population {
                 paper.setId(i + 1);
                 while (paper.getTotalScore(rule) != rule.getTotalScore()) {
                     paper.getQuestionList().clear();
-                    String idString = rule.getPointIds().toString();
                     // 单选题
                     if (rule.getSingleNum() > 0) {
-                        generateQuestion(1, random, rule.getSingleNum(), rule.getSingleScore(), idString,
-                                "单选题数量不够，组卷失败", paper);
+                        generateQuestion(1, random, rule.getSingleNum(), rule.getSingleScore(), rule.getPointIds(),
+                                "单选题数量不够，组卷失败", paper, rule.getSource());
                     }
                     // 多选题
                     if (rule.getMultipleNum() > 0) {
-                        generateQuestion(2, random, rule.getMultipleNum(), rule.getMultipleScore(), idString,
-                                "填空题数量不够，组卷失败", paper);
+                        generateQuestion(2, random, rule.getMultipleNum(), rule.getMultipleScore(), rule.getPointIds(),
+                                "填空题数量不够，组卷失败", paper, rule.getSource());
                     }
                     // 判断题
                     if (rule.getTfNum() > 0) {
-                        generateQuestion(3, random, rule.getTfNum(), rule.getTfScore(), idString,
-                                "主观题数量不够，组卷失败", paper);
+                        generateQuestion(3, random, rule.getTfNum(), rule.getTfScore(), rule.getPointIds(),
+                                "主观题数量不够，组卷失败", paper, rule.getSource());
                     }
                 }
                 // 计算试卷知识点覆盖率
@@ -41,10 +43,10 @@ public class Population {
             }
         }
     }
-    private void generateQuestion(int type, Random random, int qustionNum, double score, String idString,
-                                  String errorMsg, Paper paper) {
-        Problem[] singleArray = QuestionService.getQuestionArray(type, idString
-                .substring(1, idString.indexOf("]")));
+    private void generateQuestion(int type, Random random, int qustionNum, double score, List<String> coverage,
+                                  String errorMsg, Paper paper, String source) {
+        List<Problem> list = QuestionService.getQuestionArray(type, coverage, source);
+        Problem[] singleArray = list.toArray(new Problem[list.size()]);
         if (singleArray.length < qustionNum) {
             return;
         }

@@ -32,7 +32,7 @@ public class Paper {
     /**
      * 个体包含的试题集合
      */
-    private List<Problem> questionList = new ArrayList<>();
+    private List<Problem> questionList = new ArrayList<Problem>();
 
     public Paper(int size) {
         for (int i = 0; i < size; i++) {

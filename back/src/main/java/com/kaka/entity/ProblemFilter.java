@@ -13,6 +13,7 @@ public class ProblemFilter {
     private List<String> sourceList;
     private List<String> difficultyList;
     private List<String> labelList;
+    private List<String> categoryList;
     int pageSize;
     int start;
 }

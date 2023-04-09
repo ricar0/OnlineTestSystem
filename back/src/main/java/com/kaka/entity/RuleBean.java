@@ -10,6 +10,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RuleBean {
+    private String source;
     private int tfScore;
     private int multipleScore;
     private int singleScore;

@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/PaperBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Population.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/RuleBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/GeneticAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security.iml" beforeDir="false" afterPath="$PROJECT_DIR$/security.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/QuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Paper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Paper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Student/Header/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Student/Header/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Student/Nav/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Student/Nav/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Common/ChangeEmail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Common/ChangeEmail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Population.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/Population.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/ProblemFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/ProblemFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/RuleBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/RuleBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/GeneticAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/GeneticAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/ProblemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/ProblemMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/kaka/SecurityApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/kaka/SecurityApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/entity/Paper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/entity/Paper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/kaka/SecurityApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/kaka/SecurityApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,14 +66,16 @@
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
-  <component name="RunManager" selected="Spring Boot.SecurityApplication">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.SecurityApplicationTests.aaa">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -108,6 +112,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SecurityApplicationTests.ttt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="security" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kaka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.kaka" />
+      <option name="MAIN_CLASS_NAME" value="com.kaka.SecurityApplicationTests" />
+      <option name="METHOD_NAME" value="ttt" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SecurityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="security" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.kaka.SecurityApplication" />
@@ -118,6 +138,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.SecurityApplicationTests.aaa" />
+        <item itemvalue="JUnit.SecurityApplicationTests.ttt" />
         <item itemvalue="JUnit.SecurityApplicationTests.test" />
       </list>
     </recent_temporary>
@@ -161,6 +182,7 @@
       <workItem from="1680758031183" duration="5407000" />
       <workItem from="1680838677667" duration="1570000" />
       <workItem from="1681003993496" duration="10942000" />
+      <workItem from="1681042728865" duration="9272000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>

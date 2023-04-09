@@ -25,6 +25,12 @@
                     #{label}
                 </foreach>
             </if>
+            <if test="categoryList != null and categoryList.size() > 0">
+                AND category IN
+                <foreach item="category" collection="categoryList" open="(" separator="," close=")">
+                    #{category}
+                </foreach>
+            </if>
         </where>
         <if test="pageSize != 0">
             limit #{start}, #{pageSize};
