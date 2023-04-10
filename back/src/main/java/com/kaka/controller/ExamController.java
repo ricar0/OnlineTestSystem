@@ -208,4 +208,18 @@ public class ExamController {
     public ResponseResult getAllNumber3(@RequestBody ExamFilter examFilter) {
         return new ResponseResult(200, "获取成功!", examService.getExamByFilter(examFilter).size());
     }
+
+    @RequestMapping(value="/deleteExam", method = RequestMethod.POST)
+    public ResponseResult deleteExam(@RequestBody Exam exam) {
+        examService.deleteExam(exam.getId());
+        examService.deleteExamProblem(exam.getId());
+        return new ResponseResult(200, "删除成功!");
+    }
+
+    @RequestMapping(value="/updateExamInfo", method = RequestMethod.POST)
+    public ResponseResult updateExamInfo(@RequestBody Exam exam) {
+        examService.updateExamInfo(exam.getId());
+        examService.updateExamInfo(exam.getId());
+        return new ResponseResult(200, "删除成功!");
+    }
 }

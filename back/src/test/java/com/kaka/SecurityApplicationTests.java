@@ -2,18 +2,17 @@ package com.kaka;
 
 import com.kaka.entity.*;
 import com.kaka.mapper.ProblemMapper;
-import com.kaka.service.GeneticAlgorithm;
+import com.kaka.utils.GeneticAlgorithm;
 import com.kaka.service.UserService;
+import com.kaka.utils.Population;
 import com.kaka.utils.RedisCache;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import javax.sql.DataSource;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SpringBootTest
@@ -92,14 +91,20 @@ class SecurityApplicationTests {
        rule.setDifficulty(1.5);
        rule.setCoverageWeight(0.2);
        rule.setDifficultyWeight(0.8);
-       rule.setFitness(0.98);
-       rule.setPointIds("1,2,3,4,5");
-       System.out.println(rule.getPointIds());
+       rule.setFitness(0.6);
+       List<String> pointIds = new ArrayList<>();
+       pointIds.add("1");
+       pointIds.add("2");
+       pointIds.add("3");
+       pointIds.add("4");
+       pointIds.add("5");
+       rule.setPointIds(pointIds);
+       System.out.println(rule.getPointIds().get(0));
        if (rule != null) {
            // 初始化种群
            Population population = new Population(20, true, rule);
            System.out.println("初次适应度  " + population.getFitness().getAdaptationDegree());
-           while (count < runCount && population.getFitness().getAdaptationDegree() < expand) {
+           while (count < runCount && population.getFitness().getAdaptationDegree() < rule.getFitness()) {
                count++;
                population = GeneticAlgorithm.evolvePopulation(population, rule);
                System.out.println("第 " + count + " 次进化，适应度为： " + population.getFitness().getAdaptationDegree());
@@ -108,6 +113,6 @@ class SecurityApplicationTests {
            System.out.println(population.getFitness().getAdaptationDegree());
            resultPaper = population.getFitness();
        }
-       System.out.println(resultPaper);
+       System.out.println(resultPaper.getQuestionList());
    }
 }

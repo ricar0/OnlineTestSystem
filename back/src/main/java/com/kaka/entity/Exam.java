@@ -24,4 +24,7 @@ public class Exam {
     private int multipleScore;
     private int tfScore;
     private int number;
+    private int singleNum;
+    private int multipleNum;
+    private int tfNum;
 }

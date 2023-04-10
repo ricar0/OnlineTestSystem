@@ -30,4 +30,8 @@ public interface ExamMapper {
     public List<Exam> getExamByFilter(ExamFilter examFilter);
 
     public Integer getUserNumberByExamId(Long id);
+
+    public void deleteExam(Long id);
+
+    public void deleteExamProblem(Long id);
 }

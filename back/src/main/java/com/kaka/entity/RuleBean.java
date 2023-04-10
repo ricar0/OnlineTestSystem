@@ -25,7 +25,4 @@ public class RuleBean {
     private double coverageWeight;
     private double difficultyWeight;
 
-    public void setPointIds(String id) {
-        this.pointIds = new ArrayList<>(new HashSet<>(Arrays.asList(id)));
-    }
 }

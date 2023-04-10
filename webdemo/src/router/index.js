@@ -25,6 +25,7 @@ import AccountInfo from '@/pages/Common/AccountInfo'
 import ChangePassword from '@/pages/Common/ChangePassword'
 import ChangePhoneNumber from '@/pages/Common/ChangePhoneNumber'
 import ChangeEmail from '@/pages/Common/ChangeEmail'
+import SearchExam from '@/pages/Admin/SearchExam'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -117,6 +118,11 @@ export default new VueRouter ({
                 {
                     path: "/addProblem",
                     component: AddProblem,
+                    meta: {requiresAuth: true, show:false}
+                },
+                {
+                    path: "/searchExam",
+                    component: SearchExam,
                     meta: {requiresAuth: true, show:false}
                 },
             ]

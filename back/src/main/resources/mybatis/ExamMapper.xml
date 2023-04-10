@@ -64,4 +64,12 @@
     <select id="getUserNumberByExamId" resultType="Integer" parameterType="Integer">
         select count(*) from myexam where exam_id = #{id}
     </select>
+
+    <delete id="deleteExam" parameterType="Long">
+        delete from exam where id = #{id};
+    </delete>
+
+    <delete id="deleteExamProblem" parameterType="Long">
+        delete from exam_problem where exam_id = #{id};
+    </delete>
 </mapper>

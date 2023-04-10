@@ -1,19 +1,12 @@
-package com.kaka.service;
+package com.kaka.utils;
 
 import com.kaka.entity.Paper;
-import com.kaka.entity.Population;
 import com.kaka.entity.Problem;
-import com.kaka.entity.ProblemFilter;
 import com.kaka.entity.RuleBean;
-import com.kaka.mapper.ProblemMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import com.kaka.service.QuestionService;
 import org.springframework.stereotype.Component;
 
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component

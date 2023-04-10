@@ -1,5 +1,8 @@
-package com.kaka.entity;
+package com.kaka.utils;
 
+import com.kaka.entity.Paper;
+import com.kaka.entity.Problem;
+import com.kaka.entity.RuleBean;
 import com.kaka.service.QuestionService;
 
 import java.util.List;

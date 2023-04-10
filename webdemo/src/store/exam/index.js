@@ -1,6 +1,6 @@
 import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
     reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, 
-    reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber } from "@/api";
+    reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber, reqDeleteExam } from "@/api";
 
 const state = {
     myexam: [],
@@ -152,6 +152,14 @@ const actions = {
     async getMyExamNumber({commit}, obj) {
         let {data} = await reqGetMyExamNumber(obj);
         commit("GETMYEXAMNUMBER", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async deleteExam({commit}, obj) {
+        let {data} = await reqDeleteExam(obj);
         if (data.code == 200) {
             return "ok";
         } else {

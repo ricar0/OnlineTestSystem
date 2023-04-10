@@ -23,4 +23,8 @@ public interface ExamService {
     public List<Exam> getExamByFilter(ExamFilter examFilter);
 
     public Integer getUserNumberByExamId(Long id);
+
+    public void deleteExam(Long id);
+
+    public void deleteExamProblem(Long id);
 }

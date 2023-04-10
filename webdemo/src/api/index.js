@@ -151,3 +151,7 @@ export const reqSendEmail = (data)=>requests({url:'/email/sendEmail',data,method
 
 //验证邮箱验证码
 export const reqVerifyEmail = (data)=>requests({url:'/email/verifyEmail',data,method:'post'});
+
+//删除考试
+export const reqDeleteExam = (data)=>requests({url:'/exam/deleteExam', data,method:'post'});
+

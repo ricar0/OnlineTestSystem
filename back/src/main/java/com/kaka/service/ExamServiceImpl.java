@@ -62,4 +62,14 @@ public class ExamServiceImpl implements ExamService{
         return examMapper.getUserNumberByExamId(id);
     }
 
+    @Override
+    public void deleteExam(Long id) {
+        examMapper.deleteExam(id);
+    }
+
+    @Override
+    public void deleteExamProblem(Long id) {
+        examMapper.deleteExamProblem(id);
+    }
+
 }

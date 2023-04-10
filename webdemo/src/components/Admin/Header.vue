@@ -1,11 +1,11 @@
-<!--学生考试首页-->
+
 <template>
   <div id="student">
     <el-row class="padding-50">
       <el-col :span="24">
         <ul style="padding-left:0;" class="list">
           <li style="cursor: pointer;" @click="change()"><i style="font-size: 150%;" class="el-icon-menu"></i></li>
-          <li style="padding-right: 0;"><i style="font-size:250%;" class="el-icon-collection"></i></li>
+          <li @click="goToAdminTable()" style="padding-right: 0;cursor:pointer;"><i style="font-size:250%;" class="el-icon-collection"></i></li>
           <li class="logo"><span style="font-size:25px; color: white;">Exam-Online</span></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
             <router-link style="color:white;" v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
@@ -50,6 +50,9 @@ export default {
       change() {
         this.flag2 = this.flag2 ^ 1;
         Bus.$emit('flag', this.flag2);
+      },
+      goToAdminTable() {
+        this.$router.push('/adminTable')
       }
     }
 }

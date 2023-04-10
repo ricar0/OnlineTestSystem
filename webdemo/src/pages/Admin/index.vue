@@ -47,7 +47,7 @@ export default {
 //   background-color: #fff;
 }
 .content {
-  margin-top: 5%;
+  margin-top: 80px;
   height: 100%;
   width: 100%;
 }
