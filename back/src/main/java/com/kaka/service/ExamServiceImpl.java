@@ -72,4 +72,9 @@ public class ExamServiceImpl implements ExamService{
         examMapper.deleteExamProblem(id);
     }
 
+    @Override
+    public void updateExamInfo(Exam exam) {
+        examMapper.updateExamInfo(exam);
+    }
+
 }

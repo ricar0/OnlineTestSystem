@@ -72,4 +72,11 @@
     <delete id="deleteExamProblem" parameterType="Long">
         delete from exam_problem where exam_id = #{id};
     </delete>
+
+    <update id="updateExamInfo" parameterType="com.kaka.entity.Exam">
+        update exam set source = #{source}, description = #{description}, totalTime = #{totalTime},
+        totalScore = #{totalScore}, start_time = #{start_time}, end_time = #{end_time}, permission = #{permission},
+        password = #{password}, singleScore = #{singleScore}, multipleScore = #{multipleScore}, tfScore = #{tfScore},
+        singleNum = #{singleNum}, multipleNum = #{multipleNum}, tfNum = #{tfNum} where id = #{id};
+    </update>
 </mapper>

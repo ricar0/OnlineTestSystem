@@ -2,9 +2,9 @@
   <div class="all">
     <p style="margin:0; font-size:25px;">考试管理</p>
     <el-divider></el-divider>
-    <el-table :data="pagination.records" border>
+    <el-table style="width: 100%;" :data="pagination.records" border>
       <el-table-column fixed="left" prop="id" label="考试id" width="70"></el-table-column>
-      <el-table-column prop="source" label="学科" width="250"></el-table-column>
+      <el-table-column prop="source" label="学科" width="220"></el-table-column>
       <el-table-column prop="description" label="介绍" width="250"></el-table-column>
       <el-table-column prop="totalTime" label="总时长(min)" width="110"></el-table-column>
       <el-table-column prop="totalScore" label="总分" width="100"></el-table-column>
@@ -77,14 +77,23 @@
           <el-form-item label="判断题分值">
             <el-input v-model="form.tfScore"></el-input>
           </el-form-item>
-
+          <el-form-item label="考试时间">
+            <el-date-picker
+              @click="Click()"
+              v-model="timeList"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+            </el-date-picker>
+          </el-form-item>
           <el-form-item label="是否上锁">
             <el-select v-model="form.permission" placeholder="请选择">
-                <el-option :value="pick1"></el-option>
-                <el-option :value="pick2"></el-option>
+                <el-option :key="1" label="是" :value="1"></el-option>
+                <el-option :key="0" label="否" :value="0"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item v-if="form.permission" label="密码">
+          <el-form-item v-if="form.permission==1" label="密码">
             <el-input v-model="form.password"></el-input>
           </el-form-item>
         </el-form>
@@ -98,6 +107,7 @@
 </template>
 
 <script>
+import { getDateDiff } from '@/utils/time';
 export default {
   data() {
     return {
@@ -109,14 +119,18 @@ export default {
       },
       dialogVisible: false, //对话框
       form: {}, 
-      pick1: 'true',
-      pick2: 'false'
+      timeList: [],
+      isClick: '',
+      value:''
     };
   },
   created() {
     this.getExamInfo();
   },
   methods: {
+    Click() {
+      this.isClick = true
+    },
     getExamInfo() {
       //分页查询所有考试信息
         let pageSize = this.pagination.size
@@ -142,8 +156,10 @@ export default {
       this.dialogVisible = true
       this.$store.dispatch('getExamById', id).then(res=>{
         this.form = this.$store.state.exam.examinfo
+        this.timeList.push(this.form.start_time)
+        this.timeList.push(this.form.end_time)
       })
-      console.log(id)
+      
     },
     deleteById(examId) { //删除当前学生
       this.$confirm("确定删除当前考试吗？删除后无法恢复","Warning",{
@@ -166,12 +182,35 @@ export default {
         })
         return;
       }
+      if (this.timeList.length < 2) {
+        this.$message({
+            message: '考试时间不完整',
+            type: 'error'
+        })
+        return;
+      }
+      if (this.isClick) {
+        this.form.start_time = this.timeList[0].format('yyyy-MM-dd hh:mm:ss')
+        this.form.end_time = this.timeList[1].format('yyyy-MM-dd hh:mm:ss')
+      } else {
+        this.form.start_time = this.timeList[0]
+        this.form.end_time = this.timeList[1]
+      }
+      if (getDateDiff(this.form.start_time, this.form.end_time, "minute") != this.form.totalTime) {
+        this.$message({
+            message: '考试时间与总时长不符',
+            type: 'error'
+        })
+        return;
+      }
+      console.log(this.form.permission)
       this.$store.dispatch('updateExamInfo', this.form).then(res => {
         if(res == "ok") {
           this.$message({
             message: '更新成功',
             type: 'success'
           })
+          this.getExamInfo()
           this.dialogVisible = false
         } else {
             this.$message({

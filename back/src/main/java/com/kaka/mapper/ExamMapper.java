@@ -34,4 +34,6 @@ public interface ExamMapper {
     public void deleteExam(Long id);
 
     public void deleteExamProblem(Long id);
+
+    public void updateExamInfo(Exam exam);
 }

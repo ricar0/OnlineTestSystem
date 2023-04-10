@@ -38,7 +38,7 @@ export default {
       if (this.$route.fullPath=="/problemSet") this.selected[0] = true
       else if (this.$route.fullPath=="/myexam") this.selected[1] = true
       else if (this.$route.fullPath=="/practice") this.selected[2] = true
-      else this.selected[3] = true
+      else if (this.$route.fullPath=='wrongbook') this.selected[3] = true
       this.$store.dispatch('getUserInfo').then(res=>{
         if (this.$store.state.user.token) {
           this.isLogin = true;

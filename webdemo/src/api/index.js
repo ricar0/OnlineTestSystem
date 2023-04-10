@@ -155,3 +155,5 @@ export const reqVerifyEmail = (data)=>requests({url:'/email/verifyEmail',data,me
 //删除考试
 export const reqDeleteExam = (data)=>requests({url:'/exam/deleteExam', data,method:'post'});
 
+//修改考试信息
+export const reqUpdateExamInfo = (data)=>requests({url:'/exam/updateExamInfo', data,method:'post'});

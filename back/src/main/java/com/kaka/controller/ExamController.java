@@ -218,8 +218,7 @@ public class ExamController {
 
     @RequestMapping(value="/updateExamInfo", method = RequestMethod.POST)
     public ResponseResult updateExamInfo(@RequestBody Exam exam) {
-        examService.updateExamInfo(exam.getId());
-        examService.updateExamInfo(exam.getId());
+        examService.updateExamInfo(exam);
         return new ResponseResult(200, "删除成功!");
     }
 }

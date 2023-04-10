@@ -27,4 +27,6 @@ public interface ExamService {
     public void deleteExam(Long id);
 
     public void deleteExamProblem(Long id);
+
+    public void updateExamInfo(Exam exam);
 }

@@ -2,17 +2,17 @@
   <div class="all">
     <p style="margin:0; font-size:25px;">学生管理</p>
     <el-divider></el-divider>
-    <el-table :data="pagination.records" border>
-      <el-table-column fixed="left" prop="id" label="id" min-width="5%"></el-table-column>
-      <el-table-column prop="username" label="姓名" min-width="5%"></el-table-column>
-      <el-table-column prop="school" label="学校" min-width="10%"></el-table-column>
-      <el-table-column prop="major" label="专业" min-width="15%"></el-table-column>
-      <el-table-column prop="sex" label="性别" min-width="5%"></el-table-column>
-      <el-table-column prop="phone" label="联系方式" min-width="15%"></el-table-column>
-      <el-table-column prop="email" label="邮箱" min-width="15%"></el-table-column>
-      <el-table-column prop="idcard" label="身份证号" min-width="15%"></el-table-column>
-      <el-table-column prop="grade" label="学历" min-width="5%"></el-table-column>
-      <el-table-column fixed="right" label="操作" min-width="10%">
+    <el-table style="width: 100%;" :data="pagination.records" border>
+      <el-table-column fixed="left" prop="id" label="id" width="100"></el-table-column>
+      <el-table-column prop="username" label="姓名" width="100"></el-table-column>
+      <el-table-column prop="school" label="学校" width="200"></el-table-column>
+      <el-table-column prop="major" label="专业" width="150"></el-table-column>
+      <el-table-column prop="sex" label="性别" width="50"></el-table-column>
+      <el-table-column prop="phone" label="联系方式" width="150"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="150"></el-table-column>
+      <el-table-column prop="idcard" label="身份证号" width="200"></el-table-column>
+      <el-table-column prop="grade" label="学历" width="100"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="checkGrade(scope.row.id)" type="primary" size="small">编辑</el-button>
           <el-button @click="deleteById(scope.row.id)" type="danger" size="small">删除</el-button>
