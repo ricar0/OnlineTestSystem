@@ -88,8 +88,8 @@
                         min-width="10%">
                         <template slot-scope="scope">
                             <el-tag v-if="scope.row.label=='single'" size="small">单选题</el-tag>
-                            <el-tag v-if="scope.row.difficulty=='multiple'" size="small">多选题</el-tag>
-                            <el-tag v-if="scope.row.difficulty=='tf'" size="small">判断题</el-tag>
+                            <el-tag v-if="scope.row.label=='multiple'" size="small">多选题</el-tag>
+                            <el-tag v-if="scope.row.label=='tf'" size="small">判断题</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column

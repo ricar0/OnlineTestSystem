@@ -48,30 +48,158 @@
                         <p>试卷信息</p>
                         <div class="content2">
                             <el-form style="text-align: center;" :inline="true" ref="form" :model="exam" label-position="left" label-width="100px">
+                                <el-row>
                                 <el-form-item label="单选题数量" prop="singleNum">
                                     <el-input-number v-model="exam.singleNum" :min="0" :max="100"></el-input-number>
                                 </el-form-item>
                                 <el-form-item style="margin-left: 30px;" label="单选题分值" prop="singleScore">
                                     <el-input-number v-model="exam.singleScore" :min="1" :max="1000"></el-input-number>
+                                    <el-button @click="addSingle()" style="margin-left: 30px;">点击添加</el-button>
                                 </el-form-item>
+                                </el-row>
+                                <el-row>
                                 <el-form-item label="多选题数量" prop="multipleNum">
                                     <el-input-number v-model="exam.multipleNum" :min="0" :max="100"></el-input-number>
                                 </el-form-item>
                                 <el-form-item style="margin-left: 30px;" label="多选题分值" prop="singleScore">
                                     <el-input-number v-model="exam.multipleScore" :min="1" :max="1000"></el-input-number>
+                                    <el-button @click="addMultiple()" style="margin-left: 30px;">点击添加</el-button>
                                 </el-form-item>
+                                </el-row>
+                                <el-row>
                                 <el-form-item label="判断题数量" prop="multipleScore">
                                     <el-input-number v-model="exam.tfNum" :min="0" :max="100"></el-input-number>
                                 </el-form-item>
                                 <el-form-item style="margin-left: 30px;" label="判断题分值" prop="singleScore">
                                     <el-input-number v-model="exam.tfScore" :min="1" :max="1000"></el-input-number>
+                                    <el-button @click="addTf()" style="margin-left: 30px;">点击添加</el-button>
                                 </el-form-item>
-                                <el-form-item  label="当前总分：">
+                                </el-row>
+                                <el-form-item label="当前总分：">
                                     <span>{{ exam.singleNum*exam.singleScore+exam.multipleNum*exam.multipleScore+exam.tfNum*exam.tfScore }}</span>
                                 </el-form-item>
                             </el-form>
                         </div>
+                        <div class="behind">
+                            <el-table
+                                ref="multipleTable"
+                                :data="problem"
+                                tooltip-effect="dark"
+                                height="350"
+                                style="width: 80%; margin: 0 auto;"
+                                @selection-change="handleSelectionChange">
+                                <el-table-column
+                                type="selection"
+                                width="55">
+                                </el-table-column>
+                                <el-table-column
+                                label="题目id"
+                                width="100"
+                                prop="id">
+                                </el-table-column>
+                                <el-table-column
+                                label="学科"
+                                width="200"
+                                prop="source">
+                                </el-table-column>
+                                <el-table-column
+                                prop="description"
+                                label="题面"
+                                width="400">
+                                </el-table-column>
+                                <el-table-column
+                                prop="label"
+                                label="题型">
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.label=='single'" size="small">单选题</el-tag>
+                                    <el-tag v-if="scope.row.label=='multiple'" size="small">多选题</el-tag>
+                                    <el-tag v-if="scope.row.label=='tf'" size="small">判断题</el-tag>
+                                </template>
+                                </el-table-column>
+                                <el-table-column
+                                prop="difficulty"
+                                label="难度">
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.difficulty==1" type="success" size="small">简单</el-tag>
+                                    <el-tag v-if="scope.row.difficulty==2" type="warning" size="small">中等</el-tag>
+                                    <el-tag v-if="scope.row.difficulty==3" type="danger" size="small">困难</el-tag>
+                                </template>
+                                </el-table-column>
+                            </el-table>
+                            <div style="text-align: center; margin-top: 20px;">
+                                <el-button type="primary" @click="submit()">提交选择</el-button>
+                            </div>
+                        </div>
                     </div>
+                    <el-dialog
+                        title="选择考试题目"
+                        :visible.sync="dialogVisible"
+                        width="70%"
+                        :before-close="handleClose">
+                        <div class="behind">
+                            <el-table
+                                ref="multipleTable"
+                                :data="pagination.problem"
+                                tooltip-effect="dark"
+                                height="350"
+                                style="width: 80%; margin: 0 auto;"
+                                @selection-change="handleSelectionChange">
+                                <el-table-column
+                                type="selection"
+                                width="55">
+                                </el-table-column>
+                                <el-table-column
+                                label="题目id"
+                                width="100"
+                                prop="id">
+                                </el-table-column>
+                                <el-table-column
+                                label="学科"
+                                width="200"
+                                prop="source">
+                                </el-table-column>
+                                <el-table-column
+                                prop="description"
+                                label="题面"
+                                width="400">
+                                </el-table-column>
+                                <el-table-column
+                                prop="label"
+                                label="题型">
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.label=='single'" size="small">单选题</el-tag>
+                                    <el-tag v-if="scope.row.label=='multiple'" size="small">多选题</el-tag>
+                                    <el-tag v-if="scope.row.label=='tf'" size="small">判断题</el-tag>
+                                </template>
+                                </el-table-column>
+                                <el-table-column
+                                prop="difficulty"
+                                label="难度">
+                                <template slot-scope="scope">
+                                    <el-tag v-if="scope.row.difficulty==1" type="success" size="small">简单</el-tag>
+                                    <el-tag v-if="scope.row.difficulty==2" type="warning" size="small">中等</el-tag>
+                                    <el-tag v-if="scope.row.difficulty==3" type="danger" size="small">困难</el-tag>
+                                </template>
+                                </el-table-column>
+                            </el-table>
+                            <div class="pagination">
+                                <el-pagination
+                                    background
+                                    @size-change="handleSizeChange"
+                                    @current-change="handleCurrentChange"
+                                    :current-page="pagination.current"
+                                    :page-sizes="[10, 15]"
+                                    :page-size="pagination.size"
+                                    layout="total, sizes, prev, pager, next"
+                                    :total="pagination.total">
+                                </el-pagination>
+                            </div>
+                        </div>
+                        <span slot="footer" class="dialog-footer">
+                            <el-button @click="dialogVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="submit()">确 定</el-button>
+                        </span>
+                    </el-dialog>
                 </div>
             </el-tab-pane>
             <el-tab-pane name="second">
@@ -93,7 +221,7 @@ export default {
             exam: {
                 source: '',
                 description: '',
-                totalScore: '',
+                totalScore: 0,
                 totalTime: '',
                 start_time: '',
                 end_time: '',
@@ -103,13 +231,67 @@ export default {
                 multipleNum: 0,
                 multipleScore: 1,
                 tfNum: 0,
-                tfScore: 1
+                tfScore: 1,           
             },
+            dialogVisible: false,
             active: 1,
             step: 2,
+            pagination: {
+                current: 1,
+                size: 10,
+                problem: [],
+                total: ''
+            },
+            problem: [],
+            multipleSelection: [],
+            labelList: []
         }
     }, 
+    mounted() {
+        
+    },
     methods: {
+        addSingle() {
+            this.dialogVisible = true
+            this.labelList = []
+            this.labelList.push('single')
+            this.getProblem()
+        },
+        addMultiple() {
+            this.dialogVisible = true
+            this.labelList = []
+            this.labelList.push('multiple')
+            this.getProblem()
+        },
+        addTf() {
+            this.dialogVisible = true
+            this.labelList = []
+            this.labelList.push('tf')
+            this.getProblem()
+        },
+        getProblem() {
+            let start = this.pagination.size * (this.pagination.current-1)
+            let pageSize = this.pagination.size
+            let labelList = this.labelList
+            this.$store.dispatch('getProblemByFilter',{start,pageSize,labelList}).then(res=>{
+                this.pagination.problem = this.$store.state.problem.problem
+                this.$store.dispatch('getAllNumber',{labelList}).then(res=>{
+                    this.pagination.total = this.$store.state.problem.count
+                })
+            })
+        },
+        handleSizeChange(val) {
+            this.pagination.size = val
+            this.getProblem()
+        },
+        handleCurrentChange(val) {
+            this.pagination.current = val
+            this.getProblem()
+        },
+        handleSelectionChange(val) {
+            this.multipleSelection = val
+            console.log(val)
+        },
         resetForm() {
             this.exam.source = ''
             this.exam.description = ''
@@ -135,13 +317,21 @@ export default {
 </script>
 
 <style scoped>
+.behind {
+    height: auto;
+}
+.pagination {
+    padding: 2% 0 2% 0;
+    display: flex;
+    justify-content: center;
+}
 
 .content1 {
     width: 30%;
     margin: 0 auto;
 }
 .content2 {
-    width: 50%;
+    width: 55%;
     margin: 0 auto;
 }
 .box {

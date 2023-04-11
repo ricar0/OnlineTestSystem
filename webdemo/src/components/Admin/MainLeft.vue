@@ -114,11 +114,11 @@ export default {
   width: 213px;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  min-height: 900px;
+  min-height: 1000px;
 }
 
 #left {
-  min-height: 900px;
+  min-height: 1000px;
   background-color: #124280;
   z-index: 0;
 }

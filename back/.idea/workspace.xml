@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ExamMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ExamMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/ExamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/ExamService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/ExamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/ExamServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/ExamMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/ExamMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/ExamMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/ExamMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/ExamServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/ExamServiceImpl.class" afterDir="false" />
-    </list>
+    <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -169,6 +159,7 @@
       <workItem from="1681042728865" duration="9272000" />
       <workItem from="1681090738079" duration="7059000" />
       <workItem from="1681113513446" duration="1646000" />
+      <workItem from="1681178970665" duration="667000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>
