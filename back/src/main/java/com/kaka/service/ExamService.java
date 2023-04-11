@@ -8,7 +8,7 @@ import java.util.List;
 public interface ExamService {
     public List<Exam> getAll();
 
-    public void addExam(Exam exam);
+    public Long addExam(Exam exam);
 
     public List<Exam> getMyExam(MyExamFilter myExamFilter);
 
@@ -29,4 +29,5 @@ public interface ExamService {
     public void deleteExamProblem(Long id);
 
     public void updateExamInfo(Exam exam);
+
 }

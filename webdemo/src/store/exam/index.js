@@ -1,6 +1,7 @@
 import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
     reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, 
-    reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber, reqDeleteExam, reqUpdateExamInfo } from "@/api";
+    reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber,
+     reqDeleteExam, reqAddExam } from "@/api";
 
 const state = {
     myexam: [],
@@ -166,14 +167,14 @@ const actions = {
             return Promise.reject(new Error("failure"));
         }
     },
-    async updateExamInfo({commit}, obj) {
-        let {data} = await reqUpdateExamInfo(obj);
+    async addExam({commit}, obj) {
+        let {data} = await reqAddExam(obj);
         if (data.code == 200) {
             return "ok";
         } else {
             return Promise.reject(new Error("failure"));
         }
-    },
+    }
 }
 const getters = {};
 export default {

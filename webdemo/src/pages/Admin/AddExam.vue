@@ -30,8 +30,8 @@
                                 </el-form-item>
                                 <el-form-item label="是否上锁" prop="permission">
                                     <el-radio-group v-model="exam.permission">
-                                        <el-radio label="0">否</el-radio>
-                                        <el-radio label="1">是</el-radio>
+                                        <el-radio :label="0">否</el-radio>
+                                        <el-radio :label="1">是</el-radio>
                                     </el-radio-group>
                                 </el-form-item>
                                 <el-form-item v-if="exam.permission==1" label="设置密码" prop="password">
@@ -82,15 +82,11 @@
                         </div>
                         <div class="behind">
                             <el-table
-                                ref="multipleTable"
                                 :data="problem"
                                 tooltip-effect="dark"
-                                height="350"
+                                height="400"
                                 style="width: 80%; margin: 0 auto;"
                                 @selection-change="handleSelectionChange">
-                                <el-table-column
-                                type="selection"
-                                width="55">
                                 </el-table-column>
                                 <el-table-column
                                 label="题目id"
@@ -99,7 +95,7 @@
                                 </el-table-column>
                                 <el-table-column
                                 label="学科"
-                                width="200"
+                                width="250"
                                 prop="source">
                                 </el-table-column>
                                 <el-table-column
@@ -125,10 +121,27 @@
                                     <el-tag v-if="scope.row.difficulty==3" type="danger" size="small">困难</el-tag>
                                 </template>
                                 </el-table-column>
+                                <el-table-column label="操作">
+                                    <template slot-scope="scope">
+                                        <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                                    </template>
+                                    </el-table-column>
                             </el-table>
                             <div style="text-align: center; margin-top: 20px;">
                                 <el-button type="primary" @click="submit()">提交选择</el-button>
                             </div>
+                        </div>
+                    </div>
+                    <div v-if="step==3">
+                        <p v-if="!finished">组卷进行中</p>
+                        <p v-if="finished">组卷完成</p>
+                        <el-progress :text-inside="true" :stroke-width="26" :percentage="Percentage"></el-progress>
+                        <div style="margin: 30px auto 0 auto; text-align: center;">
+                            <el-button type="primary" v-if="finished">查看试卷</el-button>
+                            <el-button @click="goToSeachExam()" type="primary" v-if="finished">返回考试查询</el-button>
                         </div>
                     </div>
                     <el-dialog
@@ -197,7 +210,7 @@
                         </div>
                         <span slot="footer" class="dialog-footer">
                             <el-button @click="dialogVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="submit()">确 定</el-button>
+                            <el-button type="primary" @click="addproblem()">确 定</el-button>
                         </span>
                     </el-dialog>
                 </div>
@@ -225,17 +238,18 @@ export default {
                 totalTime: '',
                 start_time: '',
                 end_time: '',
-                permission: '0',
+                permission: 0,
                 singleNum: 0,
                 singleScore: 1,
                 multipleNum: 0,
                 multipleScore: 1,
                 tfNum: 0,
-                tfScore: 1,           
+                tfScore: 1,     
+                teacher: ''      
             },
             dialogVisible: false,
             active: 1,
-            step: 2,
+            step: 1,
             pagination: {
                 current: 1,
                 size: 10,
@@ -244,13 +258,49 @@ export default {
             },
             problem: [],
             multipleSelection: [],
-            labelList: []
+            labelList: [],
+            Percentage: 0,
+            finished: 1
         }
     }, 
     mounted() {
         
     },
     methods: {
+        goToSeachExam() {
+            this.$router.push('/searchExam');
+        },
+        submit() {
+            let exam = this.exam
+            exam.totalScore = exam.singleNum*exam.singleScore+exam.multipleNum*exam.multipleScore+exam.tfNum*exam.tfScore
+            this.$store.dispatch('getUserInfo').then(res=>{
+                exam.teacher = this.$store.state.user.userinfo.username
+                let problems = this.problem
+                this.active++
+                this.step++
+                setInterval(()=>{
+                    if (this.finished == 1) {
+                        this.Percentage = 100
+                        this.active++
+                        return
+                    }
+                    this.Percentage += 5
+                },100)
+                this.$store.dispatch('addExam', {exam, problems}).then(res=>{
+                    this.finished = 1
+                })
+            })
+        },
+        addproblem() {
+            this.problem = this.problem.concat(this.multipleSelection)
+            this.dialogVisible = false
+        },
+        handleClose() {
+            this.dialogVisible = false
+        },
+        handleDelete(index, row) {
+            this.problem.splice(index, 1)
+        },
         addSingle() {
             this.dialogVisible = true
             this.labelList = []
@@ -290,7 +340,6 @@ export default {
         },
         handleSelectionChange(val) {
             this.multipleSelection = val
-            console.log(val)
         },
         resetForm() {
             this.exam.source = ''
@@ -304,7 +353,7 @@ export default {
         goToStep2() {
             this.exam.start_time = this.exam.start_time.format('yyyy-MM-dd hh:mm:ss')
             this.exam.end_time = this.exam.end_time.format('yyyy-MM-dd hh:mm:ss')
-            if (getDateDiff(this.exam.start_time, this.exam.end_time, "minute") != this.totalTime) {
+            if (getDateDiff(this.exam.start_time, this.exam.end_time, "minute") != this.exam.totalTime) {
                 this.$message({type: 'error', message: '考试时长存在问题!'})
                 this.exam.start_time = ''
                 this.exam.end_time = ''
@@ -317,6 +366,13 @@ export default {
 </script>
 
 <style scoped>
+.el-card__body  {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px; 
+    height: 150px;
+}
 .behind {
     height: auto;
 }

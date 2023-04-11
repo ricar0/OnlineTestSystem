@@ -4,10 +4,10 @@
     <select id="getAll" resultType="com.kaka.entity.Exam">
         select * from exam;
     </select>
-    <insert id="addExam" parameterType="com.kaka.entity.Exam">
+    <insert id="addExam" parameterType="com.kaka.entity.Exam" useGeneratedKeys="true" keyProperty="id">
         insert into exam value(null, #{source}, #{description}, #{totalTime},
-            #{totalScore}, #{teacher}, #{examDate}, #{lock}, #{code}, #{password},
-            #{singleScore}, #{multipleScore}, #{tfScore});
+            #{totalScore}, #{teacher}, #{start_time}, #{permission}, #{code}, #{password},
+            #{singleScore}, #{multipleScore}, #{tfScore}, #{end_time}, 0, null, #{singleNum}, #{multipleNum}, #{tfNum});
     </insert>
     <select id="getMyExam" parameterType="com.kaka.entity.MyExamFilter" resultType="com.kaka.entity.Exam">
         select * from exam where id in(select exam_id from myexam where user_id = #{user_id}) order by end_time desc

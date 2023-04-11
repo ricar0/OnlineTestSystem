@@ -3,6 +3,7 @@ package com.kaka.controller;
 import com.kaka.entity.*;
 import com.kaka.mapper.ExamMapper;
 import com.kaka.service.ExamService;
+import com.kaka.service.PaperService;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,19 @@ public class ExamController {
     @Autowired
     private ExamMapper examMapper;
 
+    @Autowired
+    private PaperService paperService;
+
     @RequestMapping(value="/getAll", method = RequestMethod.GET)
     public ResponseResult getAll() {
         return new ResponseResult(200, "查询成功!", examService.getAll());
     }
 
     @RequestMapping(value="/addExam", method = RequestMethod.POST)
-    public ResponseResult addExam(@RequestBody Exam exam) {
-        examService.addExam(exam);
+    public ResponseResult addExam(@RequestBody PaperBean paperBean) {
+        Long id = examService.addExam(paperBean.getExam());
+        paperBean.getExam().setId(id);
+        paperService.addPaper(paperBean);
         return new ResponseResult(200, "添加成功!");
     }
 
@@ -71,12 +77,12 @@ public class ExamController {
             if (list.get(i).getLabel().equals("multiple")) multipleNum++;
             if (list.get(i).getLabel().equals("tf")) tfNum++;
         }
-        paperBean.setSingleNum(singleNum);
-        paperBean.setMultipleNum(multipleNum);
-        paperBean.setTfNum(tfNum);
-        paperBean.setSingleScore(e.getSingleScore());
-        paperBean.setMultipleScore(e.getMultipleScore());
-        paperBean.setTfScore(e.getTfScore());
+        paperBean.getExam().setSingleNum(singleNum);
+        paperBean.getExam().setMultipleNum(multipleNum);
+        paperBean.getExam().setTfNum(tfNum);
+        paperBean.getExam().setSingleScore(e.getSingleScore());
+        paperBean.getExam().setMultipleScore(e.getMultipleScore());
+        paperBean.getExam().setTfScore(e.getTfScore());
         return new ResponseResult(200, "获取成功!", paperBean);
     }
 
@@ -221,4 +227,5 @@ public class ExamController {
         examService.updateExamInfo(exam);
         return new ResponseResult(200, "删除成功!");
     }
+
 }

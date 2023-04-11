@@ -23,8 +23,9 @@ public class ExamServiceImpl implements ExamService{
     }
 
     @Override
-    public void addExam(Exam exam) {
+    public Long addExam(Exam exam) {
         examMapper.addExam(exam);
+        return exam.getId();
     }
 
     @Override

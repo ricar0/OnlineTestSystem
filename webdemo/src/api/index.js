@@ -157,3 +157,6 @@ export const reqDeleteExam = (data)=>requests({url:'/exam/deleteExam', data,meth
 
 //修改考试信息
 export const reqUpdateExamInfo = (data)=>requests({url:'/exam/updateExamInfo', data,method:'post'});
+
+//添加考试
+export const reqAddExam = (data)=>requests({url:'/exam/addExam', data,method:'post'});

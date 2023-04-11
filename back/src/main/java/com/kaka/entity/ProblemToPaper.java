@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class PaperBean {
-    private List<Problem> problems;
-    private Exam exam;
+@NoArgsConstructor
+public class ProblemToPaper {
+    private Long exam_id;
+    private Long problem_id;
 }
