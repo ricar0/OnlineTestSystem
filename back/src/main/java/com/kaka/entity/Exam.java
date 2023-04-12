@@ -18,7 +18,7 @@ public class Exam {
     private String teacher;
     private String start_time;
     private String end_time;
-    private boolean permission;
+    private Boolean permission;
     private String password;
     private int singleScore;
     private int multipleScore;

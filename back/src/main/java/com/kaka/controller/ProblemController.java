@@ -54,4 +54,10 @@ public class ProblemController {
         problemService.wrongAnswer(problem.getId());
         return new ResponseResult(200, "操作成功");
     }
+
+    @RequestMapping(value="/addProblem", method = RequestMethod.POST)
+    ResponseResult addProblem(@RequestBody Problem problem) {
+        problemService.addProblem(problem);
+        return new ResponseResult(200, "加入成功!");
+    }
 }

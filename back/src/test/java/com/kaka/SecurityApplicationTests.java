@@ -80,7 +80,7 @@ class SecurityApplicationTests {
        double expand = 0.98;
        // 可自己初始化组卷规则rule
        RuleBean rule = new RuleBean();
-       rule.setSource("思想道德基础和法律修养");
+       rule.setSource("思想道德修养和法律基础");
        rule.setTotalScore(100);
        rule.setTfNum(10);
        rule.setMultipleNum(14);
@@ -88,10 +88,11 @@ class SecurityApplicationTests {
        rule.setSingleScore(2);
        rule.setMultipleScore(5);
        rule.setTfScore(1);
-       rule.setDifficulty(1.5);
-       rule.setCoverageWeight(0.2);
-       rule.setDifficultyWeight(0.8);
-       rule.setFitness(0.6);
+       rule.setDifficulty(1.98);
+       rule.setCoverageWeight(0.8);
+       rule.setDifficultyWeight(0.2);
+       rule.setFitness(0.98);
+       rule.setTotalNum(34);
        List<String> pointIds = new ArrayList<>();
        pointIds.add("1");
        pointIds.add("2");
@@ -99,7 +100,7 @@ class SecurityApplicationTests {
        pointIds.add("4");
        pointIds.add("5");
        rule.setPointIds(pointIds);
-       System.out.println(rule.getPointIds().get(0));
+       long start = System.currentTimeMillis();
        if (rule != null) {
            // 初始化种群
            Population population = new Population(20, true, rule);
@@ -113,6 +114,8 @@ class SecurityApplicationTests {
            System.out.println(population.getFitness().getAdaptationDegree());
            resultPaper = population.getFitness();
        }
+       long end = System.currentTimeMillis();
+       System.out.println(String.format("Total Time：%d s", (end - start)/1000));
        System.out.println(resultPaper.getQuestionList());
    }
 }

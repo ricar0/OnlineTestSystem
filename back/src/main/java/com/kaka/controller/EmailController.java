@@ -3,7 +3,7 @@ package com.kaka.controller;
 import com.kaka.entity.EmailCheck;
 import com.kaka.entity.User;
 import com.kaka.mapper.UserMapper;
-import com.kaka.service.EmailService;
+import com.kaka.service.Impl.EmailService;
 import com.kaka.utils.EmailUtils;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;

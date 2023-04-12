@@ -160,7 +160,7 @@ export default {
                 { id: 1, color: 'plain', label: '数据结构' },
                 { id: 2, color: 'plain', label: '计算机网络' },
                 { id: 3, color: 'plain', label: '操作系统' },
-                { id: 4, color: 'plain', label: '思想道德基础和法律修养' },
+                { id: 4, color: 'plain', label: '思想道德修养和法律基础' },
             ],
             difficulty: [
                 { id: 0, color: 'dark', label: '全部' },

@@ -3,7 +3,7 @@ package com.kaka.utils;
 import com.kaka.entity.Paper;
 import com.kaka.entity.Problem;
 import com.kaka.entity.RuleBean;
-import com.kaka.service.QuestionService;
+import com.kaka.service.Impl.QuestionService;
 
 import java.util.List;
 import java.util.Random;
@@ -24,17 +24,17 @@ public class Population {
                     paper.getQuestionList().clear();
                     // 单选题
                     if (rule.getSingleNum() > 0) {
-                        generateQuestion(1, random, rule.getSingleNum(), rule.getSingleScore(), rule.getPointIds(),
+                        generateQuestion(1, random, rule.getSingleNum(), rule.getDifficulty(), rule.getPointIds(),
                                 "单选题数量不够，组卷失败", paper, rule.getSource());
                     }
                     // 多选题
                     if (rule.getMultipleNum() > 0) {
-                        generateQuestion(2, random, rule.getMultipleNum(), rule.getMultipleScore(), rule.getPointIds(),
+                        generateQuestion(2, random, rule.getMultipleNum(), rule.getDifficulty(), rule.getPointIds(),
                                 "填空题数量不够，组卷失败", paper, rule.getSource());
                     }
                     // 判断题
                     if (rule.getTfNum() > 0) {
-                        generateQuestion(3, random, rule.getTfNum(), rule.getTfScore(), rule.getPointIds(),
+                        generateQuestion(3, random, rule.getTfNum(), rule.getDifficulty(), rule.getPointIds(),
                                 "主观题数量不够，组卷失败", paper, rule.getSource());
                     }
                 }
@@ -46,9 +46,9 @@ public class Population {
             }
         }
     }
-    private void generateQuestion(int type, Random random, int qustionNum, double score, List<String> coverage,
+    private void generateQuestion(int type, Random random, int qustionNum, double difficulty, List<String> coverage,
                                   String errorMsg, Paper paper, String source) {
-        List<Problem> list = QuestionService.getQuestionArray(type, coverage, source);
+        List<Problem> list = QuestionService.getQuestionArray(type, coverage, source, difficulty);
         Problem[] singleArray = list.toArray(new Problem[list.size()]);
         if (singleArray.length < qustionNum) {
             return;

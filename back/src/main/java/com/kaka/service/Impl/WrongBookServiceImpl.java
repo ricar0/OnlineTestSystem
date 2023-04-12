@@ -1,15 +1,16 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 
 import com.kaka.entity.WrongBook;
 import com.kaka.mapper.WrongBookMapper;
+import com.kaka.service.WrongBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WrongBookServiceImpl implements WrongBookService{
+public class WrongBookServiceImpl implements WrongBookService {
 
     @Autowired
     private WrongBookMapper wrongBookMapper;

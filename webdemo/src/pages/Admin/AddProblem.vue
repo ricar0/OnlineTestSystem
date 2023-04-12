@@ -1,8 +1,7 @@
 <template>
     <div class="add">
-      <el-tabs v-model="activeName">
-      <el-tab-pane name="first">
-        <span slot="label"><i class="el-icon-circle-plus"></i>添加试题</span>
+        <p style="margin:0; font-size:25px;">添加试题</p>
+        <el-divider></el-divider>
         <section class="append">
           <ul>
             <li>
@@ -18,9 +17,9 @@
             </li>
             <li v-if="optionValue == '单选题'">
               <span>难度等级:&nbsp;</span>
-              <el-select v-model="postChange.level" placeholder="选择难度等级" class="w150">
+              <el-select v-model="postChange.difficulty" placeholder="选择难度等级" class="w150">
                 <el-option
-                  v-for="item in levels"
+                  v-for="item in difficulty"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -29,9 +28,9 @@
             </li>
             <li v-if="optionValue == '多选题'">
               <span>难度等级:&nbsp;</span>
-              <el-select v-model="postMultiple.level" placeholder="选择难度等级" class="w150">
+              <el-select v-model="postMultiple.difficulty" placeholder="选择难度等级" class="w150">
                 <el-option
-                  v-for="item in levels"
+                  v-for="item in difficulty"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -40,9 +39,42 @@
             </li>
             <li v-if="optionValue == '判断题'">
               <span>难度等级:&nbsp;</span>
-              <el-select v-model="postJudge.level" placeholder="选择难度等级" class="w150">
+              <el-select v-model="postJudge.difficulty" placeholder="选择难度等级" class="w150">
                 <el-option
-                  v-for="item in levels"
+                  v-for="item in difficulty"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '单选题'">
+              <span>知识点章节:&nbsp;</span>
+              <el-select v-model="postChange.category" placeholder="选择章节" class="w150">
+                <el-option
+                  v-for="item in category"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '多选题'">
+              <span>知识点章节:&nbsp;</span>
+              <el-select v-model="postMultiple.category" placeholder="选择章节" class="w150">
+                <el-option
+                  v-for="item in category"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '判断题'">
+              <span>知识点章节:&nbsp;</span>
+              <el-select v-model="postJudge.category" placeholder="选择章节" class="w150">
+                <el-option
+                  v-for="item in category"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
@@ -51,7 +83,7 @@
             </li>
             <li v-if="optionValue == '单选题'">
               <span>正确选项:&nbsp;</span>
-              <el-select v-model="postChange.rightAnswer" placeholder="选择正确答案" class="w150">
+              <el-select v-model="postChange.accept" placeholder="选择正确答案" class="w150">
                 <el-option
                   v-for="item in rights"
                   :key="item.value"
@@ -62,7 +94,7 @@
             </li>
             <li v-if="optionValue == '多选题'">
               <span>正确选项:&nbsp;</span>
-              <el-select multiple collapse-tags v-model="postMultiple.rightAnswer" placeholder="选择正确答案" class="w150">
+              <el-select multiple collapse-tags v-model="postMultiple.accept" placeholder="选择正确答案" class="w150">
                 <el-option
                   v-for="item in rights"
                   :key="item.value"
@@ -80,7 +112,7 @@
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postChange.question"
+                v-model="postChange.description"
                 placeholder="请输入题目内容"
                 resize="none"
                 class="answer">
@@ -94,7 +126,7 @@
                   <el-tag type="success">A</el-tag>
                   <el-input
                     placeholder="请输入选项A的内容"
-                    v-model="postChange.answerA"
+                    v-model="postChange.A"
                     clearable="">
                   </el-input>
                 </li>
@@ -102,7 +134,7 @@
                   <el-tag type="success">B</el-tag>
                   <el-input
                     placeholder="请输入选项B的内容"
-                    v-model="postChange.answerB"
+                    v-model="postChange.B"
                     clearable="">
                   </el-input>
                 </li>
@@ -110,7 +142,7 @@
                   <el-tag type="success">C</el-tag>
                   <el-input
                     placeholder="请输入选项C的内容"
-                    v-model="postChange.answerC"
+                    v-model="postChange.C"
                     clearable="">
                   </el-input>
                 </li>
@@ -118,7 +150,7 @@
                   <el-tag type="success">D</el-tag>
                   <el-input
                     placeholder="请输入选项D的内容"
-                    v-model="postChange.answerD"
+                    v-model="postChange.D"
                     clearable="">
                   </el-input>
                 </li>
@@ -129,7 +161,7 @@
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postChange.analysis"
+                v-model="postChange.solution"
                 placeholder="请输入答案解析"
                 resize="none"
                 class="answer">
@@ -147,7 +179,7 @@
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postMultiple.question"
+                v-model="postMultiple.description"
                 placeholder="请输入题目内容"
                 resize="none"
                 class="answer">
@@ -161,7 +193,7 @@
                   <el-tag type="success">A</el-tag>
                   <el-input
                     placeholder="请输入选项A的内容"
-                    v-model="postMultiple.answerA"
+                    v-model="postMultiple.A"
                     clearable="">
                   </el-input>
                 </li>
@@ -169,7 +201,7 @@
                   <el-tag type="success">B</el-tag>
                   <el-input
                     placeholder="请输入选项B的内容"
-                    v-model="postMultiple.answerB"
+                    v-model="postMultiple.B"
                     clearable="">
                   </el-input>
                 </li>
@@ -177,7 +209,7 @@
                   <el-tag type="success">C</el-tag>
                   <el-input
                     placeholder="请输入选项C的内容"
-                    v-model="postMultiple.answerC"
+                    v-model="postMultiple.C"
                     clearable="">
                   </el-input>
                 </li>
@@ -185,7 +217,7 @@
                   <el-tag type="success">D</el-tag>
                   <el-input
                     placeholder="请输入选项D的内容"
-                    v-model="postMultiple.answerD"
+                    v-model="postMultiple.D"
                     clearable="">
                   </el-input>
                 </li>
@@ -196,7 +228,7 @@
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postMultiple.analysis"
+                v-model="postMultiple.solution"
                 placeholder="请输入答案解析"
                 resize="none"
                 class="answer">
@@ -213,7 +245,7 @@
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postJudge.question"
+                v-model="postJudge.description"
                 placeholder="请输入题目内容"
                 resize="none"
                 class="answer">
@@ -221,15 +253,15 @@
             </div>
             <el-tag>选项:</el-tag>
             <div class="judgeAnswer">
-              <el-radio v-model="postJudge.answer" label="T">正确</el-radio>
-              <el-radio v-model="postJudge.answer" label="F">错误</el-radio>
+              <el-radio v-model="postJudge.A" label="T">正确</el-radio>
+              <el-radio v-model="postJudge.B" label="F">错误</el-radio>
             </div>
             <div class="title">
               <el-tag>解析:</el-tag><span>在下面的输入框中输入题目解析</span>
               <el-input
                 type="textarea"
                 rows="4"
-                v-model="postJudge.analysis"
+                v-model="postJudge.solution"
                 placeholder="请输入答案解析"
                 resize="none"
                 class="answer">
@@ -240,38 +272,6 @@
             </div>
           </div>
         </section>
-      </el-tab-pane>
-      <el-tab-pane name="second">
-        <span slot="label"><i class="el-icon-s-opportunity"></i>智能组卷</span>
-        <div class="box">
-          <ul>
-            <li>
-              <span>试题难度:</span>
-              <el-select v-model="difficultyValue" placeholder="试题难度" class="w150">
-                <el-option
-                  v-for="item in difficulty"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </li>
-            <li>
-              <span>选择题数量：</span> <el-input type="text" v-model="changeNumber"></el-input>
-            </li>
-            <li>
-              <span>填空题数量：</span> <el-input type="text" v-model="fillNumber"></el-input>
-            </li>
-            <li>
-              <span>判断题数量：</span> <el-input type="text" v-model="judgeNumber"></el-input>
-            </li>
-            <li>
-              <el-button type="primary" @click="create()">立即组卷</el-button>
-            </li>
-          </ul>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
     </div>
   </template>
   
@@ -299,33 +299,19 @@
         ],
         difficulty: [ //试题难度
           {
-            value: '简单',
+            value: '1',
             label: '简单'
           },
           {
-            value: '一般',
-            label: '一般'
+            value: '2',
+            label: '中等'
           },
           {
-            value: '困难',
+            value: '3',
             label: '困难'
           }
         ],
         difficultyValue: '简单',
-        levels: [ //难度等级
-          {
-            value: '简单',
-            label: '简单'
-          },
-          {
-            value: '中等',
-            label: '中等'
-          },
-          {
-            value: '困难',
-            label: '困难'
-          },
-        ],
         rights: [ //正确答案
           {
             value: 'A',
@@ -344,37 +330,64 @@
             label: 'D'
           },
         ],
+        category: [
+          {
+            value: '1',
+            label: '第一章'
+          },
+          {
+            value: '2',
+            label: '第二章'
+          },
+          {
+            value: '3',
+            label: '第三章'
+          },
+          {
+            value: '4',
+            label: '第四章'
+          },
+          {
+            value: '5',
+            label: '第五章'
+          },
+        ],
         paperId: null,
         optionValue: '单选题', //题型选中值
         subject: '', //试卷名称用来接收路由参数
         postChange: { //单选题提交内容
-          subject: '', //试卷名称
-          level: '', //难度等级选中值 
-          rightAnswer: '', //正确答案选中值
-          question: '', //题目
-          analysis: '', //解析
-          answerA: '',
-          answerB: '',
-          answerC: '',
-          answerD: '',
+          source: '', //试卷名称
+          difficulty: '', //难度等级选中值 
+          accept: '', //正确答案选中值
+          description: '', //题目
+          solution: '', //解析
+          category: '',
+          A: '',
+          B: '',
+          C: '',
+          D: '',
         },
         postMultiple: { //多选题提交内容
-          subject: '', //试卷名称
-          level: '', //难度等级选中值 
-          answer: '', //正确答案
-          question: '', //题目
-          analysis: '', //解析
-          answerA: '',
-          answerB: '',
-          answerC: '',
-          answerD: '',
+          source: '', //试卷名称
+          difficulty: '', //难度等级选中值 
+          accept: '', //正确答案选中值
+          description: '', //题目
+          solution: '', //解析
+          category: '',
+          A: '',
+          B: '',
+          C: '',
+          D: '',
         },
         postJudge: { //判断题提交内容
-          subject: '', //试卷名称
-          level: '', //难度等级选中值 
-          answer: '', //正确答案
-          question: '', //题目
-          analysis: '', //解析
+          source: '', //试卷名称
+          difficulty: '', //难度等级选中值 
+          accept: '', //正确答案选中值
+          description: '', //题目
+          solution: '', //解析
+          category: '',
+          A: '',
+          B: '',
         },
         postPaper: { //考试管理表对应字段
           paperId: null,
@@ -391,137 +404,19 @@
       //   console.log(tab, event);
       // },
       create() {
-        this.$axios({
-          url: '/api/item',
-          method: 'post',
-          data: {
-            changeNumber: this.changeNumber,
-            fillNumber: this.fillNumber,
-            judgeNumber: this.judgeNumber,
-            paperId: this.paperId,
-            subject: '计算机网络' //题目数量太少，指定为计算机网络出题
-          }
-        }).then(res => {
-          console.log(res)
-          let data = res.data
-          if(data.code==200){
-            setTimeout(() => {
-              this.$router.push({path: '/selectAnswer'})
-            },1000)
-             this.$message({
-              message: data.message,
-              type: 'success'
-            })
-          }else if(data.code==400){
-              this.$message({
-              message: data.message,
-              type: 'error'
-            })
-          }
-        })
+        
       },
       getParams() {
-        let subject = this.$route.query.subject //获取试卷名称
-        let paperId = this.$route.query.paperId //获取paperId
-        this.paperId = paperId
-        this.subject = subject
-        this.postPaper.paperId = paperId
+        
       },
       changeSubmit() { //选择题题库提交
-        this.postChange.subject = this.subject
-        this.$axios({ //提交数据到选择题题库表
-          url: '/api/MultiQuestion',
-          method: 'post',
-          data: {
-            ...this.postChange          
-          }
-        }).then(res => { //添加成功显示提示
-          let status = res.data.code
-          if(status == 200) {
-            this.$message({
-              message: '已添加到题库',
-              type: 'success'
-            })
-            this.postChange = {}
-          }
-        }).then(() => {
-          this.$axios(`/api/multiQuestionId`).then(res => { //获取当前题目的questionId
-            let questionId = res.data.data.questionId
-            this.postPaper.questionId = questionId
-            this.postPaper.questionType = 1
-            this.$axios({
-              url: '/api/paperManage',
-              method: 'Post',
-              data: {
-                ...this.postPaper
-              }
-            })
-          })
-        })
+        
       },
       fillSubmit() { //填空题提交
-        this.postFill.subject = this.subject
-        this.$axios({
-          url: '/api/fillQuestion',
-          method: 'post',
-          data: {
-            ...this.postFill
-          }
-        }).then(res => {
-          let status = res.data.code
-          if(status == 200) {
-            this.$message({
-              message: '已添加到题库',
-              type: 'success'
-            })
-            this.postFill = {}
-          }
-        }).then(() => {
-          this.$axios(`/api/fillQuestionId`).then(res => { //获取当前题目的questionId
-            let questionId = res.data.data.questionId
-            this.postPaper.questionId = questionId
-            this.postPaper.questionType = 2
-            this.$axios({
-              url: '/api/paperManage',
-              method: 'Post',
-              data: {
-                ...this.postPaper
-              }
-            })
-          })
-        })
+        
       },
       judgeSubmit() { //判断题提交
-        this.postJudge.subject = this.subject
-        this.$axios({
-          url: '/api/judgeQuestion',
-          method: 'post',
-          data: {
-            ...this.postJudge
-          }
-        }).then(res => {
-          let status = res.data.code
-          if(status == 200) {
-            this.$message({
-              message: '已添加到题库',
-              type: 'success'
-            })
-            this.postJudge = {}
-          }
-        }).then(() => {
-          this.$axios(`/api/judgeQuestionId`).then(res => { //获取当前题目的questionId
-            let questionId = res.data.data.questionId
-            this.postPaper.questionId = questionId
-            this.postPaper.questionType = 3
-            this.$axios({
-              url: '/api/paperManage',
-              method: 'Post',
-              data: {
-                ...this.postPaper
-              }
-            })
-          })
-        })
+        
       }
     },
   };

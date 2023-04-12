@@ -1,9 +1,10 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import com.kaka.entity.MyPracticeFilter;
 import com.kaka.entity.Practice;
 import com.kaka.entity.PracticeFilter;
 import com.kaka.mapper.PracticeMapper;
+import com.kaka.service.PracticeService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 import static com.kaka.utils.JwtUtil.parseJWT;
 
 @Service
-public class PracticeServiceImpl implements PracticeService{
+public class PracticeServiceImpl implements PracticeService {
 
     @Autowired
     private PracticeMapper practiceMapper;

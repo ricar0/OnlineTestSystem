@@ -1,7 +1,8 @@
 import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById, 
     reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, 
     reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber,
-     reqDeleteExam, reqAddExam } from "@/api";
+     reqDeleteExam, reqAddExam, reqAddExamByRand, reqUpdateExamInfo, 
+     reqAddExamByGeneticAlgorithm } from "@/api";
 
 const state = {
     myexam: [],
@@ -174,7 +175,31 @@ const actions = {
         } else {
             return Promise.reject(new Error("failure"));
         }
-    }
+    },
+    async addExamByRand({commit}, obj) {
+        let {data} = await reqAddExamByRand(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async updateExamInfo({commit}, obj) {
+        let {data} = await reqUpdateExamInfo(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async addExamByGeneticAlgorithm({commit}, obj) {
+        let {data} = await reqAddExamByGeneticAlgorithm(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
 }
 const getters = {};
 export default {

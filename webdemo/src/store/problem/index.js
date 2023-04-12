@@ -1,4 +1,4 @@
-import {reqAccept, reqGetAllNumber, reqGetProblemAll, reqGetProblemByFilter, 
+import {reqAccept, reqAddProblem, reqGetAllNumber, reqGetProblemAll, reqGetProblemByFilter, 
     reqGetProblemById, reqWrongAnswer} from "@/api";
 
 const state = {
@@ -71,6 +71,14 @@ const actions = {
     },
     async wrongAnswer({commit}, obj) {
         let {data} = await reqWrongAnswer(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async addProblem({commit}, obj) {
+        let {data} = await reqAddProblem(obj);
         if (data.code == 200) {
             return "ok";
         } else {

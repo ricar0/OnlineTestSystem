@@ -1,15 +1,16 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import com.kaka.entity.Problem;
 import com.kaka.entity.ProblemFilter;
 import com.kaka.mapper.ProblemMapper;
+import com.kaka.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProblemServiceImpl implements ProblemService{
+public class ProblemServiceImpl implements ProblemService {
 
     @Autowired
     private ProblemMapper problemMapper;
@@ -41,6 +42,11 @@ public class ProblemServiceImpl implements ProblemService{
     @Override
     public void wrongAnswer(Long id) {
         problemMapper.wrongAnswer(id);
+    }
+
+    @Override
+    public void addProblem(Problem problem) {
+        problemMapper.addProblem(problem);
     }
 
 }

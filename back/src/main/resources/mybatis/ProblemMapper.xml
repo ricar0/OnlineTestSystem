@@ -52,4 +52,9 @@
     <update id="wrongAnswer" parameterType="com.kaka.entity.Problem">
         update problems_set set totalsubmit = totalsubmit + 1 where id = #{id};
     </update>
+
+    <insert id="addProblem" parameterType="com.kaka.entity.Problem">
+        insert into problems_set value(#{label}, #{description},#{accept},#{difficulty},#{optionNum},#{A},
+            #{B},#{C},#{D},null,0,0,#{solution},#{category});
+    </insert>
 </mapper>

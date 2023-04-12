@@ -3,7 +3,7 @@ package com.kaka.utils;
 import com.kaka.entity.Paper;
 import com.kaka.entity.Problem;
 import com.kaka.entity.RuleBean;
-import com.kaka.service.QuestionService;
+import com.kaka.service.Impl.QuestionService;
 import org.springframework.stereotype.Component;
 
 
@@ -22,7 +22,7 @@ public class GeneticAlgorithm {
     /**
      * 淘汰数组大小
      */
-    private static final int tournamentSize = 5;
+    private static final int tournamentSize = 7;
 
     // 进化种群
     public static Population evolvePopulation(Population pop, RuleBean rule) {
@@ -82,7 +82,6 @@ public class GeneticAlgorithm {
 
         // 继承parent2中未被child继承的question
         // 防止出现重复的元素
-        String idString = rule.getPointIds().toString();
         for (int i = 0; i < startPos; i++) {
             if (!child.containsQuestion(parent2.getQuestion(i))) {
                 child.saveQuestion(i, parent2.getQuestion(i));

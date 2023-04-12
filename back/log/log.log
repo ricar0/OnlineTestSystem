@@ -51,7 +51,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Field userMapper in com.kaka.service.UserServiceImpl required a bean of type 'com.kaka.mapper.UserMapper' that could not be found.
+Field userMapper in com.kaka.service.Impl.UserServiceImpl required a bean of type 'com.kaka.mapper.UserMapper' that could not be found.
 
 The injection point has the following annotations:
 	- @org.springframework.beans.factory.annotation.Autowired(required=true)
@@ -88,7 +88,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Field userMapper in com.kaka.service.UserServiceImpl required a bean of type 'com.kaka.mapper.UserMapper' that could not be found.
+Field userMapper in com.kaka.service.Impl.UserServiceImpl required a bean of type 'com.kaka.mapper.UserMapper' that could not be found.
 
 The injection point has the following annotations:
 	- @org.springframework.beans.factory.annotation.Autowired(required=true)

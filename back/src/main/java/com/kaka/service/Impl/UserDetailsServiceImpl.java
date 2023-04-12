@@ -1,4 +1,4 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import com.kaka.entity.LoginUser;
 import com.kaka.mapper.UserMapper;

@@ -1,4 +1,4 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

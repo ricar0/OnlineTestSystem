@@ -160,3 +160,12 @@ export const reqUpdateExamInfo = (data)=>requests({url:'/exam/updateExamInfo', d
 
 //添加考试
 export const reqAddExam = (data)=>requests({url:'/exam/addExam', data,method:'post'});
+
+//随机生成试题
+export const reqAddExamByRand = (data)=>requests({url:'/paper/addExamByRand', data,method:'post'});
+
+//利用遗传算法组卷
+export const reqAddExamByGeneticAlgorithm = (data)=>requests({url:'/paper/addExamByGeneticAlgorithm', data,method:'post'});
+
+//向题库中添加题目
+export const reqAddProblem = (data)

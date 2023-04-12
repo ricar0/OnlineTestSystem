@@ -25,4 +25,12 @@ public class RuleBean {
     private double coverageWeight;
     private double difficultyWeight;
 
+    private String teacher;
+    private String description;
+    private String start_time;
+    private String end_time;
+    private Boolean permission;
+    private String password;
+    private int totalTime;
+    private Long exam_id;
 }

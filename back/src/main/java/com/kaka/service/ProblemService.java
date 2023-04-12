@@ -15,7 +15,9 @@ public interface ProblemService {
 
     public Problem getProblemById(Long id);
 
-    void accept(Long id);
+    public void accept(Long id);
 
-    void wrongAnswer(Long id);
+    public void wrongAnswer(Long id);
+
+    public void addProblem(Problem problem);
 }

@@ -1,9 +1,10 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import com.kaka.entity.LoginUser;
 import com.kaka.entity.PhoneCheck;
 import com.kaka.entity.User;
 import com.kaka.mapper.UserMapper;
+import com.kaka.service.LoginService;
 import com.kaka.utils.JwtUtil;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
@@ -26,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import static com.kaka.utils.JwtUtil.parseJWT;
 
 @Service
-public class LoginServiceImpl implements LoginService{
+public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private AuthenticationManager authenticationManager;

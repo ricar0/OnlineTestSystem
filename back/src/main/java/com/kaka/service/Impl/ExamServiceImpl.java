@@ -1,7 +1,8 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import com.kaka.entity.*;
 import com.kaka.mapper.ExamMapper;
+import com.kaka.service.ExamService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.List;
 import static com.kaka.utils.JwtUtil.parseJWT;
 
 @Service
-public class ExamServiceImpl implements ExamService{
+public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private ExamMapper examMapper;

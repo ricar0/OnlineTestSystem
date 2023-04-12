@@ -1,4 +1,4 @@
-package com.kaka.service;
+package com.kaka.service.Impl;
 
 import com.kaka.entity.Problem;
 import com.kaka.entity.ProblemFilter;
@@ -24,6 +24,28 @@ public class QuestionService {
         problemMapper = applicationContext.getBean(ProblemMapper.class);
     }
 
+    public static List<Problem> getQuestionArray(int type, List<String> coverage, String source, double difficulty) {
+        ProblemFilter problemFilter = new ProblemFilter();
+        problemFilter.setCategoryList(coverage);
+        List<String> sourceList = new ArrayList<>();
+        sourceList.add(source);
+        problemFilter.setSourceList(sourceList);
+        List<String> labelList = new ArrayList<>();
+        int s1 = (int)difficulty;
+        String s = Integer.toString(s1);
+        List<String> difficultyList = new ArrayList<>();
+        difficultyList.add(s);
+        problemFilter.setDifficultyList(difficultyList);
+        if (type == 1) {
+            labelList.add("single");
+        } else if (type == 2) {
+            labelList.add("multiple");
+        } else if (type == 3) {
+            labelList.add("tf");
+        }
+        problemFilter.setLabelList(labelList);
+        return problemMapper.getProblemByFilter(problemFilter);
+    }
     public static List<Problem> getQuestionArray(int type, List<String> coverage, String source) {
         ProblemFilter problemFilter = new ProblemFilter();
         problemFilter.setCategoryList(coverage);
@@ -41,6 +63,5 @@ public class QuestionService {
         problemFilter.setLabelList(labelList);
         return problemMapper.getProblemByFilter(problemFilter);
     }
-
 
 }

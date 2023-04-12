@@ -156,6 +156,7 @@ export default {
       this.dialogVisible = true
       this.$store.dispatch('getExamById', id).then(res=>{
         this.form = this.$store.state.exam.examinfo
+        console.log(this.form)
         this.timeList.push(this.form.start_time)
         this.timeList.push(this.form.end_time)
       })
@@ -189,13 +190,11 @@ export default {
         })
         return;
       }
-      if (this.isClick) {
+      if (typeof this.timeList[0] != 'string')
         this.form.start_time = this.timeList[0].format('yyyy-MM-dd hh:mm:ss')
+      if (typeof this.timeList[1] != 'string')
         this.form.end_time = this.timeList[1].format('yyyy-MM-dd hh:mm:ss')
-      } else {
-        this.form.start_time = this.timeList[0]
-        this.form.end_time = this.timeList[1]
-      }
+      
       if (getDateDiff(this.form.start_time, this.form.end_time, "minute") != this.form.totalTime) {
         this.$message({
             message: '考试时间与总时长不符',
@@ -203,7 +202,6 @@ export default {
         })
         return;
       }
-      console.log(this.form.permission)
       this.$store.dispatch('updateExamInfo', this.form).then(res => {
         if(res == "ok") {
           this.$message({
