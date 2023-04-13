@@ -194,6 +194,7 @@ const actions = {
     },
     async addExamByGeneticAlgorithm({commit}, obj) {
         let {data} = await reqAddExamByGeneticAlgorithm(obj);
+        console.log(data)
         if (data.code == 200) {
             return "ok";
         } else {

@@ -38,4 +38,6 @@ public interface UserMapper {
     void updatePassword(User user);
 
     void updateEmail(User user);
+
+    public List<User> getTeacherAll();
 }

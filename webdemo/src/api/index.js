@@ -69,6 +69,9 @@ export const reqSearchMyExamByKey = (data)=>requests({url:'search/searchMyExamBy
 //url:/api/user/getStudentAll method: get
 export const reqGetStudentAll = ()=>requests({url:'user/getStudentAll',method:'get'})
 
+//获取所有老师
+export const reqGetTacherAll = ()=>requests({url:'user/getTeacherAll',method:'get'})
+
 //获取用户信息
 //url:/api/auth/getUserInfoById  method:get  
 export const reqGetUserInfoById = (data)=>requests({url:'/user/getUserInfoById/'+data,method:'get'});
@@ -168,4 +171,7 @@ export const reqAddExamByRand = (data)=>requests({url:'/paper/addExamByRand', da
 export const reqAddExamByGeneticAlgorithm = (data)=>requests({url:'/paper/addExamByGeneticAlgorithm', data,method:'post'});
 
 //向题库中添加题目
-export const reqAddProblem = (data)
+export const reqAddProblem = (data)=>requests({url:'/problem/addProblem',data,method:'post'});
+
+//获取所有科目
+export const reqGetSubjectAll = (data)=>requests({url:'/subject/getSubjectAll',data,method:'get'});

@@ -16,6 +16,39 @@
               </el-select>
             </li>
             <li v-if="optionValue == '单选题'">
+              <span>学科分类:&nbsp;</span>
+              <el-select v-model="postChange.source" placeholder="选择学科" class="w150">
+                <el-option
+                  v-for="item in source"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '多选题'">
+              <span>学科分类:&nbsp;</span>
+              <el-select v-model="postMultiple.source" placeholder="选择学科" class="w150">
+                <el-option
+                  v-for="item in source"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '判断题'">
+              <span>学科分类:&nbsp;</span>
+              <el-select v-model="postJudge.source" placeholder="选择学科" class="w150">
+                <el-option
+                  v-for="item in source"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </li>
+            <li v-if="optionValue == '单选题'">
               <span>难度等级:&nbsp;</span>
               <el-select v-model="postChange.difficulty" placeholder="选择难度等级" class="w150">
                 <el-option
@@ -94,7 +127,7 @@
             </li>
             <li v-if="optionValue == '多选题'">
               <span>正确选项:&nbsp;</span>
-              <el-select multiple collapse-tags v-model="postMultiple.accept" placeholder="选择正确答案" class="w150">
+              <el-select multiple collapse-tags v-model="Multipleselect" placeholder="选择正确答案" class="w150">
                 <el-option
                   v-for="item in rights"
                   :key="item.value"
@@ -126,7 +159,7 @@
                   <el-tag type="success">A</el-tag>
                   <el-input
                     placeholder="请输入选项A的内容"
-                    v-model="postChange.A"
+                    v-model="postChange.a"
                     clearable="">
                   </el-input>
                 </li>
@@ -134,7 +167,7 @@
                   <el-tag type="success">B</el-tag>
                   <el-input
                     placeholder="请输入选项B的内容"
-                    v-model="postChange.B"
+                    v-model="postChange.b"
                     clearable="">
                   </el-input>
                 </li>
@@ -142,7 +175,7 @@
                   <el-tag type="success">C</el-tag>
                   <el-input
                     placeholder="请输入选项C的内容"
-                    v-model="postChange.C"
+                    v-model="postChange.c"
                     clearable="">
                   </el-input>
                 </li>
@@ -150,7 +183,7 @@
                   <el-tag type="success">D</el-tag>
                   <el-input
                     placeholder="请输入选项D的内容"
-                    v-model="postChange.D"
+                    v-model="postChange.d"
                     clearable="">
                   </el-input>
                 </li>
@@ -193,7 +226,7 @@
                   <el-tag type="success">A</el-tag>
                   <el-input
                     placeholder="请输入选项A的内容"
-                    v-model="postMultiple.A"
+                    v-model="postMultiple.a"
                     clearable="">
                   </el-input>
                 </li>
@@ -201,7 +234,7 @@
                   <el-tag type="success">B</el-tag>
                   <el-input
                     placeholder="请输入选项B的内容"
-                    v-model="postMultiple.B"
+                    v-model="postMultiple.b"
                     clearable="">
                   </el-input>
                 </li>
@@ -209,7 +242,7 @@
                   <el-tag type="success">C</el-tag>
                   <el-input
                     placeholder="请输入选项C的内容"
-                    v-model="postMultiple.C"
+                    v-model="postMultiple.c"
                     clearable="">
                   </el-input>
                 </li>
@@ -217,7 +250,7 @@
                   <el-tag type="success">D</el-tag>
                   <el-input
                     placeholder="请输入选项D的内容"
-                    v-model="postMultiple.D"
+                    v-model="postMultiple.d"
                     clearable="">
                   </el-input>
                 </li>
@@ -253,8 +286,8 @@
             </div>
             <el-tag>选项:</el-tag>
             <div class="judgeAnswer">
-              <el-radio v-model="postJudge.A" label="T">正确</el-radio>
-              <el-radio v-model="postJudge.B" label="F">错误</el-radio>
+              <el-radio v-model="postJudge.accept" label="A">正确</el-radio>
+              <el-radio v-model="postJudge.accept" label="B">错误</el-radio>
             </div>
             <div class="title">
               <el-tag>解析:</el-tag><span>在下面的输入框中输入题目解析</span>
@@ -297,6 +330,7 @@
             label: '判断题'
           },
         ],
+        source: [],
         difficulty: [ //试题难度
           {
             value: '1',
@@ -354,7 +388,6 @@
         ],
         paperId: null,
         optionValue: '单选题', //题型选中值
-        subject: '', //试卷名称用来接收路由参数
         postChange: { //单选题提交内容
           source: '', //试卷名称
           difficulty: '', //难度等级选中值 
@@ -362,10 +395,10 @@
           description: '', //题目
           solution: '', //解析
           category: '',
-          A: '',
-          B: '',
-          C: '',
-          D: '',
+          a: '',
+          b: '',
+          c: '',
+          d: '',
         },
         postMultiple: { //多选题提交内容
           source: '', //试卷名称
@@ -374,10 +407,10 @@
           description: '', //题目
           solution: '', //解析
           category: '',
-          A: '',
-          B: '',
-          C: '',
-          D: '',
+          a: '',
+          b: '',
+          c: '',
+          d: '',
         },
         postJudge: { //判断题提交内容
           source: '', //试卷名称
@@ -386,146 +419,171 @@
           description: '', //题目
           solution: '', //解析
           category: '',
-          A: '',
-          B: '',
+          a: '',
+          b: '',
+          c: '',
+          d: '',
         },
-        postPaper: { //考试管理表对应字段
-          paperId: null,
-          questionType: null, // 试卷类型 1--选择题  2--填空题   3--判断题
-          questionId: null,
-        }
+        Multipleselect: []
       };
     },
-    created() {
-      this.getParams()
+    mounted() {
+      this.$store.dispatch('getSubjectAll').then(res=>{
+        let subject = this.$store.state.subject.subject
+        for (let i = 0; i < subject.length; i++) {
+          this.source.push({value: subject[i].source, label: subject[i].source})
+        }
+      })
     },
     methods: {
-      // handleClick(tab, event) {
-      //   console.log(tab, event);
-      // },
-      create() {
-        
+      init() {
+        location.reload()
       },
-      getParams() {
-        
+      changeSubmit() { //选择题提交
+        let problem = this.postChange
+        problem.option_num = 4
+        problem.label = 'single'
+        console.log(problem)
+        this.$store.dispatch('addProblem', problem).then(res=>{
+          if (res == 'ok') {
+            this.$message({type:'success', message: '添加成功!'})
+          }
+        })
       },
-      changeSubmit() { //选择题题库提交
-        
-      },
-      fillSubmit() { //填空题提交
-        
+      fillSubmit() { //多选题提交
+        let problem = this.postMultiple
+        problem.option_num = 4
+        problem.label = 'multiple'
+        this.Multipleselect = this.Multipleselect.sort()
+        let ans = ""
+        for (let i = 0; i < this.Multipleselect.length; i++) ans += this.Multipleselect[i]
+        problem.accept = ans
+        this.$store.dispatch('addProblem', problem).then(res=>{
+          if (res == 'ok') {
+            this.$message({type:'success', message: '添加成功!'})
+          }
+        })
       },
       judgeSubmit() { //判断题提交
-        
+        let Problem = this.postJudge
+        Problem.option_num = 2
+        Problem.label = 'tf'
+        Problem.a="正确"
+        Problem.b="错误"
+        this.$store.dispatch('addProblem', Problem).then(res=>{
+          if (res == 'ok') {
+            this.$message({type:'success', message: '添加成功!'})
+          }
+        })
       }
     },
   };
   </script>
   
-  <style lang="less" scoped>
-  .add {
-    margin: 0px 40px;
-    .box {
-      padding: 0px 20px;
-      ul li {
-        margin: 10px 0px;
-        display: flex;
-        align-items: center;
-        .el-input {
-          width: 6%;
-        }
-        .w150 {
-          margin-left: 20px;
-          width: 7%;
-        }
-      }
-    }
-    .el-icon-circle-plus {
-      margin-right: 10px;
-    }
-    .icon-daoru-tianchong {
-      margin-right: 10px;
-    }
-    .append {
-      margin: 0px 20px;
-      ul {
-        display: flex;
-        align-items: center;
-        li {
-          margin-right: 20px;
-        }
-      }
-      .change {
-        margin-top: 20px;
-        padding: 20px 16px;
-        background-color: #E7F6F6;
-        border-radius: 4px;
-        .title {
-          padding-left: 6px;
-          color: #2f4f4f;
-          span:nth-child(1) {
-            margin-right: 6px;
-          }
-          .answer {
-            margin: 20px 0px 20px 8px;
-          }
-          .el-textarea {
-            width: 98% !important;
-          }
-        }
-        .options {
-          ul {
-            display: flex;
-            flex-direction: column;
-          }
-          ul li {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 98%;
-            margin: 10px 0px;
-            span {
-              margin-right: 20px;
-            }
-          }
-        }
-        .submit {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }        
-      }
-      .fill {
-        .fillAnswer {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          span {
-            margin-right: 6px;
-          }
-          .el-input {
-            width: 91% !important;
-          }
-        }
-        .analysis {
-          margin-top: 20px;
-          margin-left: 5px;
-        }
-      }
-      .judge {
-        .judgeAnswer {
-          margin-left: 20px;
-          margin-bottom: 20px;
-        }
+<style lang="less" scoped>
+.add {
+  margin: 0px 40px;
+  .box {
+    padding: 0px 20px;
+    ul li {
+      margin: 10px 0px;
+      display: flex;
+      align-items: center;
+      .el-input {
+        width: 6%;
       }
       .w150 {
-        width: 150px;
-      }
-      li:nth-child(2) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin-left: 20px;
+        width: 7%;
       }
     }
   }
-  </style>
+  .el-icon-circle-plus {
+    margin-right: 10px;
+  }
+  .icon-daoru-tianchong {
+    margin-right: 10px;
+  }
+  .append {
+    margin: 0px 20px;
+    ul {
+      display: flex;
+      align-items: center;
+      li {
+        margin-right: 20px;
+      }
+    }
+    .change {
+      margin-top: 20px;
+      padding: 20px 16px;
+      background-color: #E7F6F6;
+      border-radius: 4px;
+      .title {
+        padding-left: 6px;
+        color: #2f4f4f;
+        span:nth-child(1) {
+          margin-right: 6px;
+        }
+        .answer {
+          margin: 20px 0px 20px 8px;
+        }
+        .el-textarea {
+          width: 98% !important;
+        }
+      }
+      .options {
+        ul {
+          display: flex;
+          flex-direction: column;
+        }
+        ul li {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 98%;
+          margin: 10px 0px;
+          span {
+            margin-right: 20px;
+          }
+        }
+      }
+      .submit {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }        
+    }
+    .fill {
+      .fillAnswer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          margin-right: 6px;
+        }
+        .el-input {
+          width: 91% !important;
+        }
+      }
+      .analysis {
+        margin-top: 20px;
+        margin-left: 5px;
+      }
+    }
+    .judge {
+      .judgeAnswer {
+        margin-left: 20px;
+        margin-bottom: 20px;
+      }
+    }
+    .w150 {
+      width: 150px;
+    }
+    li:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+</style>

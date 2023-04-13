@@ -8,10 +8,13 @@ import com.kaka.utils.GeneticAlgorithm;
 import com.kaka.utils.Population;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.Future;
 
 @Service
 public class PaperServiceImpl implements PaperService {
@@ -93,7 +96,10 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public ResponseResult addExamByGeneticAlgorithm(RuleBean ruleBean) {
+    @Async("taskExecutor")
+    public Future<ResponseResult> addExamByGeneticAlgorithm(RuleBean ruleBean) {
+        long threadId = Thread.currentThread().getId();
+        System.out.println(threadId);
         ProblemFilter problemFilter = new ProblemFilter();
         List<String> sourceList = new ArrayList<>();
         sourceList.add(ruleBean.getSource());
@@ -102,15 +108,15 @@ public class PaperServiceImpl implements PaperService {
         List<Problem> multipleList = problemMapper.getProblemByFilter(problemFilter);
         List<Problem> tfList = problemMapper.getProblemByFilter(problemFilter);
         if (singleList.size() < ruleBean.getSingleNum()) {
-            return new ResponseResult(400, "单选题数量不够!");
+            return new AsyncResult<>(new ResponseResult(400, "单选题数量不够!"));
         } else if (multipleList.size() < ruleBean.getMultipleNum()) {
-            return new ResponseResult(400, "多选题数量不够!");
+            return new AsyncResult<>(new ResponseResult(400, "多选题数量不够!"));
         } else if (tfList.size() < ruleBean.getTfNum()) {
-            return new ResponseResult(400, "判断题数量不够!");
+            return new AsyncResult<>(new ResponseResult(400, "判断题数量不够!"));
         }
         System.out.println(ruleBean);
         int count = 0, runCount = 10;
-        ruleBean.setFitness(0.98);
+        ruleBean.setFitness(0.95);
         Population population = new Population(20, true, ruleBean);
 
         Paper resultPaper = null;
@@ -131,6 +137,6 @@ public class PaperServiceImpl implements PaperService {
             problemToPaper.setProblem_id(questionList.get(i).getId());
             paperMapper.addPaper(problemToPaper);
         }
-        return new ResponseResult(200, "组卷成功!");
+        return new AsyncResult<>(new ResponseResult(200, "组卷成功!"));
     }
 }

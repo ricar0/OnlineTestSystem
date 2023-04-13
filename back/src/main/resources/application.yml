@@ -2,6 +2,12 @@ server:
   port: 8080
 
 spring:
+  task:
+    execution:
+      pool:
+        core-size: 10
+        max-size: 20
+        queue-capacity: 200
   mail:
     host: smtp.163.com
     username: wmy0976543244@163.com

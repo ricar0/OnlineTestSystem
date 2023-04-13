@@ -92,7 +92,7 @@ export default {
         index: '5',
         title: '教师管理',
         icon: 'el-icon-s-custom',
-        content:[{item1:'教师管理',path:'/teacherManage'},{item2: '添加教师',path: '/addTeacher'}],
+        content:[{item1:'教师管理',path:'/teacherManage'},{item2: '教师审批',path: '/addTeacher'}],
       })
       // }
     }

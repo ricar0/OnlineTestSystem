@@ -34,4 +34,6 @@ public interface UserService {
     public void updatePassword(User user);
 
     public void updateEmail(User user);
+
+    public List<User> getTeacherAll();
 }

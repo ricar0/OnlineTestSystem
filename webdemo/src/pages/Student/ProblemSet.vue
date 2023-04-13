@@ -157,10 +157,10 @@ export default {
             showTags: true,
             source: [
                 { id: 0, color: 'dark', label: '全部' },
-                { id: 1, color: 'plain', label: '数据结构' },
-                { id: 2, color: 'plain', label: '计算机网络' },
-                { id: 3, color: 'plain', label: '操作系统' },
-                { id: 4, color: 'plain', label: '思想道德修养和法律基础' },
+                // { id: 1, color: 'plain', label: '数据结构' },
+                // { id: 2, color: 'plain', label: '计算机网络' },
+                // { id: 3, color: 'plain', label: '操作系统' },
+                // { id: 4, color: 'plain', label: '思想道德修养和法律基础' },
             ],
             difficulty: [
                 { id: 0, color: 'dark', label: '全部' },
@@ -184,6 +184,11 @@ export default {
     },
     mounted() {
         this.getProblem();
+        this.$store.dispatch('getSubjectAll').then(res=>{
+            let subject = this.$store.state.subject.subject
+            for (let i = 0; i < subject.length; i++)
+                this.source.push({id:i+1,label:subject[i].source,color:'plain'})
+        })
     },
     methods: {
         handleSizeChange(val) {

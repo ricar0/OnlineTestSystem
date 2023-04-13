@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 @RestController
 @RequestMapping("/api/paper")
 public class PaperController {
@@ -29,7 +32,7 @@ public class PaperController {
         return paperService.addPaperByRand(exam);
     }
     @RequestMapping(value="addExamByGeneticAlgorithm", method = RequestMethod.POST)
-    public ResponseResult addExamByGeneticAlgorithm(@RequestBody RuleBean ruleBean) {
+    public ResponseResult addExamByGeneticAlgorithm(@RequestBody RuleBean ruleBean) throws InterruptedException, ExecutionException {
         Exam exam = new Exam();
         exam.setSource(ruleBean.getSource());
         exam.setDescription(ruleBean.getDescription());
@@ -48,6 +51,9 @@ public class PaperController {
         exam.setTotalTime(ruleBean.getTotalTime());
         Long id = examService.addExam(exam);
         ruleBean.setExam_id(id);
-        return paperService.addExamByGeneticAlgorithm(ruleBean);
+
+        Future<ResponseResult> futureResult = paperService.addExamByGeneticAlgorithm(ruleBean);
+        ResponseResult result = futureResult.get();
+        return result;
     }
 }

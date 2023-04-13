@@ -54,7 +54,7 @@
     </update>
 
     <insert id="addProblem" parameterType="com.kaka.entity.Problem">
-        insert into problems_set value(#{label}, #{description},#{accept},#{difficulty},#{optionNum},#{A},
-            #{B},#{C},#{D},null,0,0,#{solution},#{category});
+        insert into problems_set value(#{label}, #{description},#{accept},#{difficulty},#{option_num},#{a},
+            #{b},#{c},#{d},null,#{source},null,0,0,#{solution},#{category});
     </insert>
 </mapper>

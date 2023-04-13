@@ -65,6 +65,11 @@ public class UserController {
         return new ResponseResult(200, "查询成功!", userService.getStudentAll());
     }
 
+    @RequestMapping(value="/getTeacherAll", method = RequestMethod.GET)
+    public ResponseResult getTeacherAll() {
+        return new ResponseResult(200, "查询成功!", userService.getTeacherAll());
+    }
+
     @RequestMapping(value="/getUserInfoById/{id}", method = RequestMethod.GET)
     public ResponseResult getUserInfoById(@PathVariable Long id) {
         return new ResponseResult(200, "查询成功!", userService.getUserInfoById(id));

@@ -140,7 +140,7 @@
                         <p v-if="finished">组卷完成</p>
                         <el-progress :text-inside="true" :stroke-width="26" :percentage="Percentage"></el-progress>
                         <div style="margin: 30px auto 0 auto; text-align: center;">
-                            <el-button type="primary" v-if="finished">查看试卷</el-button>
+                            <el-button @click="refresh()" type="primary" v-if="finished">继续添加考试</el-button>
                             <el-button @click="goToSeachExam()" type="primary" v-if="finished">返回考试查询</el-button>
                             <el-button @click="returnStep2()" type="primary" v-if="error">返回上一级</el-button>
                         </div>
@@ -304,7 +304,7 @@
                         <p v-if="error" style="color:red;font-size: 12px;">错误提示：{{ error_message }}</p>
                         <el-progress :text-inside="true" :stroke-width="26" :percentage="Percentage"></el-progress>
                         <div style="margin: 30px auto 0 auto; text-align: center;">
-                            <el-button type="primary" v-if="finished">查看试卷</el-button>
+                            <el-button @click="refresh()" type="primary" v-if="finished">继续添加考试</el-button>
                             <el-button @click="goToSeachExam()" type="primary" v-if="finished">返回考试查询</el-button>
                             <el-button v-if="error" @click="returnStep2()">返回上一级</el-button>
                         </div>
@@ -429,7 +429,7 @@
                         <p v-if="error" style="color:red;font-size: 12px;">错误提示：{{ error_message }}</p>
                         <el-progress :text-inside="true" :stroke-width="26" :percentage="Percentage"></el-progress>
                         <div style="margin: 30px auto 0 auto; text-align: center;">
-                            <el-button type="primary" v-if="finished">查看试卷</el-button>
+                            <el-button @click="refresh()" type="primary" v-if="finished">继续添加考试</el-button>
                             <el-button @click="goToSeachExam()" type="primary" v-if="finished">返回考试查询</el-button>
                             <el-button v-if="error" @click="returnStep2()">返回上一级</el-button>
                         </div>
@@ -502,6 +502,9 @@ export default {
         }
     },
     methods: {
+        refresh() {
+            location.reload()
+        },
         GAPaper() {
             this.Percentage = 0
             let exam = this.exam
@@ -526,6 +529,7 @@ export default {
                     if (this.Percentage >= 100) this.Percentage = 99
                 },1000)
                 this.$store.dispatch('addExamByGeneticAlgorithm', exam).then(res=>{
+                    // console.log(res)
                     if (res == 'ok')
                         this.finished = 1
                     else {

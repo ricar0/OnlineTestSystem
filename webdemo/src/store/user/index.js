@@ -1,6 +1,6 @@
 //user模块小仓库
 import {reqUserLogin, reqUserInfo, reqUserLogout, reqSendCode, reqGetCode, reqGetStudentAll, 
-    reqGetUserInfoById, reqUpdateUserInfo, reqUpdatePassword, reqSendEmail, reqVerifyEmail} from '@/api'
+    reqGetUserInfoById, reqUpdateUserInfo, reqUpdatePassword, reqSendEmail, reqVerifyEmail, reqGetTacherAll} from '@/api'
 import {setToken, getToken, removeToken} from '@/utils/token'
 const state={
     token: getToken(),
@@ -8,6 +8,7 @@ const state={
     phone:'',
     student: [],
     user: '',
+    teacher: []
 };
 const mutations = {
     USERLOGIN(state, token) {
@@ -29,6 +30,9 @@ const mutations = {
     },
     GETUSERINFOBYID(state, user) {
         state.user = user;
+    },
+    GETTEACHERALL(state, teacher) {
+        state.teacher = teacher
     }
 };
 const actions = {
@@ -85,6 +89,15 @@ const actions = {
     async getStudentAll({commit}, obj) {
         let {data} = await reqGetStudentAll(obj);
         commit("GETSTUDENTALL", data.data);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getTeacherAll({commit}, obj) {
+        let {data} = await reqGetTacherAll(obj);
+        commit("GETTEACHERALL", data.data);
         if (data.code == 200) {
             return "ok";
         } else {

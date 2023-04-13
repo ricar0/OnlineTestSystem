@@ -27,6 +27,8 @@ import ChangePhoneNumber from '@/pages/Common/ChangePhoneNumber'
 import ChangeEmail from '@/pages/Common/ChangeEmail'
 import SearchExam from '@/pages/Admin/SearchExam'
 import AddExam from '@/pages/Admin/AddExam'
+import TeacherManage from '@/pages/Admin/TeacherManage'
+import AddTeacher from '@/pages/Admin/AddTeacher'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -112,6 +114,11 @@ export default new VueRouter ({
                     meta: {requiresAuth: true, show:false}
                 },
                 {
+                    path: "/teacherManage",
+                    component: TeacherManage,
+                    meta: {requiresAuth: true, show:false}
+                },
+                {
                     path: "/problemManage",
                     component: ProblemManage,
                     meta: {requiresAuth: true, show:false}
@@ -129,6 +136,11 @@ export default new VueRouter ({
                 {
                     path: "/addExam",
                     component: AddExam,
+                    meta: {requiresAuth: true, show:false}
+                },
+                {
+                    path: "/addTeacher",
+                    component: AddTeacher,
                     meta: {requiresAuth: true, show:false}
                 },
             ]

@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
     public void updateEmail(User user) {
         userMapper.updateEmail(user);
     }
+
+    @Override
+    public List<User> getTeacherAll() {
+        return userMapper.getTeacherAll();
+    }
 }
