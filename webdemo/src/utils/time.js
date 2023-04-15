@@ -48,3 +48,51 @@ Date.prototype.format = function(fmt) {
     }
    return fmt; 
 }
+
+export const timediff = (begin_time, end_time)=> {
+    //年月日时分秒转换为时间戳
+    let beginTime = (new Date(begin_time).getTime()) / 1000;
+    let endTime = (new Date(end_time).getTime()) / 1000;
+    var starttime = ''
+    var endtime = ''
+    if (beginTime < endTime) {
+      starttime = beginTime;
+      endtime = endTime;
+    } else {
+      starttime = endTime;
+      endtime = beginTime;
+    }
+    //计算天数
+    var timediff = endtime - starttime;
+    var days = parseInt(timediff / 86400);
+    //计算小时数
+    var remain = timediff % 86400;
+    var hours = parseInt(remain / 3600);
+    //计算分钟数
+    var remain = remain % 3600;
+    var mins = parseInt(remain / 60);
+    var secs = remain % 60;
+    var res = days + '天' + hours + '小时' + mins + '分' + secs + '秒';
+    return res;
+}
+
+export const timediff2 = (begin_time, end_time)=> {
+    //年月日时分秒转换为时间戳
+    let beginTime = (new Date(begin_time).getTime()) / 1000;
+    let endTime = (new Date(end_time).getTime()) / 1000;
+    var starttime = ''
+    var endtime = ''
+    if (beginTime < endTime) {
+      starttime = beginTime;
+      endtime = endTime;
+    } else {
+      starttime = endTime;
+      endtime = beginTime;
+    }
+    var timediff = endtime - starttime;
+    //计算分钟数
+    var mins = parseInt(timediff / 60);
+    var secs = timediff % 60;
+    var res = mins + '分' + secs + '秒';
+    return res;
+}

@@ -46,7 +46,11 @@ spring:
 mybatis:
   mapper-locations: classpath:/mybatis/*.xml
 
-
+TencentCos:
+  secretId: AKID0xoU5b7bUEl6Tnz55xdAWelhR1WqyINO
+  secretKey: DG5qR9j6OYaS6XkiT4Z2OYilpplgYIwP
+  bucketName: picture-1317807251
+  region: ap-shanghai
 
 
 

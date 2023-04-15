@@ -11,7 +11,7 @@
             <router-link style="color:white;" v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
             <a style="color:white;" v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>
             <div style="cursor: pointer;" class="msg" v-if="flag && isLogin">
-              <p @click="manage()">个人信息</p>
+              <p @click="goToUserInfo()">个人信息</p>
               <p class="exit" @click="logout()">退出登录</p>
             </div>
           </li>
@@ -42,6 +42,9 @@ export default {
       })
     },
     methods: {
+      goToUserInfo() {
+        this.$router.push('UserInfo')
+      },
       logout() {
         this.$store.dispatch('userLogout').then(res=>{
           this.$router.push('/login')

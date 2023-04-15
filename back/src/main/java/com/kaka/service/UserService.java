@@ -36,4 +36,6 @@ public interface UserService {
     public void updateEmail(User user);
 
     public List<User> getTeacherAll();
+
+    public void updateRole(Long id);
 }

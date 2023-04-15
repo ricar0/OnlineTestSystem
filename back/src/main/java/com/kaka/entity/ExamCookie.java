@@ -18,8 +18,6 @@ public class ExamCookie {
     private int singleNum;
     private int multipleNum;
     private int judgeNum;
-    private int minutes;
-    private int seconds;
     private List<Boolean> singleisMark;
     private List<Boolean> multipleisMark;
     private List<Boolean> judgeisMark;

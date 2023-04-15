@@ -79,4 +79,16 @@
         password = #{password}, singleScore = #{singleScore}, multipleScore = #{multipleScore}, tfScore = #{tfScore},
         singleNum = #{singleNum}, multipleNum = #{multipleNum}, tfNum = #{tfNum} where id = #{id};
     </update>
+
+    <insert id="registerExam" parameterType="com.kaka.entity.MyExam">
+        insert into myexam value(#{user_id}, #{exam_id}, null, null, 0);
+    </insert>
+
+    <select id="getRegisterState" parameterType="com.kaka.entity.MyExam" resultType="com.kaka.entity.MyExam">
+        select * from myexam where exam_id = #{exam_id} and user_id = #{user_id};
+    </select>
+
+    <update id="addExamNumber" parameterType="Long">
+        update exam set number = number + 1 where id = #{id};
+    </update>
 </mapper>

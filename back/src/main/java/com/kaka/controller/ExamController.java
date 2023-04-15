@@ -64,80 +64,17 @@ public class ExamController {
         return new ResponseResult(200, "获取成功!", examService.getProblemById(exam.getId()));
     }
 
-    @RequestMapping(value = "/getPaperInfoById", method = RequestMethod.POST)
-    public ResponseResult getPaperInfoById(@RequestBody Exam exam) {
-        Long id = exam.getId();
-        PaperBean paperBean = new PaperBean();
-        List<Problem> list = examService.getProblemById(id);
-        Exam e = examService.getExamById(id);
-        paperBean.setProblems(list);
-        int singleNum = 0, multipleNum = 0, tfNum = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getLabel().equals("single")) singleNum++;
-            if (list.get(i).getLabel().equals("multiple")) multipleNum++;
-            if (list.get(i).getLabel().equals("tf")) tfNum++;
-        }
-        paperBean.getExam().setSingleNum(singleNum);
-        paperBean.getExam().setMultipleNum(multipleNum);
-        paperBean.getExam().setTfNum(tfNum);
-        paperBean.getExam().setSingleScore(e.getSingleScore());
-        paperBean.getExam().setMultipleScore(e.getMultipleScore());
-        paperBean.getExam().setTfScore(e.getTfScore());
-        return new ResponseResult(200, "获取成功!", paperBean);
-    }
-
-    @RequestMapping(value = "/initExamCookies", method = RequestMethod.POST)
-    public ResponseResult initExamCookies(@RequestBody ExamCookie examCookie) {
-        examCookie.setMinutes(examService.getExamById(examCookie.getExam_id()).getTotalTime());
-        examCookie.setSeconds(0);
-        List<List<Integer>> list = new ArrayList<List<Integer>>();
-        for (int i = 0; i < examCookie.getMultipleNum(); i++) {
-            List<Integer> l = new ArrayList<Integer>();
-            list.add(l);
-        }
-        examCookie.setMultipleAnswer(list);
-        List<Integer> list1 = new ArrayList<Integer>();
-        examCookie.setSingleAnswer(list1);
-        examCookie.setJudgeAnswer(list1);
-
-        List<Boolean> list2 = new ArrayList<Boolean>();
-        for (int i = 0; i < examCookie.getMultipleNum(); i++) list2.add(false);
-        examCookie.setSingleisClick(list2);
-        examCookie.setMultipleisClick(list2);
-        examCookie.setJudgeisClick(list2);
-        examCookie.setSingleisMark(list2);
-        examCookie.setMultipleisMark(list2);
-        examCookie.setJudgeisMark(list2);
-        examCookie.setBg_flag(false);
-        redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id(), examCookie);
-        return new ResponseResult(200, "设置成功!");
-    }
-
     @RequestMapping(value = "/setExamCookies", method = RequestMethod.POST)
     public ResponseResult setExamCookies(@RequestBody ExamCookie examCookie) {
-        int totalTime = examService.getExamById(examCookie.getExam_id()).getTotalTime();
         MyExam myExam = new MyExam();
         myExam.setExam_id(examCookie.getExam_id());
         myExam.setUser_id(examCookie.getUser_id());
-        Date date = examMapper.getExamInfo(myExam).getStart_time();
-        Calendar startTime = Calendar.getInstance();
-        startTime.setTime(date);
-        Calendar currentTime = Calendar.getInstance();
-        currentTime.setTime(new Date());
-        Long startSecond = startTime.getTimeInMillis();
-        Long currentSecond = currentTime.getTimeInMillis();
-        int totleSecond = totalTime * 60;
-        Long remainingTime = (totleSecond-(currentSecond-startSecond)/1000);
-        int minutes = (int)(remainingTime / 60);
-        int seconds = (int)(remainingTime - remainingTime/60*60);
-        examCookie.setMinutes(minutes);
-        examCookie.setSeconds(seconds);
-        redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id(), examCookie);
+        redisCache.setCacheObject("examcookies:"+examCookie.getUser_id()+'-'+examCookie.getExam_id(), examCookie);
         return new ResponseResult(200, "设置成功!");
     }
     @RequestMapping(value = "/getExamCookies", method = RequestMethod.POST)
     public ResponseResult getExamCookies(@RequestBody ExamCookie examCookie) {
-        ExamCookie res = redisCache.getCacheObject("examcookies:"+examCookie.getUser_id()+examCookie.getExam_id());
+        ExamCookie res = redisCache.getCacheObject("examcookies:"+examCookie.getUser_id()+'-'+examCookie.getExam_id());
         return new ResponseResult(200, "获取成功!", res);
     }
 
@@ -163,7 +100,7 @@ public class ExamController {
         myExam.setEnd_time(end_time);
         List<Problem> list = examService.getProblemById(myExam.getExam_id());
         Exam exam = examService.getExamById(myExam.getExam_id());
-        ExamCookie examCookie = redisCache.getCacheObject("examcookies:"+myExam.getUser_id()+myExam.getExam_id());
+        ExamCookie examCookie = redisCache.getCacheObject("examcookies:"+myExam.getUser_id()+'-'+myExam.getExam_id());
         List<Integer> singleAnswer = examCookie.getSingleAnswer();
         List<List<Integer>> multipleAnswer = examCookie.getMultipleAnswer();
         List<Integer> judgeAnswer = examCookie.getJudgeAnswer();
@@ -228,4 +165,21 @@ public class ExamController {
         return new ResponseResult(200, "删除成功!");
     }
 
+    @RequestMapping(value="/registerExam", method = RequestMethod.POST)
+    public ResponseResult registerExam(@RequestBody MyExam myExam) {
+        examService.registerExam(myExam);
+        Exam exam = examService.getExamById(myExam.getExam_id());
+        examService.initExam(exam, myExam.getUser_id());
+        return new ResponseResult(200, "报名成功!");
+    }
+
+    @RequestMapping(value="/getRegisterState", method = RequestMethod.POST)
+    public ResponseResult getRegisterState(@RequestBody MyExam myExam) {
+        MyExam tmp = examService.getRegisterState(myExam);
+        if (Objects.isNull(tmp)) {
+            return new ResponseResult(200, "获取成功!", 0);
+        } else {
+            return new ResponseResult(200, "获取成功!", 1);
+        }
+    }
 }

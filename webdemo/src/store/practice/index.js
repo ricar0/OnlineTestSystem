@@ -1,10 +1,16 @@
 import { reqGetAllNumber2, reqGetMyPractice, reqGetPracticeAll, reqGetPracticeByFilter
-,reqGetMyPracticeNumber} from "@/api";
+,reqGetMyPracticeNumber,
+reqAddPractice,
+reqGetPracticeInfo,
+reqGetRegisterState2,
+reqRegisterPractice} from "@/api";
 
 const state = {
     mypractice: [],
     practice: [],
-    count: 0
+    count: 0,
+    practiceInfo: '',
+    sta: ''
 }
 
 const mutations = {
@@ -22,6 +28,12 @@ const mutations = {
     },
     GETMYPRACTICENUMBER(state, count) {
         state.count = count;
+    },
+    GETPRACTICEINFO(state, practiceInfo) {
+        state.practiceInfo = practiceInfo
+    },
+    GETREGISTERSTATE(state, sta) {
+        state.sta = sta;
     }
 }
 
@@ -69,6 +81,49 @@ const actions = {
             return "ok";
         } else {
             return Promise.reject(new Error("failure"));
+        }
+    },
+    async getMyPracticeNumber({commit}, obj) {
+        let {data} = await reqGetMyPracticeNumber(obj);
+        if (data.code == 200) {
+            commit("GETMYPRACTICENUMBER", data.data);
+            return "ok";
+        } else {
+            return Promise.reject(new Error("failure"));
+        }
+    },
+    async addPractice({commit}, obj) {
+        let {data} = await reqAddPractice(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getPracticeInfo({commit}, obj) {
+        let {data} = await reqGetPracticeInfo(obj);
+        commit("GETPRACTICEINFO", data.data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getRegisterState2({commit}, obj) {
+        let {data} = await reqGetRegisterState2(obj);
+        commit("GETREGISTERSTATE", data.data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async registerPractice({commit}, obj) {
+        let {data} = await reqRegisterPractice(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
         }
     },
 }

@@ -29,6 +29,9 @@ import SearchExam from '@/pages/Admin/SearchExam'
 import AddExam from '@/pages/Admin/AddExam'
 import TeacherManage from '@/pages/Admin/TeacherManage'
 import AddTeacher from '@/pages/Admin/AddTeacher'
+import ApplicationForTeacher from '@/pages/Common/ApplicationForTeacher'
+import PracticeAnswer from '@/pages/Student/PracticeAnswer'
+import PracticeMsg from '@/pages/Student/PracticeMsg'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -168,6 +171,21 @@ export default new VueRouter ({
         {
             path: "/accountInfo/email",
             component: ChangeEmail,
+            mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/applicationForTeacher",
+            component: ApplicationForTeacher,
+            mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/practiceAnswer",
+            component: PracticeAnswer,
+            mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/practiceMsg",
+            component: PracticeMsg,
             mate: {requiresAuth: true, show:true}
         },
     ]

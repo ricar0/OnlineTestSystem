@@ -2,6 +2,7 @@ package com.kaka.controller;
 
 import com.kaka.entity.Exam;
 import com.kaka.entity.PaperBean;
+import com.kaka.entity.Problem;
 import com.kaka.entity.RuleBean;
 import com.kaka.service.ExamService;
 import com.kaka.service.PaperService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -55,5 +57,16 @@ public class PaperController {
         Future<ResponseResult> futureResult = paperService.addExamByGeneticAlgorithm(ruleBean);
         ResponseResult result = futureResult.get();
         return result;
+    }
+
+    @RequestMapping(value = "/getPaperInfoById", method = RequestMethod.POST)
+    public ResponseResult getPaperInfoById(@RequestBody Exam exam) {
+        Long id = exam.getId();
+        PaperBean paperBean = new PaperBean();
+        List<Problem> list = examService.getProblemById(id);
+        Exam e = examService.getExamById(id);
+        paperBean.setProblems(list);
+        paperBean.setExam(e);
+        return new ResponseResult(200, "获取成功!", paperBean);
     }
 }

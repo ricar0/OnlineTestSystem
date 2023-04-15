@@ -2,12 +2,15 @@
   <div id="msg">
     <Header></Header>
     <div class="title">
-      <span @click="toExam" style="cursor: pointer; color: blue;text-decoration:underline;">试卷列表</span>
+      <span @click="toExam" style="cursor: pointer; color: blue;text-decoration:underline;">考试列表</span>
       <span>/  {{examData.source}}</span>
     </div>
     <div class="wrapper">
       <ul class="top">
-        <li class="example">{{examData.source}}&nbsp;</li><i v-if="examData.lock" class="el-icon-lock" style="font-size:23px; font-weight:700;"></i>
+        <li class="example">{{examData.source}}&nbsp;</li><i v-if="examData.permission" class="el-icon-lock" style="font-size:23px; font-weight:700;"></i>
+        <li style="margin-left: 10px; font-size: 20px;" v-if="!isStarted">距考试开始还有{{ time }}</li>
+        <li style="margin-left: 10px; font-size: 20px;" v-if="isStarted && !isFinished">距考试结束还有{{ time }}</li>
+        <li style="margin-left: 10px;" v-if="isFinished"><el-tag type="danger">考试已结束</el-tag></li>
         <li class="right">
           <div>
             <span class="count">总分</span>
@@ -17,49 +20,34 @@
       </ul>
       <ul class="bottom">
         <li><i class="el-icon-edit"></i>来自 {{examData.teacher}}</li>
-        <li class="right"><el-button @click="toAnswer(examData.id)">开始答题</el-button></li>
+        <li class="right">
+          <el-button v-if="!register&&!isFinished" @click="Register(examData.id)">报名考试</el-button>
+          <el-tag v-if="!isStarted&&register" type="success">已报名</el-tag>
+          <el-button v-if="register&&isStarted&&!isFinished" @click="toAnswer(examData.id)">进入考试</el-button>
+          <el-button v-if="isFinished" @click="toAnswer(examData.id)">查看试卷</el-button>
+        </li>
       </ul>
       <ul class="info">
         <li @click="dialogVisible = true"><a href="javascript:;"><i class="el-icon-info"></i>考生须知</a></li>
       </ul>
     </div>
     <div class="content" style="margin-bottom: 20%;">
-      <el-collapse v-model="activeName" >
-        <el-collapse-item class="header" name="0">
-          <template slot="title" class="stitle" >
-            <div class="title">
-              <span style="font-weight: 700;">题型</span><i class="header-icon el-icon-info"></i>
-              <span class="time">{{examData.totalScore}}分 / {{examData.totalTime}}分钟</span>
-              <el-button type="primary" size="small">点击查看试题详情</el-button>
-            </div>
-          </template>
-          <el-collapse class="inner">
-            <el-collapse-item>
-              <template slot="title" name="1">
-                <div class="titlei">单选题 (共{{single}}题 共计{{totalScore[0]}}分)</div>
-              </template>
-            </el-collapse-item>
-            <el-collapse-item>
-              <template slot="title" name="2">
-                <div class="titlei">多选题 (共{{multiple}}题  共计{{totalScore[1]}}分)</div>
-              </template>
-            </el-collapse-item>
-            <el-collapse-item>
-              <template slot="title" name="3">
-                <div class="titlei">判断题 (共{{tf}}题 共计{{totalScore[2]}}分)</div>
-              </template>
-            </el-collapse-item>
-          </el-collapse>
-        </el-collapse-item>
-        
-      </el-collapse>
+      <div class="title">
+        <span style="font-weight: 700;">题型</span><i class="header-icon el-icon-info"></i>
+        &nbsp;({{ examData.totalScore}}分/{{ examData.totalTime }}分钟)
+      </div>
+      <el-card style="margin: 30px;">
+          <div class="titlei">单选题 (共{{single}}题 共计{{totalScore[0]}}分)</div>
+          <div class="titlei">多选题 (共{{multiple}}题  共计{{totalScore[1]}}分)</div>
+          <div class="titlei">判断题 (共{{tf}}题 共计{{totalScore[2]}}分)</div>
+      </el-card>
     </div>
     <!--考生须知对话框-->
     <el-dialog
       title="考生须知"
       :visible.sync="dialogVisible"
       width="30%">
-      <span>{{examData.tips}}</span>
+      <span>考试开始后才可答题，交卷后需要等待考试结束才可查看试题</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">知道了</el-button>
       </span>
@@ -69,6 +57,7 @@
 
 <script>
 import Header from '@/components/Student/Header'
+import {timediff} from '@/utils/time.js'
 export default {
   components: {
     Header
@@ -84,6 +73,10 @@ export default {
       tf: 0,
       totalScore: [0,0,0],
       uid:null,
+      isFinished: false,
+      isStarted: false,
+      time: '',
+      register: false
     }
   },
   mounted() {
@@ -95,30 +88,43 @@ export default {
         let id = this.$route.query.id //获取路由传递过来的试卷编号
         this.$store.dispatch('getExamById', id).then(res=>{
           this.examData = this.$store.state.exam.examinfo;
+          this.$store.dispatch('getUserInfo').then(res=>{
+            let user_id = this.$store.state.user.userinfo.id
+            this.$store.dispatch('getRegisterState', {exam_id:id, user_id}).then(res=>{
+              if (this.$store.state.exam.sta == 1) this.register = true
+            })
+          })
+          
+          this.showTime()
         })
         this.$store.dispatch('getPaperInfoById', {id}).then(res=>{
-          let list = this.$store.state.exam.paperinfo;
-          for (let i = 0; i < list.problems.length; i++) {
-            if (list.problems[i].label == 'single') this.single++;
-            if (list.problems[i].label == 'multiple') this.multiple++;
-            if (list.problems[i].label == 'tf') this.tf++;
-          }
-          this.totalScore[0] = this.single * list.singleScore;
-          this.totalScore[1] = this.multiple * list.multipleScore;
-          this.totalScore[2] = this.tf * list.tfScore;
-          this.$store.dispatch('getUserInfo').then(res=>{
-            this.uid = this.$store.state.user.userinfo.id;
-            let user_id = this.uid;
-            let exam_id = this.$route.query.id;
-            let singleNum = this.single
-            let multipleNum = this.multiple
-            let tfNum = this.tf
-            // this.$store.dispatch('initExamCookies', {user_id, exam_id, singleNum, multipleNum, tfNum})
-          })
+          let data = this.$store.state.exam.paperinfo;
+          this.single = data.exam.singleNum
+          this.multiple = data.exam.multipleNum
+          this.tf = data.exam.tfNum
+          this.totalScore[0] = data.exam.singleNum * data.exam.singleScore
+          this.totalScore[1] = data.exam.multipleNum * data.exam.multipleScore
+          this.totalScore[2] = data.exam.tfNum * data.exam.tfScore
         })
     },
+    Register(exam_id) {
+      this.$store.dispatch('getUserInfo').then(res=>{
+        let user_id = this.$store.state.user.userinfo.id
+        this.$store.dispatch('registerExam', {user_id,exam_id}).then(res=>{
+          if (res == 'ok') {
+            this.$message({type:'success', message: '报名成功!'})
+            this.register = true
+          }
+        })
+      })
+      
+    },
     toAnswer(id) {
-      if (this.examData.lock) {
+      if (!this.register) {
+        this.$message({type:'error', message: '没有报名无法查看试卷!'});
+        return
+      }
+      if (this.examData.permission) {
         this.$prompt('请输入密码', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -159,6 +165,26 @@ export default {
     },
     toExam() {
       this.$router.push('/myexam');
+    },
+    showTime() {
+      setInterval(() => {
+        let nowTime = new Date().format('yyyy-MM-dd hh:mm:ss')
+        if (this.examData.start_time > nowTime) {
+          this.isStarted = false
+        } else if (this.examData.end_time > nowTime) {
+          this.isStarted = true
+          this.isFinished = false
+        } else {
+          this.isStarted = true
+          this.isFinished = true
+        }
+        if (!this.isStarted) {
+          this.time = timediff(nowTime, this.examData.start_time)
+        } else if (this.isStarted && !this.isFinished) {
+          this.time = timediff(nowTime, this.examData.end_time)
+        }
+        if (this.isFinished) return
+      },1000)
     }
   }
 }
@@ -191,13 +217,14 @@ li {
   color: #88949b;
   font-weight: bold;
 }
-.content .title .time {
-  font-size: 16px;
-  margin-left: 500px;
-  color: #999;
+
+.content .title {
+  padding-left: 30px;
 }
-.content .stitle {
-  background-color: #0195ff;
+
+.content .titlei {
+  margin: 20px;
+  font-weight: 600;
 }
 .content .title span {
   margin-right: 10px;
@@ -209,7 +236,9 @@ li {
   align-items: center;
 }
 .content {
+  padding: 20px;
   margin-top: 20px;
+  height: auto;
   background-color: #fff;
 }
 .content .header {

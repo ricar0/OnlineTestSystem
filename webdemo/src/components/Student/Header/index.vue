@@ -48,7 +48,7 @@ export default {
     },
     methods: {
       userinfo() {
-        this.$router.push('/userinfo')
+        this.$router.push('/userInfo')
       },
       logout() {
         this.$store.dispatch('userLogout').then(res=>{

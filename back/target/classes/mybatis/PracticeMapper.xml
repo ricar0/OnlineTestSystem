@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kaka.mapper.PracticeMapper">
-    <insert id="addPractice" parameterType="com.kaka.entity.Practice">
-        insert into practice value(null, #{source}, #{description}, #{author}, #{totalTime}, #{totalScore}, #{lock}, #{code}, #{password}, #{difficulty});
+    <insert id="addPractice" parameterType="com.kaka.entity.Practice" useGeneratedKeys="true" keyProperty="id">
+        insert into practice value(null, #{source}, #{description}, #{author}, #{totalTime}, #{permission}, #{password},
+            #{difficulty}, 0, #{singleNum}, #{multipleNum}, #{tfNum} );
     </insert>
 
     <select id="getMyPractice" resultType="com.kaka.entity.Practice" parameterType="com.kaka.entity.MyPracticeFilter">
@@ -42,4 +43,24 @@
             limit #{start}, #{pageSize};
         </if>
     </select>
+
+    <insert id="addProblemToPractice" parameterType="com.kaka.entity.ProblemToPaper">
+        insert into practice_problem value(#{exam_id}, #{problem_id});
+    </insert>
+
+    <select id="getPracticeInfo" parameterType="Long" resultType="com.kaka.entity.Practice">
+        select * from practice where id = #{id};
+    </select>
+
+    <insert id="registerPractice" parameterType="com.kaka.entity.MyPractice">
+        insert into mypractice value(#{user_id}, #{practice_id});
+    </insert>
+
+    <select id="getRegisterState" parameterType="com.kaka.entity.MyPractice" resultType="com.kaka.entity.MyPractice">
+        select * from mypractice where practice_id = #{practice_id} and user_id = #{user_id};
+    </select>
+
+    <update id="addPracticeNumber" parameterType="Long">
+        update practice set number = number + 1 where id = #{id};
+    </update>
 </mapper>

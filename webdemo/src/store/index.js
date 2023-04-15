@@ -11,6 +11,8 @@ import exam from './exam'
 import practice from './practice';
 import wrongbook from './wrongbook'
 import subject from './subject'
+import role from './role'
+import pic from './pic'
 
 //对外暴露Store类的一个实例
 export default new Vuex.Store({
@@ -22,6 +24,8 @@ export default new Vuex.Store({
         exam,
         practice,
         wrongbook,
-        subject
+        subject,
+        role,
+        pic
     }
 });

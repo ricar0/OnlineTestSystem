@@ -2,18 +2,21 @@ import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById,
     reqInitExamCookies, reqGetExamCookies, reqSetExamCookies, reqStartExam, reqEndExam, 
     reqGetExamResult, reqGetExamByFilter, reqGetAllNumber3, reqGetUserNumberByExamId, reqGetMyExamNumber,
      reqDeleteExam, reqAddExam, reqAddExamByRand, reqUpdateExamInfo, 
-     reqAddExamByGeneticAlgorithm } from "@/api";
+     reqAddExamByGeneticAlgorithm, 
+     reqRegisterExam,
+     reqGetRegisterState} from "@/api";
 
 const state = {
     myexam: [],
     examinfo: [],
     probleminfo: [],
-    paperinfo:[],
+    paperinfo:null,
     examcookies: null,
     examresult:[],
     exam:[],
     count: null,
     number: 0,
+    sta: 0
 }
 
 const mutations = {
@@ -43,6 +46,9 @@ const mutations = {
     },
     GETMYEXAMNUMBER(state,number) {
         state.number = number;
+    },
+    GETREGISTERSTATE(state, sta) {
+        state.sta = sta;
     }
 }
 
@@ -194,7 +200,23 @@ const actions = {
     },
     async addExamByGeneticAlgorithm({commit}, obj) {
         let {data} = await reqAddExamByGeneticAlgorithm(obj);
-        console.log(data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async registerExam({commit}, obj) {
+        let {data} = await reqRegisterExam(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getRegisterState({commit}, obj) {
+        let {data} = await reqGetRegisterState(obj);
+        commit("GETREGISTERSTATE", data.data)
         if (data.code == 200) {
             return "ok";
         } else {

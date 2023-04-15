@@ -2,7 +2,6 @@ package com.kaka.service;
 
 import com.kaka.entity.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ExamService {
@@ -29,5 +28,11 @@ public interface ExamService {
     public void deleteExamProblem(Long id);
 
     public void updateExamInfo(Exam exam);
+
+    void registerExam(MyExam myExam);
+
+    void initExam(Exam exam, Long id);
+
+    MyExam getRegisterState(MyExam myExam);
 
 }

@@ -40,4 +40,6 @@ public interface UserMapper {
     void updateEmail(User user);
 
     public List<User> getTeacherAll();
+
+    public void updateRole(Long id);
 }

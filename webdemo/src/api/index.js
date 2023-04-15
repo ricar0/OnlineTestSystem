@@ -34,8 +34,8 @@ export const reqGetMyPractice = (data)=>requests({url:'practice/getMyPractice',d
 export const reqGetExamById = (id)=>requests({url:'exam/getExamById/'+id,method:'get'});
 
 //获取试题信息
-//url:/api/exam/getMyExam method: post
-export const reqGetPaperInfoById = (data)=>requests({url:'exam/getPaperInfoById',data, method:'post'});
+//url:/api/paper/getPaperInfoById method: post
+export const reqGetPaperInfoById = (data)=>requests({url:'paper/getPaperInfoById',data, method:'post'});
 
 //初始化考试
 //url:/api/exam/setExamCookies method: post
@@ -69,8 +69,8 @@ export const reqSearchMyExamByKey = (data)=>requests({url:'search/searchMyExamBy
 //url:/api/user/getStudentAll method: get
 export const reqGetStudentAll = ()=>requests({url:'user/getStudentAll',method:'get'})
 
-//获取所有老师
-export const reqGetTacherAll = ()=>requests({url:'user/getTeacherAll',method:'get'})
+//获取所有教师
+export const reqGetTeacherAll = ()=>requests({url:'user/getTeacherAll',method:'get'})
 
 //获取用户信息
 //url:/api/auth/getUserInfoById  method:get  
@@ -171,7 +171,45 @@ export const reqAddExamByRand = (data)=>requests({url:'/paper/addExamByRand', da
 export const reqAddExamByGeneticAlgorithm = (data)=>requests({url:'/paper/addExamByGeneticAlgorithm', data,method:'post'});
 
 //向题库中添加题目
-export const reqAddProblem = (data)=>requests({url:'/problem/addProblem',data,method:'post'});
+export const reqAddProblem = (data) =>requests({url:'/problem/addProblem',data,method:'post'});
 
-//获取所有科目
-export const reqGetSubjectAll = (data)=>requests({url:'/subject/getSubjectAll',data,method:'get'});
+//向题库中添加题目
+export const reqGetSubjectAll = () =>requests({url:'/subject/getSubjectAll',method:'get'});
+
+//获取审批信息
+export const reqGetCheckList = (data) =>requests({url:'/role/getCheckList',data,method:'post'});
+
+//获取审批信息个数
+export const reqGetCheckListSize = (data) =>requests({url:'/role/getCheckListSize',data,method:'post'});
+
+//审批通过
+export const reqAcceptCheck = (data) =>requests({url:'/role/acceptCheck',data,method:'post'});
+
+//审批不通过
+export const reqRefuseCheck = (data) =>requests({url:'/role/refuseCheck',data,method:'post'});
+
+//上传图片到后端
+export const reqUploadPic = (data) =>requests({url:'/pic/uploadPic',data,method:'post'});
+
+//获取当前申请状态
+export const reqGetCheckStateById = (data) =>requests({url:'/role/getCheckStateById',data,method:'post'});
+
+//报名考试
+export const reqRegisterExam = (data) =>requests({url:'/exam/registerExam',data,method:'post'});
+
+//查看报名状态
+export const reqGetRegisterState = (data) =>requests({url:'/exam/getRegisterState',data,method:'post'});
+
+//增加训练
+export const reqAddPractice = (data) =>requests({url:'/practice/addPractice',data,method:'post'});
+
+//获取练习信息
+export const reqGetPracticeInfo = (data) =>requests({url:'/practice/getPracticeInfo',data,method:'post'});
+
+//报名训练
+export const reqRegisterPractice = (data) =>requests({url:'/practice/registerPractice',data,method:'post'});
+
+//获取报名状态
+export const reqGetRegisterState2 = (data) =>requests({url:'/practice/getRegisterState',data,method:'post'});
+
+

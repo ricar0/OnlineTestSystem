@@ -8,7 +8,6 @@ import com.kaka.utils.GeneticAlgorithm;
 import com.kaka.utils.Population;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -37,13 +36,26 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public ResponseResult addPaperByRand(Exam exam) {
-        ProblemFilter problemFilter = new ProblemFilter();
+        ProblemFilter problemFilter1 = new ProblemFilter();
+        ProblemFilter problemFilter2 = new ProblemFilter();
+        ProblemFilter problemFilter3 = new ProblemFilter();
         List<String> sourceList = new ArrayList<>();
         sourceList.add(exam.getSource());
-        problemFilter.setSourceList(sourceList);
-        List<Problem> singleList = problemMapper.getProblemByFilter(problemFilter);
-        List<Problem> multipleList = problemMapper.getProblemByFilter(problemFilter);
-        List<Problem> tfList = problemMapper.getProblemByFilter(problemFilter);
+        problemFilter1.setSourceList(sourceList);
+        problemFilter2.setSourceList(sourceList);
+        problemFilter3.setSourceList(sourceList);
+        List<String> labelList1 = new ArrayList<>();
+        List<String> labelList2 = new ArrayList<>();
+        List<String> labelList3 = new ArrayList<>();
+        labelList1.add("single");
+        labelList2.add("multiple");
+        labelList3.add("tf");
+        problemFilter1.setLabelList(labelList1);
+        problemFilter2.setLabelList(labelList2);
+        problemFilter3.setLabelList(labelList3);
+        List<Problem> singleList = problemMapper.getProblemByFilter(problemFilter1);
+        List<Problem> multipleList = problemMapper.getProblemByFilter(problemFilter2);
+        List<Problem> tfList = problemMapper.getProblemByFilter(problemFilter3);
         if (singleList.size() < exam.getSingleNum()) {
             return new ResponseResult(400, "单选题数量不够!");
         } else if (multipleList.size() < exam.getMultipleNum()) {
@@ -62,7 +74,6 @@ public class PaperServiceImpl implements PaperService {
                 ProblemToPaper problemToPaper = new ProblemToPaper();
                 problemToPaper.setProblem_id(singleList.get(index).getId());
                 problemToPaper.setExam_id(exam.getId());
-                System.out.println(problemToPaper);
                 paperMapper.addPaper(problemToPaper);
             }
         }

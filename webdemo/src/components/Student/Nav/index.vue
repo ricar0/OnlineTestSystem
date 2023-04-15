@@ -12,7 +12,8 @@ export default {
         return {
             items: [
                 {value: '个人资料', selected: false},
-                {value: '账号信息', selected: false}
+                {value: '账号信息', selected: false},
+                {value: '教师申请', selected: false}
             ],
         }
     },
@@ -21,6 +22,8 @@ export default {
             this.items[0].selected = true
         else if (this.$route.path.split('/')[1] == 'accountInfo') 
             this.items[1].selected = true
+        else if (this.$route.path == '/applicationForTeacher')
+            this.items[2].selected = true
     },
     methods: {
         select(index) {
@@ -31,6 +34,8 @@ export default {
             }
             else if (index == 1) {
                 this.$router.push('/accountInfo')
+            } else if (index == 2) {
+                this.$router.push('/applicationForTeacher')
             }
         }
     }

@@ -43,4 +43,8 @@
     <select id="getTeacherAll" resultType="com.kaka.entity.User">
         select * from user where role = "teacher";
     </select>
+
+    <update id="updateRole">
+        update user set role = "teacher" where id = #{id}
+    </update>
 </mapper>

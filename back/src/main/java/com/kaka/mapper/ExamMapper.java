@@ -4,8 +4,6 @@ import com.kaka.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -37,4 +35,9 @@ public interface ExamMapper {
 
     public void updateExamInfo(Exam exam);
 
+    public void registerExam(MyExam myExam);
+
+    public MyExam getRegisterState(MyExam myExam);
+
+    public void addExamNumber(Long id);
 }

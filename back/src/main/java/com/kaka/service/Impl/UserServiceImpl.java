@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getTeacherAll() {
         return userMapper.getTeacherAll();
     }
+
+    @Override
+    public void updateRole(Long id) {
+        userMapper.updateRole(id);
+    }
 }

@@ -18,7 +18,8 @@
                             <el-checkbox style="size:20px;" v-model="showSource"><span style="font-size:15px;">显示学科</span></el-checkbox>
                         </el-col>
                         <el-col :span="4" style="padding-left:40%;">
-                            <el-button style="padding: 9px 15px;" type="primary" icon="el-icon-refresh" @click="reset()" round>重置</el-button>
+                            <el-button v-if="activeName=='all'" style="padding: 9px 15px;" type="primary" icon="el-icon-refresh" @click="reset()" round>重置</el-button>
+                            <el-button v-if="activeName=='my'" style="padding: 9px 15px;" type="primary" icon="el-icon-circle-plus" @click="addPractice()" round>自定义训练</el-button>
                         </el-col>
                     </el-row>
                 </div>
@@ -82,14 +83,14 @@
                     <el-table-column
                         prop="id"
                         label="编号"
-                        min-width="10%">
+                        min-width="5%">
                     </el-table-column>
                     <el-table-column
                         prop="description"
                         label="标题"
                         min-width="20%">
                     <template slot-scope="scope">
-                        <a style="cursor: pointer; color:#409eff;" @click="goToProblem(scope.row.id)">{{scope.row.description}}</a>
+                        <a style="cursor: pointer; color:#409eff;" @click="goToPractice(scope.row.id)">{{scope.row.description}}</a>
                     </template>
                     </el-table-column>
                     <el-table-column
@@ -106,6 +107,7 @@
                         label="难度"
                         min-width="10%">
                         <template slot-scope="scope">
+                            <el-tag v-if="scope.row.difficulty==0" size="small">不限</el-tag>
                             <el-tag v-if="scope.row.difficulty==1" type="success" size="small">简单</el-tag>
                             <el-tag v-if="scope.row.difficulty==2" type="warning" size="small">中等</el-tag>
                             <el-tag v-if="scope.row.difficulty==3" type="danger" size="small">困难</el-tag>
@@ -120,7 +122,7 @@
                         v-if="showSource"
                         prop="source"
                         label="学科"
-                        min-width="10%">
+                        min-width="15%">
                         <template slot-scope="scope">
                             <el-tag size="small">{{scope.row.source}}</el-tag>
                         </template>
@@ -156,6 +158,65 @@
               :total="pagination.total">
           </el-pagination>
       </div>
+      <el-dialog
+        title="请选择自定义训练"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+        <div class="content_body">
+            <el-form style="justify-content: center;" label-position="right" :model="practice" label-width="150px;">
+                <el-form-item label="科目">
+                    <el-select v-model="practice.source" placeholder="请选择科目">
+                        <el-option 
+                        v-for="item in source"
+                        v-if="item.label != '全部'"
+                        :label="item.label"
+                        :value="item.label"
+                        :key="item.id">    
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="描述">
+                    <el-input type="textarea" v-model="practice.description" style="width: 220px;" placeholder="请填写描述信息"></el-input>
+                </el-form-item>
+                <el-form-item label="单选题个数">
+                    <el-input-number :min="0" :max="100" v-model="practice.singleNum"></el-input-number>
+                </el-form-item>
+                <el-form-item label="多选题个数">
+                    <el-input-number :min="0" :max="100" v-model="practice.multipleNum"></el-input-number>
+                </el-form-item>
+                <el-form-item label="判断题个数">
+                    <el-input-number :min="0" :max="100" v-model="practice.tfNum"></el-input-number>
+                </el-form-item>
+                <el-form-item label="总时长(分钟)">
+                    <el-input v-model="practice.totalTime" style="width: 160px;"></el-input>
+                </el-form-item>
+                <el-form-item label="难度">
+                    <el-select v-model="practice.difficulty" placeholder="请选择科目">
+                        <el-option 
+                        v-for="item in difficulty"
+                        :label="item.label"
+                        :value="item.id"
+                        :key="item.id">    
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="上锁" placeholder="选择是否上锁">
+                    <el-select v-model="practice.permission">
+                        <el-option label="是" :value="1"></el-option>
+                        <el-option label="否" :value="0"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item v-if="practice.permission" label="密码">
+                    <el-input v-model="practice.password" style="width: 200px;" show-password></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addPractice()">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -168,6 +229,7 @@ export default {
     },
     data() {
         return {
+            dialogVisible: false,
             pagination: {
                 practice:[],
                 current: 1,
@@ -178,10 +240,7 @@ export default {
             input: null,
             source: [
                 { id: 0, color: 'dark', label: '全部' },
-                { id: 1, color: 'plain', label: '数据结构' },
-                { id: 2, color: 'plain', label: '计算机网络' },
-                { id: 3, color: 'plain', label: '操作系统' },
-                { id: 4, color: 'plain', label: '思想道德基础和法律修养' },
+
             ],
             difficulty: [
                 { id: 0, color: 'dark', label: '全部' },
@@ -197,13 +256,60 @@ export default {
             permissionList: [],
             sourceList: [],
             difficultyList: [],
-            activeName: 'all'
+            activeName: 'all',
+            practice: {
+                source: '',
+                singleNum: '',
+                multipleNum: '',
+                tfNum: '',
+                difficulty: null,
+                totalTime: 0,
+                permission: '',
+                password: '',
+                description: '',
+                id: '',
+            }
         }
     },
     mounted() {
         this.getPractice()
+        this.getSubject()
     },
     methods: {
+        goToPractice(id) {
+            this.$router.push({path:'/practiceMsg', query:{id:id}})
+        },
+        handleClose() {
+            this.dialogVisible = false
+        },
+        addPractice() {
+            
+            if (this.practice.description == '' || this.practice.difficulty == null || this.practice.source == '' || (this.practice.permission==1&&this.practice.password=='')) {
+                this.$message({type:'error', message: '请完整填写信息'})
+                return;
+            }
+            this.practice.id = this.$store.state.user.userinfo.id
+            this.practice.author = this.$store.state.user.userinfo.username
+            this.$store.dispatch('addPractice', this.practice).then(res=>{
+                if (res == 'ok') {
+                    this.$message({type:'success', message: '添加训练成功!'})
+                    this.dialogVisible = false
+                    this.getMyPractice()
+                } else {
+                    this.$message({type:'error', message: res})
+                }
+            })
+        },
+        getSubject() {
+            this.$store.dispatch('getSubjectAll').then(res=>{
+            let subject = this.$store.state.subject.subject
+            for (let i = 0; i < subject.length; i++)
+                this.source.push({id:i+1,label:subject[i].source,color:'plain'})
+            })
+        },
+        addPractice() {
+            this.dialogVisible = true
+        },
         handleClick(tab, event) {
             if (tab.name == 'all') {
                 this.getPractice()
@@ -332,6 +438,11 @@ export default {
 
 
 <style lang="less" scoped>
+
+.content_body {
+    margin: 0 auto;
+    width: 50%;
+}
 /deep/ .el-tabs__item {
     font-size: 20px;
     font-weight: 700;

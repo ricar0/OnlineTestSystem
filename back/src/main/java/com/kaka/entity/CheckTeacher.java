@@ -10,9 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckTeacher {
-    private Long id;
+    private Long check_id;
     private Long user_id;
-    private User user;
+    private String time;
+    private int state;
     private List<String> material;
     private int start;
+    private int pageSize;
 }

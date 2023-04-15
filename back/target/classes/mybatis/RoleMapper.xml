@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kaka.mapper.RoleMapper">
+    <select id="getCheckList" resultType="com.kaka.entity.CheckTeacher" parameterType="com.kaka.entity.CheckTeacher">
+        select * from teacherCheck where state = #{state}
+        <if test="pageSize != 0">
+            limit #{start}, #{pageSize};
+        </if>
+    </select>
+
+    <select id="getMaterialById" parameterType="Long" resultType="String">
+        select url from check_material where check_id = #{check_id};
+    </select>
+
+    <update id="updateCheckState" parameterType="com.kaka.entity.CheckTeacher" >
+        update teacherCheck set state = #{state} where check_id = #{check_id};
+    </update>
+
+    <insert id="addTeacherCheck" useGeneratedKeys="true" keyProperty="check_id" parameterType="com.kaka.entity.CheckTeacher">
+        insert into teacherCheck value(null, #{user_id}, #{state}, #{time});
+    </insert>
+
+    <insert id="addMaterialToCheck" parameterType="com.kaka.entity.Material">
+        insert into check_material value(#{check_id}, #{url});
+    </insert>
+
+    <select id="getCheckStateById" parameterType="Long" resultType="com.kaka.entity.CheckTeacher">
+        select * from teacherCheck where user_id = #{user_id} order by time desc;
+    </select>
+</mapper>

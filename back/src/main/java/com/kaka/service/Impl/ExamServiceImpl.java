@@ -3,20 +3,21 @@ package com.kaka.service.Impl;
 import com.kaka.entity.*;
 import com.kaka.mapper.ExamMapper;
 import com.kaka.service.ExamService;
-import io.jsonwebtoken.Claims;
+import com.kaka.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.kaka.utils.JwtUtil.parseJWT;
 
 @Service
 public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private ExamMapper examMapper;
+
+    @Autowired
+    private RedisCache redisCache;
 
     @Override
     public List<Exam> getAll() {
@@ -77,6 +78,51 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public void updateExamInfo(Exam exam) {
         examMapper.updateExamInfo(exam);
+    }
+
+    @Override
+    public void registerExam(MyExam myExam) {
+        examMapper.registerExam(myExam);
+        examMapper.addExamNumber(myExam.getExam_id());
+    }
+
+    @Override
+    public void initExam(Exam exam, Long id) {
+        ExamCookie examCookie = new ExamCookie();
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        for (int i = 0; i < exam.getMultipleNum(); i++) {
+            List<Integer> l = new ArrayList<Integer>();
+            list.add(l);
+        }
+        examCookie.setMultipleAnswer(list);
+        List<Integer> list1 = new ArrayList<Integer>();
+        examCookie.setSingleAnswer(list1);
+        examCookie.setJudgeAnswer(list1);
+
+        List<Boolean> singleList = new ArrayList<Boolean>();
+        List<Boolean> multipleList = new ArrayList<Boolean>();
+        List<Boolean> judgeList = new ArrayList<Boolean>();
+        for (int i = 0; i < exam.getSingleNum(); i++) singleList.add(false);
+        for (int i = 0; i < exam.getMultipleNum(); i++) multipleList.add(false);
+        for (int i = 0; i < exam.getTfNum(); i++) judgeList.add(false);
+        examCookie.setSingleisClick(singleList);
+        examCookie.setMultipleisClick(multipleList);
+        examCookie.setJudgeisClick(judgeList);
+        examCookie.setSingleisMark(singleList);
+        examCookie.setMultipleisMark(multipleList);
+        examCookie.setJudgeisMark(judgeList);
+        examCookie.setBg_flag(false);
+        examCookie.setUser_id(id);
+        examCookie.setSingleNum(exam.getSingleNum());
+        examCookie.setMultipleNum(exam.getMultipleNum());
+        examCookie.setJudgeNum(exam.getTfNum());
+        examCookie.setExam_id(exam.getId());
+        redisCache.setCacheObject("examcookies:"+id+'-'+exam.getId(), examCookie);
+    }
+
+    @Override
+    public MyExam getRegisterState(MyExam myExam) {
+        return examMapper.getRegisterState(myExam);
     }
 
 }
