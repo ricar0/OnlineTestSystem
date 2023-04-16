@@ -12,4 +12,5 @@ import java.util.List;
 public class PaperBean {
     private List<Problem> problems;
     private Exam exam;
+    private Practice practice;
 }

@@ -212,4 +212,9 @@ export const reqRegisterPractice = (data) =>requests({url:'/practice/registerPra
 //获取报名状态
 export const reqGetRegisterState2 = (data) =>requests({url:'/practice/getRegisterState',data,method:'post'});
 
+//获取训练试题和相关信息
+export const reqGetPaperInfoByPracticeId = (data) =>requests({url:'/practice/getPaperInfoByPracticeId',data,method:'post'});
+
+//保存练习结果
+export const reqAddPracticeResult = (data) =>requests({url:'/practice/addPracticeResult',data,method:'post'});
 

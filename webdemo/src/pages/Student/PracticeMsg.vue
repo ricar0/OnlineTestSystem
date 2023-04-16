@@ -23,7 +23,7 @@
         <ul class="bottom">
           <li><i class="el-icon-edit"></i>来自 {{practiceData.author}}</li>
           <li class="right">
-            <el-button v-if="register">进入练习</el-button>
+            <el-button v-if="register" @click="toAnswer(practiceData.id)">进入练习</el-button>
             <el-button v-if="!register" @click="Register(practiceData.id)">报名练习</el-button>
           </li>
         </ul>
@@ -46,7 +46,7 @@
         title="考生须知"
         :visible.sync="dialogVisible"
         width="30%">
-        <span>考试开始后才可答题，交卷后需要等待考试结束才可查看试题</span>
+        <span>训练过程中不会保存进度，一旦退出需要重新答题</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">知道了</el-button>
         </span>
@@ -110,27 +110,18 @@
           this.$message({type:'error', message: '没有报名无法查看试卷!'});
           return
         }
-        if (this.examData.permission) {
+        if (this.practiceData.permission) {
           this.$prompt('请输入密码', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               inputErrorMessage: '密码不正确'
             }).then(({ value }) => {
-              console.log(this.examData.password)
-              if (value == this.examData.password) {
+              if (value == this.practiceData.password) {
                 this.$message({
                   type: 'success',
                   message: '密码正确'
                 });
-                this.$store.dispatch('getUserInfo').then(res=>{
-                  this.uid = this.$store.state.user.userinfo.id;
-                  let user_id = this.uid;
-                  let exam_id = id;
-                    this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
-                      this.$router.push({path:"/answer",query:{id: id}})
-                    })
-                  })
-               
+                this.$router.push({path:'/practiceAnswer',query:{id:id}})
               }   
             }).catch(() => {
               this.$message({
@@ -139,14 +130,7 @@
             });       
           });
         } else {
-          this.$store.dispatch('getUserInfo').then(res=>{
-            this.uid = this.$store.state.user.userinfo.id;
-            let user_id = this.uid;
-            let exam_id = id;
-            this.$store.dispatch('startExam', {user_id, exam_id}).then(res=>{
-              this.$router.push({path:"/answer",query:{id: id}})
-            })
-          })
+          this.$router.push({path:'/practiceAnswer',query:{id:id}})
         }
       },
       toExam() {

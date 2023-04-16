@@ -1,9 +1,6 @@
 package com.kaka.controller;
 
-import com.kaka.entity.MyPractice;
-import com.kaka.entity.MyPracticeFilter;
-import com.kaka.entity.Practice;
-import com.kaka.entity.PracticeFilter;
+import com.kaka.entity.*;
 import com.kaka.service.PracticeService;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +23,15 @@ public class PracticeController {
     ResponseResult addPractice(@RequestBody Practice practice) {
         Long id = practiceService.addPractice(practice);
         MyPractice myPractice = new MyPractice();
+        myPractice.setUser_id(practice.getUser_id());
         myPractice.setPractice_id(id);
-        myPractice.setUser_id(practice.getId());
         practiceService.registerPractice(myPractice);
         practice.setId(id);
-        return practiceService.generateProblems(practice,id);
+        ResponseResult ans = practiceService.generateProblems(practice,id);
+        if (ans.getCode() == 400) {
+            practiceService.deletePractice(myPractice.getPractice_id());
+        }
+        return ans;
     }
 
     @RequestMapping(value = "/getMyPractice", method = RequestMethod.POST)
@@ -78,5 +79,27 @@ public class PracticeController {
             return new ResponseResult(200, "未报名!", 0);
         else
             return new ResponseResult(200, "已报名!", 1);
+    }
+
+    @RequestMapping(value="/getPaperInfoByPracticeId", method = RequestMethod.POST)
+    ResponseResult getPaperInfoByPracticeId(@RequestBody Practice practice) {
+        List<Problem> problems = practiceService.getProblemByPracticeId(practice.getId());
+        Practice practiceInfo = practiceService.getPracticeInfo(practice.getId());
+        PaperBean paperBean = new PaperBean();
+        paperBean.setPractice(practiceInfo);
+        paperBean.setProblems(problems);
+        return new ResponseResult(200, "获取成功!", paperBean);
+    }
+
+    @RequestMapping(value="/addPracticeResult", method = RequestMethod.POST)
+    ResponseResult addPracticeResult(@RequestBody ScoreResult scoreResult) {
+        practiceService.addPracticeResult(scoreResult);
+        return new ResponseResult(200, "加入成功!");
+    }
+
+    @RequestMapping(value="/deletePractice", method = RequestMethod.POST)
+    ResponseResult deletePractice(@RequestBody Practice practice) {
+        practiceService.deletePractice(practice.getId());
+        return new ResponseResult(200, "删除成功!");
     }
 }

@@ -26,4 +26,12 @@ public interface PracticeMapper {
     public MyPractice getRegisterState(MyPractice myPractice);
 
     public void addPracticeNumber(Long id);
+
+    public List<Problem> getProblemByPracticeId(Long id);
+
+    void addPracticeResult(ScoreResult scoreResult);
+
+    void deletePracticeProblem(Long id);
+
+    void deletePractice(Long id);
 }

@@ -68,7 +68,7 @@ public class PaperServiceImpl implements PaperService {
         int count = 0;
         while (count < exam.getSingleNum()) {
             int index = random.nextInt(singleList.size());
-            if (!chosenIndex.contains(index)) {
+            if (!chosenIndex.contains((long)index)) {
                 chosenIndex.add((long)index);
                 count++;
                 ProblemToPaper problemToPaper = new ProblemToPaper();
@@ -81,7 +81,7 @@ public class PaperServiceImpl implements PaperService {
         chosenIndex.clear();
         while (count < exam.getMultipleNum()) {
             int index = random.nextInt(multipleList.size());
-            if (!chosenIndex.contains(index)) {
+            if (!chosenIndex.contains((long)index)) {
                 chosenIndex.add((long)index);
                 count++;
                 ProblemToPaper problemToPaper = new ProblemToPaper();
@@ -94,7 +94,7 @@ public class PaperServiceImpl implements PaperService {
         count = 0;
         while (count < exam.getTfNum()) {
             int index = random.nextInt(tfList.size());
-            if (!chosenIndex.contains(index)) {
+            if (!chosenIndex.contains((long)index)) {
                 chosenIndex.add((long)index);
                 count++;
                 ProblemToPaper problemToPaper = new ProblemToPaper();

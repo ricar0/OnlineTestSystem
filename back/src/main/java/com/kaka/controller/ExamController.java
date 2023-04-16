@@ -80,8 +80,6 @@ public class ExamController {
 
     @RequestMapping(value="/startExam", method = RequestMethod.POST)
     public ResponseResult startExam(@RequestBody MyExam myExam) {
-        ExamCookie examCookie = redisCache.getCacheObject("examcookies:"+myExam.getUser_id()+myExam.getExam_id());
-        System.out.println(examCookie);
         MyExam tmp = examMapper.getExamInfo(myExam);
         if (!Objects.isNull(tmp.getEnd_time())) {
             return new ResponseResult(400, "考试已结束!");

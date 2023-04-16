@@ -20,4 +20,6 @@ public class Practice {
     private int singleNum;
     private int multipleNum;
     private int tfNum;
+
+    private Long user_id;
 }

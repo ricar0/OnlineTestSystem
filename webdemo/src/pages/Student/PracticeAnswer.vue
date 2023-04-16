@@ -3,9 +3,9 @@
        <div class="top">
          <ul class="item">
            <li><i class="el-icon-time" ref="toggle" @click="slider_flag = !slider_flag"></i></li>
-           <li>{{examData.source}}</li>
+           <li>{{practiceData.source}}</li>
            <li @click="flag = !flag">
-             <p style="margin:0;"><i class="el-icon-user"></i> {{userInfo.name}}</p>
+             <p style="margin:0;"><i class="el-icon-user"></i> {{userInfo.username}}</p>
            </li>
          </ul>
        </div>
@@ -81,7 +81,7 @@
                     </li>
                   </ul>
                 </div>
-                <div v-if="!isFinished" class="final" @click="commit()">结束考试</div>
+                <div v-if="!isFinished" class="final" @click="commit()">提交答案</div>
                 <div v-if="isFinished" class="final" @click="show()">查看成绩</div>
               </div>
             </div>
@@ -92,7 +92,7 @@
             <div class="title">
               <span style="margin-left:1%;font-size:17px;font-weight:700;">{{title}}</span>
               <i class="iconfont icon-right auto-right"></i>
-              <span v-if="!isFinished">全卷共{{topicCount[0]+topicCount[1]+topicCount[2]}}题 &nbsp;&nbsp;<i class="el-icon-time"></i>倒计时：<b>{{ time }}</b></span>
+              <span v-if="!isFinished">全卷共{{topicCount[0]+topicCount[1]+topicCount[2]}}题 &nbsp;&nbsp;<i class="el-icon-time"></i>倒计时：<b>{{time.minute}}分 {{ time.seconds }}秒</b></span>
               <span v-if="isFinished">全卷共{{topicCount[0]+topicCount[1]+topicCount[2]}}题 &nbsp;&nbsp;<el-tag type="danger">考试已结束</el-tag></span>
             </div>
             <div class="content">
@@ -172,22 +172,58 @@
                 <li @click="previous()"><i class="el-icon-arrow-left"></i><span>上一题</span></li>
                 <li @click="mark()"><i class="el-icon-view"></i><span>标记</span></li>
                 <li @click="next()"><span>下一题</span><i class="el-icon-arrow-right"></i></li>
-                <li @click="save()"><el-button type="primary">保存进度</el-button></li>
+                <li @click="refresh()"><el-button type="primary">重新开始</el-button></li>
               </ul>
             </div>
           </div>
           </transition>
+          <el-dialog
+            title="练习结果"
+            :visible.sync="dialogVisible"
+            width="40%">
+            <div style="width: 50%; margin: 0 auto;">
+              <el-form :label-position="left" label-width="100px;">
+                <el-form-item label="练习科目">
+                  <el-tag>{{practiceData.source}}</el-tag>
+                </el-form-item>
+                <el-form-item label="开始时间">
+                 <label>{{start_time}}</label>
+                </el-form-item>
+                <el-form-item label="结束时间">
+                  <label>{{end_time}}</label>
+                </el-form-item>
+                <el-form-item label="总正确率">
+                  <el-progress :text-inside="true" :stroke-width="26" :percentage="acceptRate"></el-progress>
+                </el-form-item>
+                <el-form-item v-if="topicCount[0]!=0" label="单选题准确率">
+                  <el-progress :text-inside="true" :stroke-width="26" :percentage="(singleAccept*100/topicCount[0]).toFixed(2)"></el-progress>
+                </el-form-item>
+                <el-form-item v-if="topicCount[1]!=0" label="多选题准确率">
+                  <el-progress :text-inside="true" :stroke-width="26" :percentage="(multipleAccept*100/topicCount[1]).toFixed(2)"></el-progress>
+                </el-form-item>
+                <el-form-item v-if="topicCount[2]!=0" label="判断题准确率">
+                  <el-progress :text-inside="true" :stroke-width="26" :percentage="(judgeAccept*100/topicCount[2]).toFixed(2)"></el-progress>
+                </el-form-item>
+              </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="close()">确 定</el-button>
+            </span>
+        </el-dialog>
        </div> 
     </div>
   </template>
   
   <script>
   import {mapState} from 'vuex'
-  import {timediff2} from '@/utils/time.js'
   export default {
     data() {
       return {
-        time: '',
+        dialogVisible: false,
+        time: {
+          minute: '',
+          seconds: ''
+        },
         answerScore: 0, //答题总分数
         bg_flag: false, //已答标识符,已答改变背景色
         isFillClick: false, //选择题是否点击标识符
@@ -197,10 +233,10 @@
         title: "请选择正确的选项",
         index: 0, //全局index
         userInfo: { //用户信息
-          name: null,
+          username: null,
           id: null,
         },
-        examData: { //考试信息
+        practiceData: { //考试信息
         },
         topic: [[],[],[]],
         topicCount:[0,0,0],
@@ -220,14 +256,25 @@
         judgeCheck: [],
         multipleCheck: [],
         singleCheck: [],
+        start_time: '',
+        end_time: '',
+        singleAccept: 0,
+        multipleAccept: 0,
+        judgeAccept: 0,
+        acceptRate: 0
       }
     },
     created() {
-      this.getCookies()
+      this.getInfo()
       this.getExamData()
-      this.showTime()
     },
     methods: {
+      refresh() {
+        location.reload(0)
+      },
+      close() {
+        this.dialogVisible = false
+      },
       Check1(ans1, ans2) {
         if (ans2 == 1 && ans1 == 'A') return true
         if (ans2 == 2 && ans1 == 'B') return true
@@ -247,11 +294,7 @@
         return ans1 == s;
       },
       show() { 
-        let id = this.$route.query.id;
-        this.$router.push({
-          path: '/answerScore',
-          query: {id:id}
-        })
+        this.dialogVisible = true
       },
       save() {
         if (this.isFinished) {
@@ -267,110 +310,49 @@
           });
         }
       },
-      setCookies() {
-        let user_id = this.userInfo.id;
-        let exam_id = this.$route.query.id
-        let singleNum = this.topicCount[0]
-        let multipleNum = this.topicCount[1]
-        let tfNum = this.topicCount[2]
-        const {singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag} = this
-        this.$store.dispatch('setExamCookies', {singleNum,multipleNum,tfNum,user_id, exam_id, singleAnswer, multipleAnswer, judgeAnswer, singleisClick, singleisMark, multipleisClick, multipleisMark, judgeisClick, judgeisMark, bg_flag})
-      },
-      getCookies() {  //获取用户信息信息和答题信息
-        this.$store.dispatch('getUserInfo').then(res=>{
-          this.userInfo.name = this.$store.state.user.userinfo.username;
-          this.userInfo.id = this.$store.state.user.userinfo.id;
-          let user_id = this.$store.state.user.userinfo.id;
-          let exam_id = this.$route.query.id
-          //在每次刷新后先同步信息，再上传
-          this.$store.dispatch('getExamCookies', {user_id, exam_id}).then(res=>{
-            let data = this.$store.state.exam.examcookies;
-            // 选项
-            this.singleAnswer = data.singleAnswer
-            this.multipleAnswer = data.multipleAnswer
-            this.judgeAnswer = data.judgeAnswer
-  
-            // 点击
-            this.singleisClick = data.singleisClick
-            this.multipleisClick = data.multipleisClick
-            this.judgeisClick = data.judgeisClick
-            // 标记
-            this.singleisMark = data.singleisMark
-            this.multipleisMark = data.multipleisMark
-            this.judgeisMark = data.judgeisMark
-            this.bg_flag = data.bg_flag
-            this.setCookies();
-          });
-        })
-      },
-      getTime(date) { //日期格式化
-        let year = date.getFullYear()
-        let month= date.getMonth()+ 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        let day=date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        let hours=date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-        let minutes=date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-        let seconds=date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-        // 拼接
-        return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
-      },
-      calcuScore() { //计算答题分数
+      submit() { //计算答题分数
         
       },
+      getInfo() {
+        this.$store.dispatch('getUserInfo').then(res=>{
+          this.userInfo = this.$store.state.user.userinfo
+        })
+      },
       getExamData() { //获取当前试卷所有信息
-        let date = new Date();
-        this.startTime = this.getTime(date)
-        let exam_id = this.$route.query.id //获取路由传递过来的试卷编号
-        this.$store.dispatch('getPaperInfoById', {id:exam_id}).then(res => {  
-          this.examData = this.$store.state.exam.paperinfo.exam //获取考试详情
-          let data = this.$store.state.exam.paperinfo.problems
-          this.topicCount[0] = this.examData.singleNum;
-          this.topicCount[1] = this.examData.multipleNum;
-          this.topicCount[2] = this.examData.tfNum;
+        this.start_time = new Date().format('yyyy-MM-dd hh:mm:ss')
+        let id = this.$route.query.id //获取路由传递过来的试卷编号
+        this.$store.dispatch('getPaperInfoByPracticeId', {id}).then(res => {  
+          this.practiceData = this.$store.state.practice.paperinfo.practice //获取考试详情
+          let data = this.$store.state.practice.paperinfo.problems
+          console.log(this.practiceData)
+          this.topicCount[0] = this.practiceData.singleNum;
+          this.topicCount[1] = this.practiceData.multipleNum;
+          this.topicCount[2] = this.practiceData.tfNum;
           let problem = data[this.index];
           this.showAnswer[0] = problem.a;
           this.showAnswer[1] = problem.b;
           this.showAnswer[2] = problem.c;
           this.showAnswer[3] = problem.d;
           this.showQuestion = problem.description;
-          for (let i = 0; i < this.examData.singleNum; i++) {
+          this.time.minute = this.practiceData.totalTime
+          this.time.seconds = 0
+          this.showTime()
+          for (let i = 0; i < this.practiceData.singleNum; i++) {
             this.topic[0].push(data[i]);
+            this.singleAnswer.push(null)
+            this.singleCheck.push(false)
           }
-          for (let i = 0; i < this.examData.multipleNum; i++) {
-            this.topic[1].push(data[i+this.examData.singleNum]);
+          for (let i = 0; i < this.practiceData.multipleNum; i++) {
+            this.topic[1].push(data[i+this.practiceData.singleNum]);
+            this.multipleAnswer.push([])
+            this.multipleCheck.push(false)
           }
-          for (let i = 0; i < this.examData.tfNum; i++) {
-            this.topic[2].push(data[i+this.examData.singleNum+this.examData.multipleNum]);
+          for (let i = 0; i < this.practiceData.tfNum; i++) {
+            this.topic[2].push(data[i+this.practiceData.singleNum+this.practiceData.multipleNum]);
+            this.judgeAnswer.push(null)
+            this.judgeCheck.push(false)
           }
-          let exam_id = this.$route.query.id
-          this.$store.dispatch('getUserInfo').then(res=>{
-            let user_id = this.$store.state.user.userinfo.id
-            this.$store.dispatch('startExam', {user_id,exam_id}).then(res=>{
-            if (res == 'over') {
-              this.isFinished = true;
-              for (let i = 0; i < this.examData.singleNum; i++) {
-                if (this.Check1(this.topic[0][i].accept, this.singleAnswer[i])) {
-                  this.singleCheck[i] = true
-                } else {
-                  this.singleCheck[i] = false
-                }
-              }
-              for (let i = 0; i < this.examData.multipleNum; i++) {
-                if (this.Check2(this.topic[1][i].accept, this.multipleAnswer[i])) {
-                  this.multipleCheck[i] = true
-                } else {
-                  this.multipleCheck[i] = false
-                }
-              }
-              for (let i = 0; i < this.examData.tfNum; i++) {
-                if (this.Check1(this.topic[2][i].accept, this.judgeAnswer[i])) {
-                  this.judgeCheck[i] = true
-                } else {
-                  this.judgeCheck[i] = false
-                }
-              }
-            } 
-          })
-          }) 
+          
         })  
       },
       single(index) { //单选题
@@ -497,24 +479,48 @@
             this.judgeisMark[this.index] ^= 1 //判断题标记
         }
       },
+      calcAcceptRate() {
+        for (let i = 0; i < this.topicCount[0]; i++) {
+          if (this.Check1(this.topic[0][i].accept, this.singleAnswer[i])) {
+            this.singleAccept += 1
+            this.singleCheck[i] = true
+          }
+        }
+        for (let i = 0; i < this.topicCount[1]; i++) {
+          if (this.Check2(this.topic[1][i].accept, this.multipleAnswer[i])) {
+            this.multipleAccept += 1
+            this.multipleCheck[i] = true
+          }
+        }
+        for (let i = 0; i < this.topicCount[2]; i++) {
+          if (this.Check1(this.topic[2][i].accept, this.judgeAnswer[i])) {
+            this.judgeAccept += 1
+            this.judgeCheck[i] = true
+          }
+        }
+      },
       commit() { //答案提交计算分数
-        
         if(this.time != 0) {
           this.$confirm("考试结束时间未到,是否提前交卷","友情提示",{
             confirmButtonText: '立即交卷',
             cancelButtonText: '再检查一下',
             type: 'warning'
           }).then(() => {
-            console.log("交卷")
-            this.setCookies();
-            let date = new Date()
-            this.endTime = this.getTime(date)
-            let answerDate = this.endTime.substr(0,10)
+            this.end_time = new Date().format('yyyy-MM-dd hh:mm:ss')
+            let end_time = this.end_time
             //提交成绩信息
-            let user_id = this.userInfo.id;
-            let exam_id = this.$route.query.id;
-            this.$store.dispatch('endExam', {user_id, exam_id}).then(res=>{
-              this.$router.push({path:'/answerScore', query: {id:exam_id}})
+            let user_id = this.userInfo.id
+            let practice_id = this.$route.query.id
+            this.calcAcceptRate()
+            this.acceptRate = (this.singleAccept+this.multipleAccept+this.judgeAccept)*100/(this.topicCount[0]+this.topicCount[1]+this.topicCount[2])
+            this.acceptRate = this.acceptRate.toFixed(2)
+            let acceptRate = this.acceptRate
+            this.$store.dispatch('addPracticeResult', {user_id,practice_id,end_time,acceptRate}).then(res=>{
+              if (res == 'ok') {
+                this.$message({type:'success', message: '提交成功!'})
+                this.dialogVisible = true
+                this.isFinished = true
+              }
             })
           }).catch(() => {
             console.log("继续答题")
@@ -523,12 +529,13 @@
       },
       showTime() { //倒计时
         setInterval(() => {
-          let nowTime = new Date().format('yyyy-MM-dd hh:mm:ss')
-          if (nowTime < this.examData.end_time) {
-            this.time = timediff2(nowTime, this.examData.end_time)
-          } else {
-            this.isFinished = true
+          if (this.time.seconds == 0 && this.time.minute == 0) {
+            this.commit()
+            this.$message({type:'warning', message:'训练时间到，已自动提交!'})
+            return
           }
+          this.time.seconds --
+          if (this.time.seconds < 0) this.time.minute --, this.time.seconds = 59
         },1000)
       }
     },
@@ -699,7 +706,7 @@
     text-align: center;
    background-color: rgb(39, 118, 223);
     width: 240px;
-    margin: 20px 0px 20px 10px;
+    margin: 20px 0px 20px 0px;
     border-radius: 4px;
     height: 30px;
     line-height: 30px;

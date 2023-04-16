@@ -122,25 +122,16 @@
                         v-if="showSource"
                         prop="source"
                         label="学科"
-                        min-width="15%">
+                        min-width="20%">
                         <template slot-scope="scope">
                             <el-tag size="small">{{scope.row.source}}</el-tag>
                         </template>
                     </el-table-column>
                     <el-table-column
-                        prop="number"
                         label="参与人数"
-                        min-width="10%">
-                    </el-table-column>
-                    <el-table-column
-                        prop="rate"
-                        label="平均分"
                         min-width="20%">
                         <template slot-scope="scope">
-                            <el-progress v-if="scope.row.per < 30" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="exception"></el-progress>
-                            <el-progress v-if="scope.row.per < 50 && scope.row.per >= 30" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="warning"></el-progress>
-                            <el-progress v-if="scope.row.per < 70 && scope.row.per >= 50" :text-inside="true" :stroke-width="20" :percentage="scope.row.per"></el-progress>
-                            <el-progress v-if="scope.row.per >= 70" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="success"></el-progress>
+                            <i class="el-icon-user-solid"></i> x{{ scope.row.number }}
                         </template>
                     </el-table-column>
                 </el-table>
@@ -214,7 +205,7 @@
         </div>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addPractice()">确 定</el-button>
+            <el-button type="primary" @click="AddPractice()">确 定</el-button>
         </span>
     </el-dialog>
   </div>
@@ -282,13 +273,12 @@ export default {
         handleClose() {
             this.dialogVisible = false
         },
-        addPractice() {
-            
+        AddPractice() {
             if (this.practice.description == '' || this.practice.difficulty == null || this.practice.source == '' || (this.practice.permission==1&&this.practice.password=='')) {
                 this.$message({type:'error', message: '请完整填写信息'})
                 return;
             }
-            this.practice.id = this.$store.state.user.userinfo.id
+            this.practice.user_id = this.$store.state.user.userinfo.id
             this.practice.author = this.$store.state.user.userinfo.username
             this.$store.dispatch('addPractice', this.practice).then(res=>{
                 if (res == 'ok') {

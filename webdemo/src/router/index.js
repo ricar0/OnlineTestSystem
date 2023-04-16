@@ -32,6 +32,7 @@ import AddTeacher from '@/pages/Admin/AddTeacher'
 import ApplicationForTeacher from '@/pages/Common/ApplicationForTeacher'
 import PracticeAnswer from '@/pages/Student/PracticeAnswer'
 import PracticeMsg from '@/pages/Student/PracticeMsg'
+import PracticeSearch from '@/pages/Common/PracticeSearch'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -186,6 +187,11 @@ export default new VueRouter ({
         {
             path: "/practiceMsg",
             component: PracticeMsg,
+            mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/practiceSearch",
+            component: PracticeSearch,
             mate: {requiresAuth: true, show:true}
         },
     ]

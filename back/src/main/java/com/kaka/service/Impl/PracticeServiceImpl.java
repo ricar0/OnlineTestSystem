@@ -84,7 +84,7 @@ public class PracticeServiceImpl implements PracticeService {
         int count = 0;
         while (count < practice.getSingleNum()) {
             int index = random.nextInt(singleList.size());
-            if (!chosenIndex.contains(index)) {
+            if (!chosenIndex.contains((long)index)) {
                 chosenIndex.add((long)index);
                 count++;
                 ProblemToPaper problemToPaper = new ProblemToPaper();
@@ -97,7 +97,7 @@ public class PracticeServiceImpl implements PracticeService {
         chosenIndex.clear();
         while (count < practice.getMultipleNum()) {
             int index = random.nextInt(multipleList.size());
-            if (!chosenIndex.contains(index)) {
+            if (!chosenIndex.contains((long)index)) {
                 chosenIndex.add((long)index);
                 count++;
                 ProblemToPaper problemToPaper = new ProblemToPaper();
@@ -110,7 +110,7 @@ public class PracticeServiceImpl implements PracticeService {
         count = 0;
         while (count < practice.getTfNum()) {
             int index = random.nextInt(tfList.size());
-            if (!chosenIndex.contains(index)) {
+            if (!chosenIndex.contains((long)index)) {
                 chosenIndex.add((long)index);
                 count++;
                 ProblemToPaper problemToPaper = new ProblemToPaper();
@@ -136,5 +136,21 @@ public class PracticeServiceImpl implements PracticeService {
     @Override
     public MyPractice getRegisterState(MyPractice myPractice) {
         return practiceMapper.getRegisterState(myPractice);
+    }
+
+    @Override
+    public List<Problem> getProblemByPracticeId(Long id) {
+        return practiceMapper.getProblemByPracticeId(id);
+    }
+
+    @Override
+    public void addPracticeResult(ScoreResult scoreResult) {
+        practiceMapper.addPracticeResult(scoreResult);
+    }
+
+    @Override
+    public void deletePractice(Long id) {
+        practiceMapper.deletePracticeProblem(id);
+        practiceMapper.deletePractice(id);
     }
 }

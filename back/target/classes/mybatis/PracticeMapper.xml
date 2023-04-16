@@ -63,4 +63,20 @@
     <update id="addPracticeNumber" parameterType="Long">
         update practice set number = number + 1 where id = #{id};
     </update>
+
+    <select id="getProblemByPracticeId" parameterType="Long" resultType="com.kaka.entity.Problem">
+        select * from problems_set where id in(select problem_id from practice_problem where practice_id = #{id});
+    </select>
+
+    <insert id="addPracticeResult" parameterType="com.kaka.entity.ScoreResult">
+        insert into practice_result value(#{practice_id}, #{user_id}, #{end_time}, #{acceptRate});
+    </insert>
+
+    <delete id="deletePracticeProblem" parameterType="Long">
+        delete from practice_problem where practice_id = #{id};
+    </delete>
+
+    <delete id="deletePractice" parameterType="Long">
+        delete from practice where id = #{id};
+    </delete>
 </mapper>

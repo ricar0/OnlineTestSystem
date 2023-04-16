@@ -699,9 +699,9 @@ li {
   cursor: pointer;
   display: inline-block;
   text-align: center;
- background-color: rgb(39, 118, 223);
+  background-color: rgb(39, 118, 223);
   width: 240px;
-  margin: 20px 0px 20px 10px;
+  margin: 20px 0px 20px 0px;
   border-radius: 4px;
   height: 30px;
   line-height: 30px;
@@ -716,7 +716,7 @@ li {
   border-radius: 4px;
   background-color: #fff;
   height: 600px;
-  overflow: auto;
+  overflow-y: scroll;
 }
 .l-bottom .item p {
   margin-bottom: 15px;

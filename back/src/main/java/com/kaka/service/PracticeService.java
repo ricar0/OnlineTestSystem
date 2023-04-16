@@ -1,9 +1,6 @@
 package com.kaka.service;
 
-import com.kaka.entity.MyPractice;
-import com.kaka.entity.MyPracticeFilter;
-import com.kaka.entity.Practice;
-import com.kaka.entity.PracticeFilter;
+import com.kaka.entity.*;
 import com.kaka.utils.ResponseResult;
 
 import java.util.List;
@@ -24,4 +21,10 @@ public interface PracticeService {
     public void registerPractice(MyPractice myPractice);
 
     public MyPractice getRegisterState(MyPractice myPractice);
+
+    public List<Problem> getProblemByPracticeId(Long id);
+
+    void addPracticeResult(ScoreResult scoreResult);
+
+    void deletePractice(Long id);
 }

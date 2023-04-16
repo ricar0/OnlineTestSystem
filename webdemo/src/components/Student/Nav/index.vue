@@ -13,7 +13,9 @@ export default {
             items: [
                 {value: '个人资料', selected: false},
                 {value: '账号信息', selected: false},
-                {value: '教师申请', selected: false}
+                {value: '教师申请', selected: false},
+                {value: '训练查询', selected: false},
+                {value: '考试查询', selected: false},
             ],
         }
     },
