@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/practice/getAllNumber",
                         "/api/exam/getExamByFilter",
                         "/api/exam/getAllNumber3",
-                        "/api/email/sendEmail"
+                        "/api/email/**"
                 ).permitAll()
                 //除上面外所有请求都需要鉴权认证
                 .anyRequest().authenticated();

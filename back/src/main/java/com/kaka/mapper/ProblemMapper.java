@@ -23,4 +23,6 @@ public interface ProblemMapper {
     public void wrongAnswer(Long id);
 
     public void addProblem(Problem problem);
+
+    void deleteProblem(Long id);
 }

@@ -42,4 +42,6 @@ public interface UserMapper {
     public List<User> getTeacherAll();
 
     public void updateRole(Long id);
+
+    void updatePasswordByEmail(User user);
 }

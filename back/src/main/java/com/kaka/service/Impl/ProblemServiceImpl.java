@@ -49,4 +49,9 @@ public class ProblemServiceImpl implements ProblemService {
         problemMapper.addProblem(problem);
     }
 
+    @Override
+    public void deleteProblem(Long id) {
+        problemMapper.deleteProblem(id);
+    }
+
 }

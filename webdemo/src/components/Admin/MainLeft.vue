@@ -10,7 +10,7 @@
       :collapse="flag"
       background-color="#124280"  
       menu-trigger="click" router>
-      <el-submenu v-for="(item,index) in menu" :index='item.index' :key="index">
+      <el-submenu v-if="item.index!=5 || (item.index==5&&isAdmin)" v-for="(item,index) in menu" :index='item.index' :key="index">
         <template slot="title">
           <div class="left-width">
             <i class="iconfont" :class="item.icon"></i>
@@ -29,15 +29,19 @@
 
 <script>
 import Bus from '@/utils/bus.js'
+import {getRole} from '@/utils/token.js'
 export default {
   name: "mainLeft",
   data() {
     return {
       menu:[],
       flag: false,
+      isAdmin: false,
     }
   },
   mounted() {
+    let role = getRole()
+    if (role == 'admin') this.isAdmin = true
     this.addData()
   },
   watch: {
@@ -68,19 +72,19 @@ export default {
         index: '1',
         title: '考试管理',
         icon: 'el-icon-s-order',
-        content:[{item1:'功能介绍',path:'/introductionExam'},{item2: '考试查询',path: '/searchExam'}, {item3:'添加考试', path:'/addExam'}],
+        content:[{item1: '考试查询',path: '/searchExam'}, {item2:'添加考试', path:'/addExam'}],
       }),
       this.menu.push({
         index: '2',
         title: '题库管理',
         icon: 'el-icon-s-home',
-        content:[{item1:'功能介绍',path:'/introduction'},{item2: '题库查询',path: '/problemSet'}, {item3:'添加题库', path:'/addProblem'}],
+        content:[{item1:'添加科目',path:'/addSubject'},{item2: '题库查询',path: '/problemManage'}, {item3:'添加题库', path:'/addProblem'}],
       }),
       this.menu.push({
         index: '3',
         title: '成绩查询',
         icon: 'el-icon-s-data',
-        content:[{item1: '学生成绩查询',path: '/searchGrades'}, {item2:'成绩分段查询', path:'/searchGradesSection'}],
+        content:[{item1: '学生成绩查询',path: '/searchStudentGrades'}, {item2:'成绩分段查询', path:'/searchExamGrades'}],
       }),
       this.menu.push({
         index: '4',

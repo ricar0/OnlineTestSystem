@@ -1,21 +1,14 @@
 package com.kaka.controller;
 
-import com.kaka.entity.LoginUser;
 import com.kaka.entity.User;
-import com.kaka.service.LoginService;
 import com.kaka.service.UserService;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.Objects;
 
@@ -98,4 +91,13 @@ public class UserController {
         userService.updatePassword(user);
         return new ResponseResult(200, "修改成功!");
     }
+
+//    @RequestMapping(value="/resetPassword", method = RequestMethod.POST)
+//    public ResponseResult resetPassword(@RequestBody JSONObject jsonObject) {
+//        String phoneNumber = jsonObject.getString("phone");
+//        String email = jsonObject.getString("email");
+//        if (Objects.isNull(phoneNumber)) {
+//
+//        }
+//    }
 }

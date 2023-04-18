@@ -91,4 +91,17 @@
     <update id="addExamNumber" parameterType="Long">
         update exam set number = number + 1 where id = #{id};
     </update>
+
+    <select id="getRecentExamResult" parameterType="Long" resultType="com.kaka.entity.ScoreResult">
+        select * from myexam where user_id = #{id} order by end_time desc
+            limit 0, 10;
+    </select>
+
+    <select id="getExamScoreResult" parameterType="Long" resultType="com.kaka.entity.MyExam">
+        select * from myexam where exam_id = #{id};
+    </select>
+
+    <select id="getRecentExamScore" resultType="com.kaka.entity.ScoreResult">
+        select * from myexam order by end_time desc limit 0, 10;
+    </select>
 </mapper>

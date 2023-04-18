@@ -11,15 +11,15 @@
             <el-form  label-width="80px">
               <i class="el-icon-user"></i>
                 <el-input style="width:60%;" v-model="username" placeholder="请输入用户名"></el-input>
-                <br></br>
+                <br><br>
               <i class="el-icon-lock"></i>
                 <el-input style="width:60%;" v-model="password" placeholder="请输入密码" type='password'></el-input>
               <div class="submit">
                 <el-button style="width:65%; height: 10%;" type="primary" class="row-login" @click="login()">登录</el-button>
               </div>
               <div class="options">
-                <p class="find" style="width: 30%; left:15%; top:0; position: relative;"><a href="javascript:;">忘记密码?</a></p>
-                <div class="register" style="width: 50%; left:65%; top:100%; position:absolute;">
+                <p class="find" style="width: 30%; left:15%; top:0; position: relative;"><a href="javascript:;"><router-link to="/resetPassword">忘记密码?</router-link></a></p>
+                <div class="register" style="width: 50%; left:60%; top:100%; position:absolute;">
                   <span>没有账号?</span>
                   <span><router-link to="/register">去注册</router-link></span>
                 </div>
@@ -35,6 +35,7 @@
 
 <script>
 import Header from '@/components/Student/Header'
+import {setRole} from '@/utils/token.js'
 export default {
     components: {
       Header
@@ -42,7 +43,8 @@ export default {
     data() {
         return {
             username:'',
-            password:''
+            password:'',
+            state: 1
         }
     },
     methods: {
@@ -52,7 +54,10 @@ export default {
             if (res != 'ok') {
               this.$message.error("用户名或密码不正确！");
             } else {
-              this.$router.push("/myExam");
+              this.$store.dispatch('getUserInfo').then(res=>{
+                setRole(this.$store.state.user.userinfo.role)
+                this.$router.push("/problemSet");
+              })
             }
           });
         }
@@ -86,7 +91,8 @@ export default {
   margin-right: 3%;
 }
 .bottom .left {
-  background-color: dodgerblue;
+  background-image: url('@/assets/testlogo1.jpg');
+  -moz-background-size:100% 100%; background-size:100% 100%;
   height: 100%;
   width: 50%;
   top: 0;

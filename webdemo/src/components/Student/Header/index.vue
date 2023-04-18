@@ -11,9 +11,10 @@
           <li :class="{active:selected[3]}"><router-link to="/wrongbook"><i class="el-icon-collection"></i> 错题本</router-link></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
             <router-link v-if="!isLogin" to="/login">&nbsp;&nbsp;&nbsp;登录/注册</router-link>
-            <a v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>
+            <a v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;{{user.username}}</a>
             <div class="msg" v-if="flag && isLogin">
               <p @click="userinfo()">个人信息</p>
+              <p @click="goToManageMain()" v-if="isTeacher">管理界面</p>
               <p class="exit" @click="logout()">退出登录</p>
             </div>
           </li>
@@ -31,7 +32,8 @@ export default {
             user: {},
             flag: false,
             isLogin: false,
-            selected: [false,false,false,false]
+            selected: [false,false,false,false],
+            isTeacher: false,
         }
     },
     created() {
@@ -42,11 +44,23 @@ export default {
       this.$store.dispatch('getUserInfo').then(res=>{
         if (this.$store.state.user.token) {
           this.isLogin = true;
-          this.user = this.$store.state.user.userinfo;
+          this.$store.dispatch('getUserInfoById', this.$store.state.user.userinfo.id).then(res=>{
+            this.user = this.$store.state.user.userinfo;
+            if (this.user.role == 'student') {
+            } else if (this.user.role == 'teacher') {
+              this.isTeacher = true
+            } else {
+              this.isTeacher = true
+            }
+          })
+          
         }
       })
     },
     methods: {
+      goToManageMain(){
+        this.$router.push('/adminTable')
+      },
       userinfo() {
         this.$router.push('/userInfo')
       },

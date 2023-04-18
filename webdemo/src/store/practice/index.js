@@ -6,7 +6,8 @@ reqGetRegisterState2,
 reqRegisterPractice,
 reqGetProblemByPracticeId,
 reqGetPaperInfoByPracticeId,
-reqAddPracticeResult} from "@/api";
+reqAddPracticeResult,
+reqGetRecentPracticeResult} from "@/api";
 
 const state = {
     mypractice: [],
@@ -14,7 +15,8 @@ const state = {
     count: 0,
     practiceInfo: '',
     sta: '',
-    paperinfo: ''
+    paperinfo: '',
+    result: ''
 }
 
 const mutations = {
@@ -41,6 +43,9 @@ const mutations = {
     },
     GETPROBLEMBYPRACTICEID(state, paperinfo) {
         state.paperinfo = paperinfo
+    },
+    GETRECENTPRACTICERESULT(state, result) {
+        state.result = result
     }
 }
 
@@ -144,6 +149,15 @@ const actions = {
     },
     async addPracticeResult({commit}, obj) {
         let {data} = await reqAddPracticeResult(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getRecentPracticeResult({commit}, obj) {
+        let {data} = await reqGetRecentPracticeResult(obj);
+        commit("GETRECENTPRACTICERESULT", data.data)
         if (data.code == 200) {
             return "ok";
         } else {

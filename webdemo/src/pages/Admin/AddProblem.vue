@@ -431,7 +431,7 @@
       this.$store.dispatch('getSubjectAll').then(res=>{
         let subject = this.$store.state.subject.subject
         for (let i = 0; i < subject.length; i++) {
-          this.source.push({value: subject[i].source, label: subject[i].source})
+          this.source.push({value: subject[i], label: subject[i].source})
         }
       })
     },

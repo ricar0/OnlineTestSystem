@@ -1,34 +1,46 @@
 <template>
   <div class="all">
-    <p style="margin:0 ; font-size:25px;">题库管理</p>
+    <p style="margin:0; font-size:25px;">题库管理</p>
     <el-divider></el-divider>
-    <el-table ref="filterTable" :data="pagination.records" @filter-change="filterChange" border>
-      <el-table-column fixed="left" prop="source" label="学科" width="100%"
-       :filters="[{text: '思想道德基础和法律修养', value: '思想道德基础和法律修养'}, {text: '数据结构', value: '数据结构'}, {text: '计算机网络', value: '计算机网络'}]"
-       column-key="source"
-      ></el-table-column>
-      <el-table-column showOverflowTooltip: true prop="label" label="题型" width="70%"
-      :filters="[{text: '单选题', value: '单选题'}, {text: '多选题', value: '多选题'}, {text: '判断题', value: '判断题'}]"
-       column-key="label"
-      ></el-table-column>
-      <el-table-column prop="description" label="题目" width="200"></el-table-column>
-      <el-table-column prop="accept" label="答案" width="50%"></el-table-column>
-      <el-table-column prop="difficulty" label="难度" width="80"
-       :filters="[{text: '简单', value: '简单'}, {text: '中等', value: '中等'}, {text: '困难', value: '困难'}]"
-       column-key="difficulty"
-      ></el-table-column>
-      <el-table-column showOverflowTooltip: true prop="a" label="A" width="120"></el-table-column>
-      <el-table-column showOverflowTooltip: true prop="b" label="B" width="120"></el-table-column>
-      <el-table-column showOverflowTooltip: true prop="c" label="C" width="120"></el-table-column>
-      <el-table-column showOverflowTooltip: true prop="d" label="C" width="120"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+    <el-table style="width: 100%;" 
+      :header-cell-style="{'text-align':'center'}"
+      :cell-style="{'text-align':'center'}"
+      :data="pagination.records" border>
+      <el-table-column fixed="left" prop="id" label="id" width="100"></el-table-column>
+      <el-table-column prop="description" label="题面" width="400"></el-table-column>
+      <el-table-column prop="source" label="学科" width="200"></el-table-column>
+      <el-table-column label="题型" width="100">
         <template slot-scope="scope">
-          <el-button @click="checkGrade(scope.row.id)" type="primary" size="small">编辑</el-button>
+            <el-tag v-if="scope.row.label=='single'" size="small">单选题</el-tag>
+            <el-tag v-if="scope.row.label=='multiple'" size="small">多选题</el-tag>
+            <el-tag v-if="scope.row.label=='tf'" size="small">判断题</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="难度" width="100">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.difficulty==1" type="success" size="small">简单</el-tag>
+          <el-tag v-if="scope.row.difficulty==2" type="warning" size="small">中等</el-tag>
+          <el-tag v-if="scope.row.difficulty==3" type="danger" size="small">困难</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="章节" width="100">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.category==1" type="info" size="small">第一章</el-tag>
+          <el-tag v-if="scope.row.category==2" type="info" size="small">第二章</el-tag>
+          <el-tag v-if="scope.row.category==3" type="info" size="small">第三章</el-tag>
+          <el-tag v-if="scope.row.category==4" type="info" size="small">第四章</el-tag>
+          <el-tag v-if="scope.row.category==5" type="info" size="small">第五章</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="totalsubmit" label="提交总数" width="150"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="100">
+        <template slot-scope="scope">
           <el-button @click="deleteById(scope.row.id)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination
+      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="pagination.current"
@@ -56,6 +68,10 @@
             <el-input v-model="form.major"></el-input>
           </el-form-item>
           <el-form-item label="性别">
+             <el-select v-model="form.sex" placeholder="请选择">
+                <el-option :value="sex1"></el-option>
+                <el-option :value="sex2"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="联系方式">
             <el-input v-model="form.phone"></el-input>
@@ -65,6 +81,16 @@
           </el-form-item>
           <el-form-item label="身份证号">
             <el-input v-model="form.idcard"></el-input>
+          </el-form-item>
+          <el-form-item label="年级">
+             <el-select v-model="form.grade" placeholder="请选择">
+                <el-option :value="pick1"></el-option>
+                <el-option :value="pick2"></el-option>
+                <el-option :value="pick3"></el-option>
+                <el-option :value="pick4"></el-option>
+                <el-option :value="pick5"></el-option>
+                <el-option :value="pick6"></el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </section>
@@ -80,6 +106,14 @@
 export default {
   data() {
     return {
+      sex1:"男",
+      sex2:"女",
+      pick1: "小学",
+      pick2: "初中",
+      pick3: "高中",
+      pick4: "大学",
+      pick5: "研究生",
+      pick6: "博士及以上",
       pagination: {
         records:[],
         current: 1, //当前页
@@ -88,97 +122,45 @@ export default {
       },
       dialogVisible: false, //对话框
       form: {}, 
-      difficultyList: [],
-      sourceList:[],
-      labelList:[],
     };
   },
   created() {
-    this.getStudentInfo();
+    this.getProblem();
   },
   methods: {
-    filterChange(filter) {
-      if (filter['difficulty']) {
-        let difficulty = []
-        for (let i = 0; i < filter['difficulty'].length; i++) {
-          if (filter['difficulty'][i] == "简单") difficulty.push("1");
-          else if (filter['difficulty'][i] == "中等") difficulty.push("2");
-          else difficulty.push("3");
-        }
-        this.difficultyList = difficulty;
-      } else if (filter['source']){
-        this.sourceList = filter['source'];
-      } else {
-        let label = []
-        for (let i = 0; i < filter['label'].length; i++) {
-          if (filter['label'][i] == "单选题") label.push("single");
-          else if (filter['label'][i] == "多选题") label.push("multiple");
-          else label.push("tf");
-        }
-        this.labelList = label;
-      }
-      this.getStudentInfoByFilter()
-    },
-    work() {
-      this.pagination.records = this.$store.state.problem.problem;
-      this.pagination.total = this.pagination.records.length;
-      this.pagination.records = this.pagination.records.slice(this.pagination.size*(this.pagination.current-1),this.pagination.current*this.pagination.size);
-      for (let i = 0; i < this.pagination.records.length; i++) {
-          if (this.pagination.records[i].label == "single") this.pagination.records[i].label = "单选题"
-          else if (this.pagination.records[i].label == "multiple") this.pagination.records[i].label = "多选题"
-          else this.pagination.records[i].label = "判断题"
-
-          if (this.pagination.records[i].difficulty == 1) this.pagination.records[i].difficulty = "简单"
-          else if (this.pagination.records[i].difficulty == 2) this.pagination.records[i].difficulty = "中等"
-          else this.pagination.records[i].difficulty = "困难"
-      }
-    },
-    getStudentInfoByFilter() {
-      const {sourceList, difficultyList, labelList} = this;
-      console.log(sourceList, difficultyList, labelList)
-      this.$store.dispatch('getProblemByFilter', {sourceList, difficultyList, labelList}).then(res=>{
-        this.work();
-      })
-    },
-    getStudentInfo() {
+    getProblem() {
       //分页查询所有题目信息
-      console.log(111)
-      this.$store.dispatch('getProblemAll').then(res=>{
-        this.work();
+      let start = (this.pagination.current-1)*this.pagination.size
+      let pageSize = this.pagination.size
+      this.$store.dispatch('getProblemByFilter',{start,pageSize}).then(res=>{
+        this.pagination.records = this.$store.state.problem.problem
+        this.$store.dispatch('getAllNumber',{}).then(res=>{
+          this.pagination.total = this.$store.state.problem.count
+        })
       })
     },
     //改变当前记录条数
     handleSizeChange(val) {
       this.pagination.size = val;
-      if (this.difficultyList.length || this.sourceList.length || this.labelList.length) {
-        this.getStudentInfoByFilter()
-      } else {
-        this.getStudentInfo();
-      }
+      this.getProblem();
     },
     //改变当前页码，重新发送请求
     handleCurrentChange(val) {
       this.pagination.current = val;
-      if (this.difficultyList.length || this.sourceList.length || this.labelList.length) {
-        this.getStudentInfoByFilter()
-      } else {
-        this.getStudentInfo();
-      }
+      this.getProblem();
     },
-    checkGrade(id) { //修改学生信息
-      this.dialogVisible = true
-      this.$store.dispatch('getUserInfoById', id).then(res=>{
-        this.form = this.$store.state.user.user
-      })
-      console.log(id)
-    },
-    deleteById(teacherId) { //删除当前学生
-      this.$confirm("确定删除当前学生吗？删除后无法恢复","Warning",{
+    deleteById(id) { //删除当前试题
+      this.$confirm("确定删除当前试题吗？删除后无法恢复","Warning",{
         confirmButtonText: '确定删除',
         cancelButtonText: '算了,留着吧',
         type: 'danger'
       }).then(()=> { //确认删除
-        
+        this.$store.dispatch('deleteProblem', {id}).then(res=>{
+          if (res == 'ok') {
+            this.$message({type:'success', message: '删除成功！'})
+            this.getProblem()
+          }
+        })
       })
     },
     submit() { //提交更改

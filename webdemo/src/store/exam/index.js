@@ -4,7 +4,10 @@ import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById,
      reqDeleteExam, reqAddExam, reqAddExamByRand, reqUpdateExamInfo, 
      reqAddExamByGeneticAlgorithm, 
      reqRegisterExam,
-     reqGetRegisterState} from "@/api";
+     reqGetRegisterState,
+     reqGetRecentExamResult,
+     reqGetExamScoreResult,
+     reqGetRecentExamScore} from "@/api";
 
 const state = {
     myexam: [],
@@ -16,7 +19,9 @@ const state = {
     exam:[],
     count: null,
     number: 0,
-    sta: 0
+    sta: 0,
+    result: '',
+    examresult: ''
 }
 
 const mutations = {
@@ -49,7 +54,17 @@ const mutations = {
     },
     GETREGISTERSTATE(state, sta) {
         state.sta = sta;
+    },
+    GETRECENTEXAMRESULT(state, result) {
+        state.result = result
+    },
+    GETEXAMSCORERESULT(state, examresult) {
+        state.examresult = examresult
+    },
+    GETRECENTEXAMSCORE(state, examresult) {
+        state.examresult = examresult
     }
+
 }
 
 const actions = {
@@ -217,6 +232,33 @@ const actions = {
     async getRegisterState({commit}, obj) {
         let {data} = await reqGetRegisterState(obj);
         commit("GETREGISTERSTATE", data.data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getRecentExamResult({commit}, obj) {
+        let {data} = await reqGetRecentExamResult(obj);
+        commit("GETRECENTEXAMRESULT", data.data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getExamScoreResult({commit}, obj) {
+        let {data} = await reqGetExamScoreResult(obj);
+        commit("GETEXAMSCORERESULT", data.data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getRecentExamScore({commit}, obj) {
+        let {data} = await reqGetRecentExamScore(obj);
+        commit("GETRECENTEXAMSCORE", data.data)
         if (data.code == 200) {
             return "ok";
         } else {

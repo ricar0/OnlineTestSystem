@@ -5,7 +5,6 @@ Vue.use(VueRouter);
 import Login from '@/pages/Common/Login'
 import Register from '@/pages/Common/Register'
 import Search from '@/pages/Student/Search'
-import ExamPaper from '@/pages/Student/ExamPaper'
 import Answer from '@/pages/Student/Answer'
 import Practice from '@/pages/Student/Practice'
 import WrongBook from '@/pages/Student/WrongBook'
@@ -14,7 +13,7 @@ import Phonecheck from '@/pages/Common/Phonecheck'
 import ExamMsg from '@/pages/Student/ExamMsg'
 import ScoreTable from '@/pages/Student/ScoreTable'
 import AnswerScore from '@/pages/Student/AnswerScore'
-import AdminTable from '@/pages/Admin/index'
+import AdminTable from '@/pages/Admin/AdminTable'
 import StudentManage from '@/pages/Admin/StudentManage'
 import ProblemManage from '@/pages/Admin/ProblemManage'
 import AddProblem from '@/pages/Admin/AddProblem'
@@ -33,6 +32,13 @@ import ApplicationForTeacher from '@/pages/Common/ApplicationForTeacher'
 import PracticeAnswer from '@/pages/Student/PracticeAnswer'
 import PracticeMsg from '@/pages/Student/PracticeMsg'
 import PracticeSearch from '@/pages/Common/PracticeSearch'
+import ExamSearch from '@/pages/Common/ExamSearch'
+import SearchStudentGrades from '@/pages/Admin/SearchStudentGrades'
+import SearchExamGrades from '@/pages/Admin/SearchExamGrades'
+import Forbidden from '@/pages/Common/Forbidden'
+import index from '@/pages/Admin/index'
+import AddSubject from '@/pages/Admin/AddSubject'
+import ResetPassword from '@/pages/Common/ResetPassword'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -51,11 +57,6 @@ export default new VueRouter ({
             component: Search,
             meta: {show:true},
             name: 'search'
-        },
-        {
-            path: "/exampaper",
-            component: ExamPaper,
-            meta: {show:true},
         },
         {
             path: "/answer",
@@ -108,44 +109,64 @@ export default new VueRouter ({
             meta: {requiresAuth: true, show:true}
         },
         {
-            path: "/adminTable",
-            component: AdminTable,
-            meta: {requiresAuth: true, show:false},
+            path: "/index",
+            component: index,
+            meta: {requiresAuth: true, show:false, role:'teacher'},
             children: [
+                {
+                    path: "/adminTable",
+                    component: AdminTable,
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
+                },
                 {
                     path: "/studentManage",
                     component: StudentManage,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
                 {
                     path: "/teacherManage",
                     component: TeacherManage,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'admin'}
                 },
                 {
                     path: "/problemManage",
                     component: ProblemManage,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
                 {
                     path: "/addProblem",
                     component: AddProblem,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
                 {
                     path: "/searchExam",
                     component: SearchExam,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
                 {
                     path: "/addExam",
                     component: AddExam,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
                 {
                     path: "/addTeacher",
                     component: AddTeacher,
-                    meta: {requiresAuth: true, show:false}
+                    meta: {requiresAuth: true, show:false, role:'admin'}
+                },
+                {
+                    path: "/searchStudentGrades",
+                    component: SearchStudentGrades,
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
+                },
+                {
+                    path: "/searchExamGrades",
+                    component: SearchExamGrades,
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
+                },
+                {
+                    path: "/addSubject",
+                    component: AddSubject,
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
             ]
         },
@@ -193,6 +214,21 @@ export default new VueRouter ({
             path: "/practiceSearch",
             component: PracticeSearch,
             mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/examSearch",
+            component: ExamSearch,
+            mate: {requiresAuth: true, show:true}
+        },
+        {
+            path: "/forbidden",
+            component: Forbidden,
+            mate: {show:true}
+        },
+        {
+            path: "/resetPassword",
+            component: ResetPassword,
+            mate: {show:true}
         },
     ]
 })

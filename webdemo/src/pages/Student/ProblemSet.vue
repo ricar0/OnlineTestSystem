@@ -10,7 +10,7 @@
                             <el-input  placeholder="输入关键词" suffix-icon="el-icon-search" v-model="input"></el-input>
                         </el-col>
                         <el-col style="text-align: center;padding-top: 6px;padding-bottom:6px;" :span="3">
-                            <el-checkbox style="size:20px;" v-model="showTags"><span style="font-size:15px;">显示标签</span></el-checkbox>
+                            <el-checkbox style="size:20px;" v-model="showTags"><span style="font-size:15px;">显示章节</span></el-checkbox>
                         </el-col>
                         <el-col :span="8" style="padding-left:40%;">
                             <el-button style="padding: 9px 15px;" type="primary" icon="el-icon-refresh" @click="reset()" round>重置</el-button>
@@ -104,19 +104,25 @@
                     </el-table-column>
                     <el-table-column
                         v-if="showTags"
-                        prop="tag"
-                        label="标签"
+                        label="章节"
                         min-width="10%">
+                        <template slot-scope="scope">
+                            <el-tag v-if="scope.row.category==1" type="info" size="small">第一章</el-tag>
+                            <el-tag v-if="scope.row.category==2" type="info" size="small">第二章</el-tag>
+                            <el-tag v-if="scope.row.category==3" type="info" size="small">第三章</el-tag>
+                            <el-tag v-if="scope.row.category==4" type="info" size="small">第四章</el-tag>
+                            <el-tag v-if="scope.row.category==5" type="info" size="small">第五章</el-tag>
+                        </template>
                     </el-table-column>
                     <el-table-column
                         prop="totalsubmit"
                         label="总数"
-                        min-width="20%">
+                        min-width="15%">
                     </el-table-column>
                     <el-table-column
                         prop="rate"
                         label="通过率"
-                        min-width="20%">
+                        min-width="25%">
                         <template slot-scope="scope">
                             <el-progress v-if="scope.row.per < 30" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="exception"></el-progress>
                             <el-progress v-if="scope.row.per < 50 && scope.row.per >= 30" :text-inside="true" :stroke-width="20" :percentage="scope.row.per" status="warning"></el-progress>
@@ -157,10 +163,6 @@ export default {
             showTags: true,
             source: [
                 { id: 0, color: 'dark', label: '全部' },
-                // { id: 1, color: 'plain', label: '数据结构' },
-                // { id: 2, color: 'plain', label: '计算机网络' },
-                // { id: 3, color: 'plain', label: '操作系统' },
-                // { id: 4, color: 'plain', label: '思想道德修养和法律基础' },
             ],
             difficulty: [
                 { id: 0, color: 'dark', label: '全部' },
@@ -187,7 +189,7 @@ export default {
         this.$store.dispatch('getSubjectAll').then(res=>{
             let subject = this.$store.state.subject.subject
             for (let i = 0; i < subject.length; i++)
-                this.source.push({id:i+1,label:subject[i].source,color:'plain'})
+                this.source.push({id:i+1,label:subject[i],color:'plain'})
         })
     },
     methods: {

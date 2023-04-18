@@ -2,7 +2,10 @@
   <div class="all">
     <p style="margin:0; font-size:25px;">考试管理</p>
     <el-divider></el-divider>
-    <el-table style="width: 100%;" :data="pagination.records" border>
+    <el-table style="width: 100%;" 
+    :header-cell-style="{'text-align':'center'}"
+    :cell-style="{'text-align':'center'}"
+    :data="pagination.records" border>
       <el-table-column fixed="left" prop="id" label="考试id" width="70"></el-table-column>
       <el-table-column prop="source" label="学科" width="220"></el-table-column>
       <el-table-column prop="description" label="介绍" width="250"></el-table-column>

@@ -218,3 +218,35 @@ export const reqGetPaperInfoByPracticeId = (data) =>requests({url:'/practice/get
 //保存练习结果
 export const reqAddPracticeResult = (data) =>requests({url:'/practice/addPracticeResult',data,method:'post'});
 
+//获取最近的练习结果
+export const reqGetRecentPracticeResult = (data) =>requests({url:'/practice/getRecentPracticeResult',data,method:'post'});
+
+//获取最近的考试结果
+export const reqGetRecentExamResult = (data) =>requests({url:'/exam/getRecentExamResult',data,method:'post'});
+
+//获取考试分析
+export const reqGetExamScoreResult = (data) =>requests({url:'/exam/getExamScoreResult',data,method:'post'});
+
+//获取系统信息
+export const reqGetSystemInfo = () =>requests({url:'/system/getSystemInfo',method:'get'});
+
+//获取系统信息
+export const reqGetRecentExamScore = () =>requests({url:'/exam/getRecentExamScore',method:'get'});
+
+//获取学科信息
+export const reqGetSubjectProblemNumber = () =>requests({url:'/subject/getSubjectProblemNumber',method:'get'});
+
+//添加学科
+export const reqAddSubject = (data) =>requests({url:'/subject/addSubject',data,method:'post'});
+
+//删除学科
+export const reqDeleteSubject = (data) =>requests({url:'/subject/deleteSubject',data, method:'post'});
+
+//删除题目
+export const reqDeleteProblem = (data) =>requests({url:'/problem/deleteProblem',data, method:'post'});
+
+//验证验证码
+export const reqVerifyEmailByCode = (data) =>requests({url:'/email/verifyEmailByCode',data, method:'post'});
+
+//验证验证码
+export const reqUpdatePasswordByEmail = (data) =>requests({url:'/email/updatePasswordByEmail',data, method:'post'});

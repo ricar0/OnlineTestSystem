@@ -102,4 +102,14 @@ public class PracticeController {
         practiceService.deletePractice(practice.getId());
         return new ResponseResult(200, "删除成功!");
     }
+
+    @RequestMapping(value="getRecentPracticeResult", method = RequestMethod.POST)
+    ResponseResult getRecentPracticeResult(@RequestBody User user) {
+        List<ScoreResult> scoreResultList = practiceService.getRecentPracticeResult(user.getId());
+        for (ScoreResult item : scoreResultList) {
+            Practice practice = practiceService.getPracticeInfo(item.getPractice_id());
+            item.setSource(practice.getSource());
+        }
+        return new ResponseResult(200, "获取成功!", scoreResultList);
+    }
 }

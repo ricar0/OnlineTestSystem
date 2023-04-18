@@ -26,6 +26,11 @@ export default {
             this.items[1].selected = true
         else if (this.$route.path == '/applicationForTeacher')
             this.items[2].selected = true
+        else if (this.$route.path == '/practiceSearch')
+            this.items[3].selected = true
+        else if (this.$route.path == '/examSearch')
+            this.items[4].selected = true
+
     },
     methods: {
         select(index) {
@@ -38,6 +43,10 @@ export default {
                 this.$router.push('/accountInfo')
             } else if (index == 2) {
                 this.$router.push('/applicationForTeacher')
+            } else if (index == 3) {
+                this.$router.push('/practiceSearch')
+            } else if (index == 4) {
+                this.$router.push('/examSearch')
             }
         }
     }

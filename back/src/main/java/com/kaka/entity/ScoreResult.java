@@ -14,4 +14,5 @@ public class ScoreResult {
     private float acceptRate;
     private int score;
     private String end_time;
+    private String source;
 }

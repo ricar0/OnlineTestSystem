@@ -40,4 +40,10 @@ public interface ExamMapper {
     public MyExam getRegisterState(MyExam myExam);
 
     public void addExamNumber(Long id);
+
+    List<ScoreResult> getRecentExamResult(Long id);
+
+    List<MyExam> getExamScoreResult(Long id);
+
+    List<ScoreResult> getRecentExamScore();
 }

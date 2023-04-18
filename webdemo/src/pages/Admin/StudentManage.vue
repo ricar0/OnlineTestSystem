@@ -2,7 +2,10 @@
   <div class="all">
     <p style="margin:0; font-size:25px;">学生管理</p>
     <el-divider></el-divider>
-    <el-table style="width: 100%;" :data="pagination.records" border>
+    <el-table style="width: 100%;" 
+    :header-cell-style="{'text-align':'center'}"
+    :cell-style="{'text-align':'center'}"
+    :data="pagination.records" border>
       <el-table-column fixed="left" prop="id" label="id" width="100"></el-table-column>
       <el-table-column prop="username" label="姓名" width="100"></el-table-column>
       <el-table-column prop="school" label="学校" width="200"></el-table-column>

@@ -172,7 +172,11 @@
               <li @click="previous()"><i class="el-icon-arrow-left"></i><span>上一题</span></li>
               <li @click="mark()"><i class="el-icon-view"></i><span>标记</span></li>
               <li @click="next()"><span>下一题</span><i class="el-icon-arrow-right"></i></li>
-              <li @click="save()"><el-button type="primary">保存进度</el-button></li>
+              <li>
+                <el-button @click="save()" type="primary">保存进度</el-button>
+                <el-button v-if="slider_flag" @click="Hide()">隐藏侧边栏</el-button>
+                <el-button v-if="!slider_flag" @click="Show()">显示侧边栏</el-button>
+              </li>
             </ul>
           </div>
         </div>
@@ -228,6 +232,12 @@ export default {
     this.showTime()
   },
   methods: {
+    Hide() {
+      this.slider_flag = false
+    },
+    Show() {
+      this.slider_flag = true
+    },
     Check1(ans1, ans2) {
       if (ans2 == 1 && ans1 == 'A') return true
       if (ans2 == 2 && ans1 == 'B') return true
@@ -765,6 +775,7 @@ li {
   border-radius: 4px;
   margin-bottom: 10px;
   background-color: #fff;
+  margin-top:0;
 }
 .left {
   width: 260px;
@@ -813,6 +824,7 @@ li {
   display: flex;
   padding: 20px;
   font-size: 20px;
+  margin-top: 0;
 }
 #answer .top .item li:nth-child(1) {
   margin-right: 10px;

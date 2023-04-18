@@ -13,6 +13,7 @@ import wrongbook from './wrongbook'
 import subject from './subject'
 import role from './role'
 import pic from './pic'
+import system from './system'
 
 //对外暴露Store类的一个实例
 export default new Vuex.Store({
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         wrongbook,
         subject,
         role,
-        pic
+        pic,
+        system
     }
 });

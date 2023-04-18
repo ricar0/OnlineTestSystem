@@ -125,4 +125,19 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.getRegisterState(myExam);
     }
 
+    @Override
+    public List<ScoreResult> getRecentExamResult(Long id) {
+        return examMapper.getRecentExamResult(id);
+    }
+
+    @Override
+    public List<MyExam> getExamScoreResult(Long id) {
+        return examMapper.getExamScoreResult(id);
+    }
+
+    @Override
+    public List<ScoreResult> getRecentExamScore() {
+        return examMapper.getRecentExamScore();
+    }
+
 }

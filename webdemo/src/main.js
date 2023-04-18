@@ -6,6 +6,9 @@ import router from '@/router';
 import store from '@/store'
 import Cookies from 'js-cookie'
 import axios from 'axios'
+import  * as  echarts from 'echarts'
+Vue.prototype.$echarts = echarts;
+
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(ElementUI);
@@ -18,12 +21,16 @@ new Vue({
   store,
 }).$mount('#app')
 
-import {getToken} from '@/utils/token'
+import {getToken,getRole} from '@/utils/token'
 router.beforeEach((to,from,next)=>{
   const isAuthenticated = getToken()
-  console.log(to)
+  const role = getRole()
   if (to.meta.requiresAuth && !isAuthenticated) {
     next('/login')
+  } else if (to.meta.role == 'teacher' && role == 'student') {
+    next('/forbidden')
+  } else if (to.meta.role == 'admin' && role != 'admin') {
+    next('/forbidden')
   } else {
     next()
   }

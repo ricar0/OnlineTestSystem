@@ -153,4 +153,9 @@ public class PracticeServiceImpl implements PracticeService {
         practiceMapper.deletePracticeProblem(id);
         practiceMapper.deletePractice(id);
     }
+
+    @Override
+    public List<ScoreResult> getRecentPracticeResult(Long id) {
+        return practiceMapper.getRecentPracticeResult(id);
+    }
 }

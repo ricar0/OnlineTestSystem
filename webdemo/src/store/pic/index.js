@@ -1,5 +1,3 @@
-//role模块小仓库
-
 import { reqUploadPic } from "@/api";
 
 const state={

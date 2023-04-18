@@ -79,4 +79,9 @@
     <delete id="deletePractice" parameterType="Long">
         delete from practice where id = #{id};
     </delete>
+
+    <select id="getRecentPracticeResult" parameterType="Long" resultType="com.kaka.entity.ScoreResult">
+        select * from practice_result where user_id = #{id} order by end_time desc
+        limit 0, 10;
+    </select>
 </mapper>

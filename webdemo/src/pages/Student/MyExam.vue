@@ -54,7 +54,7 @@
               <p v-if="pagination.total==0" class="no-contest">
                 <el-empty description="暂无考试"></el-empty>
               </p>
-              <ol class="contest-list">
+              <ol v-else class="contest-list">
                 <li class="item-list" v-for="item in pagination.exam">
                   <div>
                     <el-row justify='space-between' align="middle" type="flex">
@@ -280,7 +280,7 @@ a:hover {
   margin-bottom: 0;
 }
 .contest-list>li {
-  border-left: 4px solid rgb(25, 190, 107);
+  border-left: 4px solid #409EFF;
   padding: 5px;
   margin-left: -20px;
   margin-top: 10px;

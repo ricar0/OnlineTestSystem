@@ -180,4 +180,30 @@ public class ExamController {
             return new ResponseResult(200, "获取成功!", 1);
         }
     }
+
+    @RequestMapping(value="/getRecentExamResult", method = RequestMethod.POST)
+    public ResponseResult getRecentExamResult(@RequestBody User user) {
+        List<ScoreResult> scoreResultList = examService.getRecentExamResult(user.getId());
+        for (ScoreResult scoreResult: scoreResultList) {
+            Exam exam = examService.getExamById(scoreResult.getExam_id());
+            scoreResult.setSource(exam.getSource());
+        }
+        return new ResponseResult(200, "获取成功!", scoreResultList);
+    }
+
+    @RequestMapping(value="/getExamScoreResult", method = RequestMethod.POST)
+    public ResponseResult getExamScoreResult(@RequestBody Exam exam) {
+        return new ResponseResult(200, "获取成功!", examService.getExamScoreResult(exam.getId()));
+    }
+
+    @RequestMapping(value="/getRecentExamScore", method = RequestMethod.GET)
+    public ResponseResult getRecentExamScore() {
+        List<ScoreResult> scoreResultList = examService.getRecentExamScore();
+        for (ScoreResult scoreResult: scoreResultList) {
+            Exam exam = examService.getExamById(scoreResult.getExam_id());
+            scoreResult.setSource(exam.getSource());
+        }
+        return new ResponseResult(200, "获取成功!", scoreResultList);
+    }
+
 }

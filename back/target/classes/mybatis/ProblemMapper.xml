@@ -57,4 +57,8 @@
         insert into problems_set value(#{label}, #{description},#{accept},#{difficulty},#{option_num},#{a},
             #{b},#{c},#{d},null,#{source},null,0,0,#{solution},#{category});
     </insert>
+
+    <delete id="deleteProblem" parameterType="Long">
+        delete from problems_set where id = #{id};
+    </delete>
 </mapper>

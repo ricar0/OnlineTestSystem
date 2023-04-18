@@ -12,6 +12,7 @@
             <a style="color:white;" v-if="isLogin" href="javascript:;"><i style="font-size: 150%;" class="el-icon-user-solid"></i>&nbsp;&nbsp;&nbsp;{{user.username}}</a>
             <div style="cursor: pointer;" class="msg" v-if="flag && isLogin">
               <p @click="goToUserInfo()">个人信息</p>
+              <p @click="gotToUserMain()">用户界面</p>
               <p class="exit" @click="logout()">退出登录</p>
             </div>
           </li>
@@ -37,11 +38,17 @@ export default {
       this.$store.dispatch('getUserInfo').then(res=>{
         if (this.$store.state.user.token) {
           this.isLogin = true;
-          this.user = this.$store.state.user.userinfo;
+          this.$store.dispatch('getUserInfoById', this.$store.state.user.userinfo.id).then(res=>{
+            this.user = this.$store.state.user.userinfo;
+          })
+          
         }
       })
     },
     methods: {
+      gotToUserMain() {
+        this.$router.push('/problemSet')
+      },
       goToUserInfo() {
         this.$router.push('UserInfo')
       },

@@ -27,4 +27,6 @@ public interface PracticeService {
     void addPracticeResult(ScoreResult scoreResult);
 
     void deletePractice(Long id);
+
+    List<ScoreResult> getRecentPracticeResult(Long id);
 }

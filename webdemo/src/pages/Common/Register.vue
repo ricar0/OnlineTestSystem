@@ -181,7 +181,8 @@ export default {
   margin-right: 3%;
 }
 .bottom .left {
-  background-color: dodgerblue;
+  background-image: url('@/assets/testlogo2.jpg');
+  -moz-background-size:100% 100%; background-size:100% 100%;
   height: 100%;
   width: 50%;
   top: 0;
@@ -217,14 +218,14 @@ a:link {
   width: 100%;
   overflow-y: auto;
   height: 100%;
-  background-color: #b6bccdd1 !important;
+  background-color: #eff3f5!important;
 }
 #login .main-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 4.3%;
-  background-image: url('@/assets/background.png');
+  background-color: #eff3f5!important;
 }
 #login .main-container .top {
   margin-top: 10%;

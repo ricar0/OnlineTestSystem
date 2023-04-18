@@ -34,4 +34,6 @@ public interface PracticeMapper {
     void deletePracticeProblem(Long id);
 
     void deletePractice(Long id);
+
+    List<ScoreResult> getRecentPracticeResult(Long id);
 }

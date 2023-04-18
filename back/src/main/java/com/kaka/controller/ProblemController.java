@@ -6,8 +6,10 @@ import com.kaka.service.ProblemService;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Objects;
@@ -59,5 +61,11 @@ public class ProblemController {
     ResponseResult addProblem(@RequestBody Problem problem) {
         problemService.addProblem(problem);
         return new ResponseResult(200, "加入成功!");
+    }
+
+    @RequestMapping(value="/deleteProblem", method = RequestMethod.POST)
+    ResponseResult deleteProblem(@RequestBody Problem problem) {
+        problemService.deleteProblem(problem.getId());
+        return new ResponseResult(200, "删除成功!");
     }
 }

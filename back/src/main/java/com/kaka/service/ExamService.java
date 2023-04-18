@@ -35,4 +35,9 @@ public interface ExamService {
 
     MyExam getRegisterState(MyExam myExam);
 
+    List<ScoreResult> getRecentExamResult(Long id);
+
+    List<MyExam> getExamScoreResult(Long id);
+
+    List<ScoreResult> getRecentExamScore();
 }

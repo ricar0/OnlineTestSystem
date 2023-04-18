@@ -294,7 +294,7 @@ export default {
             this.$store.dispatch('getSubjectAll').then(res=>{
             let subject = this.$store.state.subject.subject
             for (let i = 0; i < subject.length; i++)
-                this.source.push({id:i+1,label:subject[i].source,color:'plain'})
+                this.source.push({id:i+1,label:subject[i],color:'plain'})
             })
         },
         addPractice() {

@@ -99,7 +99,9 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-right: 3%;
 }
 .bottom .left {
-  background-color: dodgerblue;
+  background-image: url('@/assets/testlogo3.png');
+  -moz-background-size:100% 100%;
+  background-size:100% 100%;
   height: 100%;
   width: 50%;
   top: 0;
@@ -143,7 +145,7 @@ a:link {
   justify-content: center;
   align-items: center;
   margin-bottom: 13.95%;
-  background-image: url('@/assets/background.png');
+  background-color: #eff3f5!important;
 }
 #login .main-container .top {
   margin-top: 10%;

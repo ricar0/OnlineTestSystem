@@ -8,7 +8,7 @@
       </div>
       <div class="total">
         <div class="look">
-          本次考试成绩
+          <el-button @click="goToAnswer()">查看试题</el-button>
         </div>
         <div class="show">
           <div class="number" :class="{'border': isTransition}">
@@ -56,6 +56,10 @@ export default {
         this.isTransition = true
         this.imgShow = true
       },1000)
+    },
+    goToAnswer() {
+      let id = this.$route.query.id
+      this.$router.push({path:'/answer', query:{id:id}})
     },
     getScore() {
       this.$store.dispatch('getUserInfo').then(res=>{
