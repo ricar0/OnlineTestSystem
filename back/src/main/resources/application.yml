@@ -10,14 +10,14 @@ spring:
         queue-capacity: 200
   mail:
     host: smtp.163.com
-    username: wmy0976543244@163.com
-    password: NRZBAAMHADBMMHQJ
+    username: 
+    password: 
     protocol: smtp
     port: 25
     properties:
       mail:
         smtp:
-          from: wmy0976543244@163.com
+          from: 
     default-encoding: utf-8
 
   thymeleaf:
@@ -39,17 +39,17 @@ spring:
         min-idle: 0
 
   datasource:
-      url: jdbc:mysql://121.41.45.164:3306/onlinetest?characterEncoding=utf-8&serverTimezone=UTC
-      username: root
-      password: wmy0976543244
+      url: 
+      username: 
+      password: 
       driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
   mapper-locations: classpath:/mybatis/*.xml
 
 TencentCos:
-  secretId: AKID0xoU5b7bUEl6Tnz55xdAWelhR1WqyINO
-  secretKey: DG5qR9j6OYaS6XkiT4Z2OYilpplgYIwP
-  bucketName: picture-1317807251
+  secretId: 
+  secretKey: 
+  bucketName: 
   region: ap-shanghai
 
 
