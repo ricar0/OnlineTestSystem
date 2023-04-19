@@ -25,8 +25,9 @@
           </template>
           
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column fixed="right" label="操作" width="250">
           <template slot-scope="scope">
+            <el-button @click="checkRank(scope.row.id)" type="primary" size="small">查看排名</el-button>
             <el-button @click="checkGrade(scope.row.id)" type="primary" size="small">查看考试分析</el-button>
           </template>
         </el-table-column>
@@ -45,16 +46,33 @@
       <!-- 编辑对话框-->
       <el-dialog
         title="考试成绩分析"
-        :visible.sync="dialogVisible"
+        :visible.sync="dialogVisible1"
         width="50%"
         @open="opens()"
-        :before-close="handleClose">
+        :before-close="handleClose1">
         <section class="update">
             <div v-if="!isNull" class="chart-container" ref="chart"></div>
             <el-empty v-if="isNull" :image-size="200"></el-empty>
         </section>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="close()">关 闭</el-button>
+          <el-button @click="close1()">关 闭</el-button>
+        </span>
+      </el-dialog>
+      <el-dialog
+        title="考试排名"
+        :visible.sync="dialogVisible2"
+        width="50%"
+        :before-close="handleClose2">
+        <section class="update">
+          <el-table :data="examRank" style="width: 100%">
+            <el-table-column prop="rank" label="排名" width="60"></el-table-column>
+            <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+            <el-table-column prop="score" label="分数" width="120"></el-table-column>
+        </el-table>
+            <el-empty v-if="isNull" :image-size="200"></el-empty>
+        </section>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="close2()">关 闭</el-button>
         </span>
       </el-dialog>
     </div>
@@ -71,7 +89,8 @@ export default {
           total: null, //记录条数
           size: 6, //每页条数
         },
-        dialogVisible: false, //对话框
+        dialogVisible1: false, //对话框
+        dialogVisible2: false, //对话框
         form: {}, 
         timeList: [],
         isClick: '',
@@ -86,19 +105,26 @@ export default {
             '60分以下': 0,
         },
         examData: '',
-        myChart: ''
+        myChart: '',
+        examRank:''
       }
     },
     mounted() {
       this.getExamInfo();
     },
     methods: {
-        close() {
-            this.dialogVisible = false
+        close1() {
+            this.dialogVisible1 = false
             location.reload(0)
         },
-        handleClose(done) {
+        close2() {
+            this.dialogVisible2 = false
+        },
+        handleClose1(done) {
             location.reload(0)
+            done()
+        },
+        handleClose2(done) {
             done()
         },
         Click() {
@@ -141,7 +167,7 @@ export default {
             }
             // 创建图表
             data.forEach(element => {
-                switch(element.score / 10) {
+                switch(parseInt(element.score / 10)) {
                 case 10:
                 case 9:
                     this.category["90分及以上"]++
@@ -213,10 +239,17 @@ export default {
       checkGrade(id) { //查询考试信息成绩 
         this.$store.dispatch('getExamById', id).then(res=>{
             this.id = id
-            this.dialogVisible = true
+            this.dialogVisible1 = true
             this.examData = this.$store.state.exam.examinfo
         })
       },
+      checkRank(id) {
+        
+        this.$store.dispatch('getExamRank', {id}).then(res=>{
+          this.examRank = this.$store.state.exam.examrank
+          this.dialogVisible2 = true
+        })
+      }
     }
 };
 </script>

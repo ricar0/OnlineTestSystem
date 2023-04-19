@@ -84,6 +84,7 @@ public class LoginServiceImpl implements LoginService {
             e.printStackTrace();
             throw new RuntimeException("tolen非法");
         }
+//        System.out.println(userid);
         // 从redis中获取用户信息
         String redisKey = "login:" + userid;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);

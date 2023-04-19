@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.kaka.SecurityApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.932 s - in com.kaka.SecurityApplicationTests

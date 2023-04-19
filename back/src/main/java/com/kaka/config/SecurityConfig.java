@@ -47,9 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //对于登录接口允许匿名访问
                 .antMatchers(
-                        "/api/auth/login",
-                        "/api/auth/sendCode",
-                        "/api/auth/getCode"
+
                 ).anonymous()
                 .and()
                 .authorizeRequests()
@@ -60,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/practice/getAllNumber",
                         "/api/exam/getExamByFilter",
                         "/api/exam/getAllNumber3",
-                        "/api/email/**"
+                        "/api/email/**",
+                        "/api/auth/**"
                 ).permitAll()
                 //除上面外所有请求都需要鉴权认证
                 .anyRequest().authenticated();

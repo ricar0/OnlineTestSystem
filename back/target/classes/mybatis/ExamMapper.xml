@@ -104,4 +104,8 @@
     <select id="getRecentExamScore" resultType="com.kaka.entity.ScoreResult">
         select * from myexam order by end_time desc limit 0, 10;
     </select>
+
+    <select id="getExamRank" resultType="com.kaka.entity.MyExam">
+        select * from myexam  where exam_id = #{id} order by score desc;
+    </select>
 </mapper>

@@ -1,9 +1,11 @@
 package com.kaka.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.kaka.entity.*;
 import com.kaka.mapper.ExamMapper;
 import com.kaka.service.ExamService;
 import com.kaka.service.PaperService;
+import com.kaka.service.UserService;
 import com.kaka.utils.RedisCache;
 import com.kaka.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class ExamController {
 
     @Autowired
     private PaperService paperService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value="/getAll", method = RequestMethod.GET)
     public ResponseResult getAll() {
@@ -206,4 +211,21 @@ public class ExamController {
         return new ResponseResult(200, "获取成功!", scoreResultList);
     }
 
+    @RequestMapping(value="/getExamRank", method = RequestMethod.POST)
+    public ResponseResult getExamRank(@RequestBody Exam exam) {
+        List<MyExam> myExamList = examService.getExamRank(exam.getId());
+        List<JSONObject> jsonObjectList = new ArrayList<>();
+        int count = 0;
+        for (MyExam myExam : myExamList) {
+            count++;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("score", myExam.getScore());
+            jsonObject.put("end_time", myExam.getEnd_time().toString());
+            User user = userService.getUserInfoById(myExam.getUser_id());
+            jsonObject.put("rank", count);
+            jsonObject.put("name", user.getUsername());
+            jsonObjectList.add(jsonObject);
+        }
+        return new ResponseResult(200, "获取成功!", jsonObjectList);
+    }
 }

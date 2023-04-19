@@ -54,7 +54,9 @@ export default {
             if (res != 'ok') {
               this.$message.error("用户名或密码不正确！");
             } else {
+
               this.$store.dispatch('getUserInfo').then(res=>{
+                console.log(res)
                 setRole(this.$store.state.user.userinfo.role)
                 this.$router.push("/problemSet");
               })

@@ -5,86 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="739d564f-311f-42e7-88ea-c8ea298a99dd" name="Default Changelist" comment="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/SystemController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2022CCPC桂林.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/EmailController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ExamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/PracticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/PracticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ProblemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/ProblemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/SubjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/SubjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/entity/ScoreResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/entity/ScoreResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ExamMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ExamMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/PracticeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/PracticeMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ProblemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/ProblemMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/SubjectMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/SubjectMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/mapper/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/ExamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/ExamService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/ExamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/ExamServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/PracticeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/PracticeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/ProblemServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/ProblemServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/SubjectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/SubjectServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/PracticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/PracticeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/ProblemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/ProblemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/SubjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/SubjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kaka/service/Impl/LoginServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/ExamMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/ExamMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/PracticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/PracticeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/ProblemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/ProblemMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/SubjectMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/SubjectMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis/UserMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/EmailController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/EmailController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/ExamController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/PracticeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/PracticeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/ProblemController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/ProblemController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/SubjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/SubjectController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/entity/ScoreResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/entity/ScoreResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/controller/LoginController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/ExamMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/ExamMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/PracticeMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/PracticeMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/ProblemMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/ProblemMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/SubjectMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/SubjectMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/mapper/UserMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/ExamService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/ExamService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/ExamServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/ExamServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/PracticeServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/PracticeServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/ProblemServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/ProblemServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/SubjectServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/SubjectServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/PracticeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/PracticeService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/SubjectService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/SubjectService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/LoginServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/kaka/service/Impl/LoginServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mybatis/ExamMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/ExamMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/PracticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/PracticeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/SubjectMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mybatis/SubjectMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Admin/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Admin/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Admin/MainLeft.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Admin/MainLeft.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Student/Header/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Student/Header/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/components/Student/Nav/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/components/Student/Nav/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/AddProblem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/AddProblem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/AdminTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/AdminTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/ProblemManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/ProblemManage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/SearchExam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/SearchExam.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/StudentManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/StudentManage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/TeacherManage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/TeacherManage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/AddExam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/AddExam.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Admin/SearchExamGrades.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Admin/SearchExamGrades.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Common/ApplicationForTeacher.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Common/ApplicationForTeacher.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Common/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Common/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Common/PracticeSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Common/PracticeSearch.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/MyExam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/MyExam.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/Practice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/Practice.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/pages/Student/ProblemSet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/pages/Student/ProblemSet.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/store/exam/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/exam/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/pic/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/pic/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/practice/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/practice/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/store/subject/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/subject/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../webdemo/src/store/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/store/user/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../webdemo/src/utils/token.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webdemo/src/utils/token.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +88,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+    <property name="settings.editor.selected.configurable" value="build.tools" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -274,6 +220,8 @@
       <workItem from="1681712022723" duration="3925000" />
       <workItem from="1681725794413" duration="7749000" />
       <workItem from="1681779756598" duration="8217000" />
+      <workItem from="1681800010754" duration="7498000" />
+      <workItem from="1681812165904" duration="1395000" />
     </task>
     <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/ricar0/OnlineTestSystem&#10;&#10;# Conflicts:&#10;#&#9;.idea/compiler.xml&#10;update 2023-3-4">
       <created>1677927098482</created>

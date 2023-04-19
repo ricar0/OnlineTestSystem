@@ -14,7 +14,14 @@
                         <div class="content1">
                             <el-form ref="form" :model="exam" label-position="left" label-width="100px">
                                 <el-form-item label="科目" prop="source">
-                                    <el-input v-model="exam.source" placeholder="请输入考试科目"></el-input>
+                                    <el-select v-model="exam.source" placeholder="请输入考试科目">
+                                        <el-option
+                                            v-for="item in source"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                                 <el-form-item label="描述" prop="description">
                                     <el-input type="textarea" v-model="exam.description" placeholder="请输入考试描述"></el-input>
@@ -229,7 +236,14 @@
                         <div class="content1">
                             <el-form ref="form" :model="exam" label-position="left" label-width="100px">
                                 <el-form-item label="科目" prop="source">
-                                    <el-input v-model="exam.source" placeholder="请输入考试科目"></el-input>
+                                    <el-select v-model="exam.source" placeholder="请输入考试科目">
+                                        <el-option
+                                            v-for="item in source"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                                 <el-form-item label="描述" prop="description">
                                     <el-input type="textarea" v-model="exam.description" placeholder="请输入考试描述"></el-input>
@@ -325,7 +339,14 @@
                         <div class="content1">
                             <el-form ref="form" :model="exam" label-position="left" label-width="100px">
                                 <el-form-item label="科目" prop="source">
-                                    <el-input v-model="exam.source" placeholder="请输入考试科目"></el-input>
+                                    <el-select v-model="exam.source" placeholder="请输入考试科目">
+                                        <el-option
+                                            v-for="item in source"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value">
+                                        </el-option>
+                                    </el-select>
                                 </el-form-item>
                                 <el-form-item label="描述" prop="description">
                                     <el-input type="textarea" v-model="exam.description" placeholder="请输入考试描述"></el-input>
@@ -481,11 +502,17 @@ export default {
             difficulty: 0,
             difficultyWeight: 0,
             coverageWeight: 100,
-            pointIds:[]
+            pointIds:[],
+            source:[]
         }
     }, 
     mounted() {
-        
+        this.$store.dispatch('getSubjectAll').then(res=>{
+            let data = this.$store.state.subject.subject
+            for (let i = 0; i < data.length; i++) {
+                this.source.push({label:data[i], value:data[i]})
+            }
+        })
     },
     watch: {
         'coverageWeight': {

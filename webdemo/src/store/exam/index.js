@@ -7,7 +7,8 @@ import { reqGetMyExam, reqGetExamById, reqGetProblemById, reqGetPaperInfoById,
      reqGetRegisterState,
      reqGetRecentExamResult,
      reqGetExamScoreResult,
-     reqGetRecentExamScore} from "@/api";
+     reqGetRecentExamScore,
+     reqGetExamRank} from "@/api";
 
 const state = {
     myexam: [],
@@ -21,7 +22,8 @@ const state = {
     number: 0,
     sta: 0,
     result: '',
-    examresult: ''
+    examresult: '',
+    examrank:''
 }
 
 const mutations = {
@@ -63,6 +65,9 @@ const mutations = {
     },
     GETRECENTEXAMSCORE(state, examresult) {
         state.examresult = examresult
+    },
+    GETEXAMRANK(state, examrank) {
+        state.examrank = examrank
     }
 
 }
@@ -259,6 +264,15 @@ const actions = {
     async getRecentExamScore({commit}, obj) {
         let {data} = await reqGetRecentExamScore(obj);
         commit("GETRECENTEXAMSCORE", data.data)
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return data.msg;
+        }
+    },
+    async getExamRank({commit}, obj) {
+        let {data} = await reqGetExamRank(obj);
+        commit("GETEXAMRANK", data.data)
         if (data.code == 200) {
             return "ok";
         } else {

@@ -140,4 +140,9 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.getRecentExamScore();
     }
 
+    @Override
+    public List<MyExam> getExamRank(Long id) {
+        return examMapper.getExamRank(id);
+    }
+
 }

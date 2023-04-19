@@ -250,3 +250,9 @@ export const reqVerifyEmailByCode = (data) =>requests({url:'/email/verifyEmailBy
 
 //验证验证码
 export const reqUpdatePasswordByEmail = (data) =>requests({url:'/email/updatePasswordByEmail',data, method:'post'});
+
+//添加学生
+export const reqAddUser = (data) =>requests({url:'/user/addUser',data, method:'post'});
+
+//获取考试排名
+export const reqGetExamRank = (data) =>requests({url:'/exam/getExamRank',data, method:'post'});

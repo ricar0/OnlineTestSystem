@@ -1,6 +1,6 @@
 //user模块小仓库
 import {reqUserLogin, reqUserInfo, reqUserLogout, reqSendCode, reqGetCode, reqGetStudentAll, 
-    reqGetUserInfoById, reqUpdateUserInfo, reqUpdatePassword, reqSendEmail, reqVerifyEmail, reqGetTeacherAll, reqVerifyEmailByCode, reqUpdatePasswordByEmail} from '@/api'
+    reqGetUserInfoById, reqUpdateUserInfo, reqUpdatePassword, reqSendEmail, reqVerifyEmail, reqGetTeacherAll, reqVerifyEmailByCode, reqUpdatePasswordByEmail, reqAddUser} from '@/api'
 import {setToken, getToken, removeToken} from '@/utils/token'
 const state={
     token: getToken(),
@@ -156,6 +156,14 @@ const actions = {
     },
     async updatePasswordByEmail({commit}, obj) {
         let {data} = await reqUpdatePasswordByEmail(obj);
+        if (data.code == 200) {
+            return "ok";
+        } else {
+            return 'error';
+        }
+    },
+    async addUser({commit}, obj) {
+        let {data} = await reqAddUser(obj);
         if (data.code == 200) {
             return "ok";
         } else {

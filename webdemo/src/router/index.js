@@ -39,6 +39,7 @@ import Forbidden from '@/pages/Common/Forbidden'
 import index from '@/pages/Admin/index'
 import AddSubject from '@/pages/Admin/AddSubject'
 import ResetPassword from '@/pages/Common/ResetPassword'
+import AddUser from '@/pages/Admin/AddUser'
 export default new VueRouter ({
     //配置路由
     routes:[
@@ -166,6 +167,11 @@ export default new VueRouter ({
                 {
                     path: "/addSubject",
                     component: AddSubject,
+                    meta: {requiresAuth: true, show:false, role:'teacher'}
+                },
+                {
+                    path: "/AddUser",
+                    component: AddUser,
                     meta: {requiresAuth: true, show:false, role:'teacher'}
                 },
             ]

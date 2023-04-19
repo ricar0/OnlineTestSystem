@@ -9,7 +9,7 @@
                         <span class="account-body-title">教师申请</span>
                         <el-divider></el-divider>
                         <div>
-                            <el-steps v-if="state == 0" :active="active" finish-status="success">
+                            <el-steps v-if="state == 0 || state == -1" :active="active" finish-status="success">
                                 <el-step title="提交申请"></el-step>
                                 <el-step title="等待审批"></el-step>
                                 <el-step title="审批结束"></el-step>

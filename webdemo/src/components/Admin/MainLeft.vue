@@ -90,7 +90,7 @@ export default {
         index: '4',
         title: '学生管理',
         icon: 'el-icon-user-solid',
-        content:[{item1: '查询学生信息',path: '/studentManage'}, {item2:'添加学生', path:'/addStudent'}],
+        content:[{item1: '查询学生信息',path: '/studentManage'}, {item2:'添加学生', path:'/addUser'}],
       }),
       this.menu.push({
         index: '5',

@@ -46,4 +46,6 @@ public interface ExamMapper {
     List<MyExam> getExamScoreResult(Long id);
 
     List<ScoreResult> getRecentExamScore();
+
+    List<MyExam> getExamRank(Long id);
 }
